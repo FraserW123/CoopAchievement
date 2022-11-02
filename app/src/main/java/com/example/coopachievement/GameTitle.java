@@ -35,7 +35,9 @@ public class GameTitle extends AppCompatActivity {
         int gameIndex = intent.getIntExtra("game_index", -1);
 
         if(gameIndex >= 0){
+            System.out.println("game has been deleted");
             gameConfig.deleteGame(gameIndex);
+            System.out.println("TITLE: Number of games left " + gameConfig.getNumGame());
         }
         backToMain();
 

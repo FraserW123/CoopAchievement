@@ -1,5 +1,7 @@
 package com.example.coopachievement.model;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,6 +9,7 @@ import java.util.List;
 public class GameConfig {
     private List<Game> gameName = new ArrayList<>();
     private int numGames = 0;
+    private boolean isDelete;
 
     private static GameConfig instance;
     private GameConfig(){
@@ -23,14 +26,19 @@ public class GameConfig {
     public void addGame(Game game){
         gameName.add(game);
         numGames++;
-        System.out.println("added "+game.getName());
+        Log.i("games added", "added "+game.getName() + " games: " + getNumGame());
     }
 
     public void deleteGame(int pos){
+        Log.i("before","games before " + getNumGame());
         gameName.remove(pos);
         numGames--;
+        isDelete = true;
+        Log.i("after","games after " + getNumGame());
     }
 
+    public boolean getisDelete(){return isDelete;}
+    public void setisDelete(){ isDelete=false;}
     public int getNumGame(){
         return numGames;
     }

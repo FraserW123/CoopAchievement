@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -16,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-
+    boolean startup = true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,8 +29,9 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        populateListView();
+
         listClick();
+        populateListView();
         storeGameList();
 
     }
@@ -45,15 +47,16 @@ public class MainActivity extends AppCompatActivity {
     private void populateListView() {
         GameConfig gameConfig = GameConfig.getInstance();
         List<String> list = gameConfig.getGamesNameList();
-        if(gameConfig.getGamesNameList().isEmpty() && !getGameList().isEmpty()){
-
+        if((gameConfig.getGamesNameList().isEmpty() && !getGameList().isEmpty()) && !gameConfig.getisDelete()){
+            System.out.println("this happened");
             list = getGameList();
+            gameConfig.setisDelete();
         }
+        System.out.println("did not happen ");
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 this, R.layout.list_game_config, list);
         ListView lvManager = findViewById(R.id.ListofGames);
         lvManager.setAdapter(adapter);
-
     }
 
 
@@ -63,29 +66,22 @@ public class MainActivity extends AppCompatActivity {
         String extractedText = prefs.getString("StartGameList","");
         System.out.println(extractedText);
 
-
-        
         String[] gameInfo = extractedText.split(",");
-        String[] gameName = new String[gameInfo.length/2];
-        String[] gameDescription = new String[gameInfo.length/2];
-        //Figure this out
+        System.out.println("length of thing" +gameInfo.length);
 
-//        if(extractedText != ""){
-//            for(int i = 0; i<gameName.length;i++){
-//                gameName[i] = gameInfo[(i+2)];
-//                gameDescription[i] = gameInfo[i];
-//
-//            }
-//            for(int i = 0; i<gameInfo.length; i++){
-//                Game game = new Game(gameName[i], gameDescription[i]);
-//                gameConfig.addGame(game);
-//            }
-//        }
+        if(extractedText != "" && !gameConfig.getisDelete()){
+            System.out.println("length " + ((gameInfo.length+1)/2));
+            for(int i = 0; i<(gameInfo.length+1)/2; i+=2){
+                Game game = new Game(gameInfo[i], gameInfo[i+1]);
+                System.out.println("game info " + gameInfo[i]);
+                gameConfig.addGame(game);
+            }
+        }
 
 
         List<String> items = new ArrayList<>();
-        for(int i = 0; i<gameName.length; i++){
-            if(!gameInfo[i].equals(""))
+        for(int i = 0; i<gameInfo.length; i+=2){
+            if(!gameInfo[i].equals("") && !gameConfig.getisDelete())
                 items.add(gameInfo[i]);
         }
 
@@ -96,15 +92,16 @@ public class MainActivity extends AppCompatActivity {
         GameConfig gameConfig = GameConfig.getInstance();
         List<Game> gameList = gameConfig.getGameList();
         StringBuilder stringBuilder = new StringBuilder();
-//        for(String s: gameList){
-//            stringBuilder.append(s);
-//            stringBuilder.append(",");
-//        }
+
         for(int i = 0; i<gameList.size(); i++){
             stringBuilder.append(gameList.get(i).getName());
             stringBuilder.append(",");
             stringBuilder.append(gameList.get(i).getDescription());
             stringBuilder.append(",");
+        }
+        String [] gameInfo = stringBuilder.toString().split(",");
+        for(int i = 0; i<gameInfo.length; i++){
+            System.out.println("Lazar " + gameInfo[i]);
         }
         System.out.println("the result is "+ stringBuilder.toString());
         SharedPreferences prefs = getSharedPreferences("games_list", MODE_PRIVATE);
