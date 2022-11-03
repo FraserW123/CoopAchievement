@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.coopachievement.model.Game;
 import com.example.coopachievement.model.GameConfig;
@@ -35,9 +36,8 @@ public class GameTitle extends AppCompatActivity {
         int gameIndex = intent.getIntExtra("game_index", -1);
 
         if(gameIndex >= 0){
-            System.out.println("game has been deleted");
             gameConfig.deleteGame(gameIndex);
-            System.out.println("TITLE: Number of games left " + gameConfig.getNumGame());
+            System.out.println("Number of games left " + gameConfig.getNumGame());
         }
         backToMain();
 
@@ -46,15 +46,22 @@ public class GameTitle extends AppCompatActivity {
     private void saveGame() {
         EditText name = findViewById(R.id.editTextGameName);
         EditText description = findViewById(R.id.editTextGameDescription);
-        if(!edited){
-            Game game = new Game(name.getText().toString(), description.getText().toString());
-            gameConfig.addGame(game);
-            edited = false;
-        } else{
-            game.setName(name.getText().toString());
-            game.setDescription(description.getText().toString());
+        if(!name.getText().toString().isEmpty() && !description.getText().toString().isEmpty()){
+            if(!edited){
+                Game game = new Game(name.getText().toString(), description.getText().toString());
+                gameConfig.addGame(game);
+                edited = false;
+            } else{
+                game.setName(name.getText().toString());
+                game.setDescription(description.getText().toString());
+            }
+            backToMain();
+
         }
-        backToMain();
+        else{
+            Toast.makeText(this, "One or more required items missing", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     private void refreshDisplay() {
