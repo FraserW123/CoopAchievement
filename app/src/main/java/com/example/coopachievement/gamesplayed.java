@@ -27,6 +27,7 @@ public class gamesplayed extends AppCompatActivity {
         ab.setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.activity_gamesplayed);
         refreshDisplay();
+        findViewById(R.id.playGame).setOnClickListener(v-> switchScreen());
     }
     private void refreshDisplay() {
         Intent intent = getIntent();
@@ -88,5 +89,10 @@ public class gamesplayed extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void switchScreen() {
+        Intent intent = new Intent(this, AddScore.class);
+        startActivity(intent);
     }
 }
