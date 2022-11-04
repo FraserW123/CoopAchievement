@@ -8,6 +8,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 
@@ -33,8 +34,8 @@ public class gamesplayed extends AppCompatActivity {
         if(gameIndex >= 0){
             edited = true;
             game = gameConfig.getGame(gameIndex);
-            EditText name = findViewById(R.id.editTextGameName);
-            EditText description = findViewById(R.id.editTextGameDescription);
+            EditText name = findViewById(R.id.editTextGameName2);
+            EditText description = findViewById(R.id.editTextGameDescription2);
             name.setText(game.getName());
             description.setText(game.getDescription());
         }
@@ -54,6 +55,10 @@ public class gamesplayed extends AppCompatActivity {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
+    }
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.delete, menu);
+        return true;
     }
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
