@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.coopachievement.model.Game;
@@ -39,7 +40,9 @@ public class MainActivity extends AppCompatActivity {
     private void listClick() {
         ListView lvManager = findViewById(R.id.ListofGames);
         lvManager.setOnItemClickListener((parent, view, position, id) -> {
-            Toast.makeText(this, "entering game", Toast.LENGTH_SHORT).show();
+            TextView textView = (TextView) view;
+            String message = "You clicked # " + position + ", which is game: " + textView.getText().toString();
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
             SwitchActivity(position);
         });
     }
@@ -104,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void SwitchActivity(int position) {
-        Intent intent = new Intent(this, GameTitle.class);
+        Intent intent = new Intent(this, gamesplayed.class);
         intent.putExtra("game_index", position);
         startActivity(intent);
     }
