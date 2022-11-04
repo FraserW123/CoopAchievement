@@ -6,21 +6,59 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 
+import com.example.coopachievement.model.Game;
 import com.example.coopachievement.model.GameConfig;
 
 public class gamesplayed extends AppCompatActivity {
-    GameConfig gameconfig;
-    int index;
+
+    GameConfig gameConfig = GameConfig.getInstance();
+    Game game;
+    Boolean edited = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.activity_gamesplayed);
-        gameconfig= GameConfig.getInstance();
+        refreshDisplay();
+    }
+    private void refreshDisplay() {
+        Intent intent = getIntent();
+        int gameIndex = intent.getIntExtra("game_index", -1);
+        if(gameIndex >= 0){
+            edited = true;
+            game = gameConfig.getGame(gameIndex);
+            EditText name = findViewById(R.id.editTextGameName2);
+            EditText description = findViewById(R.id.editTextGameDescription2);
+            name.setText(game.getName());
+            description.setText(game.getDescription());
+        }
+    }
+        private void deleteGame() {
+        Intent intent = getIntent();
+        int gameIndex = intent.getIntExtra("game_index", -1);
+
+        if(gameIndex >= 0){
+            gameConfig.deleteGame(gameIndex);
+            System.out.println("Number of games left " + gameConfig.getNumGame());
+        }
+        backToMain();
+
+    }
+    private void backToMain() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.delete, menu);
+        return true;
     }
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -33,7 +71,7 @@ public class gamesplayed extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int id) {
                                 // CONFIRM
 
-                                //gameconfig.remove(index);
+                                deleteGame();
                                 finish();
                             }
                         })
