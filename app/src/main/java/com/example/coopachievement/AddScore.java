@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.example.coopachievement.model.ScoreCalculator;
 
 public class AddScore extends AppCompatActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
