@@ -22,6 +22,10 @@ public class GameConfig {
         gameList.add(game);
         System.out.println("added "+game);
     }
+    public void remove(int index)
+    {
+        gameList.remove(index);
+    }
 
     public List<String> getGamesList(){
         return gameList;
