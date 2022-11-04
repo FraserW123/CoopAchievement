@@ -3,6 +3,7 @@ package com.example.coopachievement;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -22,7 +23,7 @@ public class GameTitle extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_title);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         refreshDisplay();
 
 
@@ -84,7 +85,7 @@ public class GameTitle extends AppCompatActivity {
     }
 
     private void switchScreen() {
-        Intent intent = new Intent(this, ScoreCalculator.class);
+        Intent intent = new Intent(this, AddScore.class);
         startActivity(intent);
     }
 
@@ -92,5 +93,9 @@ public class GameTitle extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         finish();
         return super.onOptionsItemSelected(item);
+    }
+
+    public static Intent makeIntent(Context context){
+        return new Intent(context, GameTitle.class);
     }
 }
