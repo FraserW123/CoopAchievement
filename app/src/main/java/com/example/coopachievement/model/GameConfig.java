@@ -18,16 +18,41 @@ public class GameConfig {
         return instance;
     }
 
-    public void addGame(String game){
-        gameList.add(game);
-        System.out.println("added "+game);
+    public void addGame(Game game){
+        gameName.add(game);
+        numGames++;
+        Log.i("games added", "added "+game.getName() + " games: " + getNumGame());
+    }
+
+    public void deleteGame(int pos){
+        Log.i("before","games before " + getNumGame());
+        gameName.remove(pos);
+        numGames--;
+        isDelete = true;
+        Log.i("after","games after " + getNumGame());
+    }
+
+    public boolean getisDelete(){return isDelete;}
+    public void setisDelete(){ isDelete=false;}
+    public int getNumGame(){
+        return numGames;
+    }
+    public Game getGame(int pos){return gameName.get(pos);}
+
+
+    public List<Game> getGameList(){
+        return gameName;
     }
     public void remove(int index)
     {
         gameList.remove(index);
     }
 
-    public List<String> getGamesList(){
-        return gameList;
+    public List<String> getGamesNameList(){
+        List<String> gameNameString = new ArrayList<>();
+        for(int i = 0; i<numGames; i++){
+            gameNameString.add(gameName.get(i).getName());
+        }
+        return gameNameString;
     }
 }
