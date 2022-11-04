@@ -110,7 +110,6 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, gamesplayed.class);
         intent.putExtra("game_index", position);
         startActivity(intent);
-        finish();
     }
 
 }
