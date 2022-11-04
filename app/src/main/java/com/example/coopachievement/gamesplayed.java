@@ -33,7 +33,7 @@ public class gamesplayed extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int id) {
                                 // CONFIRM
 
-                                gameconfig.remove(index);
+                                //gameconfig.remove(index);
                                 finish();
                             }
                         })

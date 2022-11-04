@@ -1,10 +1,14 @@
 package com.example.coopachievement.model;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class GameConfig {
-    private List<String> gameList = new ArrayList<>();
+    private List<Game> gameName = new ArrayList<>();
+    private int numGames = 0;
+    private boolean isDelete;
 
     private static GameConfig instance;
     private GameConfig(){
@@ -43,10 +47,10 @@ public class GameConfig {
     public List<Game> getGameList(){
         return gameName;
     }
-    public void remove(int index)
-    {
-        gameList.remove(index);
-    }
+//    public void remove(int index)
+//    {
+//        gameList.remove(index);
+//    }
 
     public List<String> getGamesNameList(){
         List<String> gameNameString = new ArrayList<>();
