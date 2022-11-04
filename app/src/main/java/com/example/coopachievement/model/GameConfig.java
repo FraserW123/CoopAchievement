@@ -5,7 +5,6 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class GameConfig {
     private List<Game> gameName = new ArrayList<>();
     private int numGames = 0;
@@ -48,6 +47,10 @@ public class GameConfig {
     public List<Game> getGameList(){
         return gameName;
     }
+//    public void remove(int index)
+//    {
+//        gameList.remove(index);
+//    }
 
     public List<String> getGamesNameList(){
         List<String> gameNameString = new ArrayList<>();

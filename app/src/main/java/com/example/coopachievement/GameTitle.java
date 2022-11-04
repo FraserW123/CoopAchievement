@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -23,26 +24,27 @@ public class GameTitle extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_title);
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        refreshDisplay();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //refreshDisplay();
 
 
         findViewById(R.id.saveConfig).setOnClickListener(v-> saveGame());
-        findViewById(R.id.deleteConfig).setOnClickListener(v->deleteGame());
+        //findViewById(R.id.deleteConfig).setOnClickListener(v->deleteGame());
         findViewById(R.id.startGame).setOnClickListener(v-> switchScreen());
     }
 
-    private void deleteGame() {
-        Intent intent = getIntent();
-        int gameIndex = intent.getIntExtra("game_index", -1);
+//    private void deleteGame() {
+//        Intent intent = getIntent();
+//        int gameIndex = intent.getIntExtra("game_index", -1);
+//
+//        if(gameIndex >= 0){
+//            gameConfig.deleteGame(gameIndex);
+//            System.out.println("Number of games left " + gameConfig.getNumGame());
+//        }
+//        backToMain();
+//
+//    }
 
-        if(gameIndex >= 0){
-            gameConfig.deleteGame(gameIndex);
-            System.out.println("Number of games left " + gameConfig.getNumGame());
-        }
-        backToMain();
-
-    }
 
     private void saveGame() {
         EditText name = findViewById(R.id.editTextGameName);
@@ -65,18 +67,18 @@ public class GameTitle extends AppCompatActivity {
 
     }
 
-    private void refreshDisplay() {
-        Intent intent = getIntent();
-        int gameIndex = intent.getIntExtra("game_index", -1);
-        if(gameIndex >= 0){
-            edited = true;
-            game = gameConfig.getGame(gameIndex);
-            EditText name = findViewById(R.id.editTextGameName);
-            EditText description = findViewById(R.id.editTextGameDescription);
-            name.setText(game.getName());
-            description.setText(game.getDescription());
-        }
-    }
+//    private void refreshDisplay() {
+//        Intent intent = getIntent();
+//        int gameIndex = intent.getIntExtra("game_index", -1);
+//        if(gameIndex >= 0){
+//            edited = true;
+//            game = gameConfig.getGame(gameIndex);
+//            EditText name = findViewById(R.id.editTextGameName);
+//            EditText description = findViewById(R.id.editTextGameDescription);
+//            name.setText(game.getName());
+//            description.setText(game.getDescription());
+//        }
+//    }
 
     private void backToMain() {
         Intent intent = new Intent(this, MainActivity.class);
