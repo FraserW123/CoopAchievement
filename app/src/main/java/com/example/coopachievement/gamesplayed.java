@@ -71,7 +71,6 @@ public class gamesplayed extends AppCompatActivity {
                         .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 // CONFIRM
-
                                 deleteGame();
                                 finish();
                             }

@@ -33,18 +33,6 @@ public class GameTitle extends AppCompatActivity {
         findViewById(R.id.startGame).setOnClickListener(v-> switchScreen());
     }
 
-//    private void deleteGame() {
-//        Intent intent = getIntent();
-//        int gameIndex = intent.getIntExtra("game_index", -1);
-//
-//        if(gameIndex >= 0){
-//            gameConfig.deleteGame(gameIndex);
-//            System.out.println("Number of games left " + gameConfig.getNumGame());
-//        }
-//        backToMain();
-//
-//    }
-
 
     private void saveGame() {
         EditText name = findViewById(R.id.editTextGameName);
