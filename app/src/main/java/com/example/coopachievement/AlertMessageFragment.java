@@ -32,7 +32,7 @@ public class AlertMessageFragment extends AppCompatDialogFragment  {
             startActivity(intent);
         });
 
-        ScoreCalculator score_calc = ScoreCalculator.getCalculatorInstatnce();
+        ScoreCalculator score_calc = ScoreCalculator.getCalculatorInstance();
         String level = score_calc.achievementLevel();
 
         //Build the alert dialog

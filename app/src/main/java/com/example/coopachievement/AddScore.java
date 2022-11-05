@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
@@ -46,8 +47,7 @@ public class AddScore extends AppCompatActivity {
         }
         return true;
     }
-
-    @RequiresApi(api = Build.VERSION_CODES.O)
+    
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch(item.getItemId()) {
@@ -74,10 +74,10 @@ public class AddScore extends AppCompatActivity {
         if(!st_players.equals("") && !st_score.equals("") && !st_players.equals("0")){
             int players = Integer.parseInt(st_players);
             int score = Integer.parseInt(st_score);
-            ScoreCalculator score_calc = ScoreCalculator.getCalculatorInstatnce();
+            ScoreCalculator score_calc = ScoreCalculator.getCalculatorInstance();
             score_calc.setNumPlayers(players);
             score_calc.setScore(score);
-
+            score_calc.setMatchName();
             FragmentManager manager = getSupportFragmentManager();
             AlertMessageFragment alert = new AlertMessageFragment();
             alert.show(manager, "AlertMessage");
@@ -99,5 +99,10 @@ public class AddScore extends AppCompatActivity {
                 }).setNegativeButton("Cancel", null);
         AlertDialog areYouSure = builder.create();
         areYouSure.show();
+    }
+
+    private int getGameIndex(){
+        Intent intent = getIntent();
+        return intent.getIntExtra("game_index", -1);
     }
 }

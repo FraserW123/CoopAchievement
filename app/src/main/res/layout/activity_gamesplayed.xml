@@ -7,15 +7,15 @@
     tools:context=".gamesplayed">
 
     <ListView
-        android:id="@+id/listview"
+        android:id="@+id/lvMatchView"
         android:layout_width="389dp"
         android:layout_height="390dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="25dp"
+        app:layout_constraintBottom_toTopOf="@+id/playGame"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.59"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.739">
+        app:layout_constraintTop_toBottomOf="@+id/editTextGameDescription2">
 
     </ListView>
 
