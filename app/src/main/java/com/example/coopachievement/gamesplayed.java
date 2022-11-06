@@ -10,16 +10,23 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.coopachievement.model.Game;
 import com.example.coopachievement.model.GameConfig;
 
+import java.util.List;
+
 public class gamesplayed extends AppCompatActivity {
 
     GameConfig gameConfig = GameConfig.getInstance();
+    //ScoreCalculator scoreCalculator = ScoreCalculator.getCalculatorInstance();
     Game game;
     Boolean edited = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,24 +34,46 @@ public class gamesplayed extends AppCompatActivity {
         ab.setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.activity_gamesplayed);
         refreshDisplay();
-        findViewById(R.id.playGame).setOnClickListener(v-> switchScreen());
+        populateList();
+        findViewById(R.id.playGame).setOnClickListener(v-> createNewMatch());
     }
+
     private void refreshDisplay() {
-        Intent intent = getIntent();
-        int gameIndex = intent.getIntExtra("game_index", -1);
+        int gameIndex = getGameIndex();
+        if(gameIndex == -1 && gameConfig.isAccessedMatches()){
+            gameIndex = gameConfig.getCurrentGameIndex();
+        }
         if(gameIndex >= 0){
             edited = true;
             game = gameConfig.getGame(gameIndex);
+
             EditText name = findViewById(R.id.editTextGameName2);
             EditText description = findViewById(R.id.editTextGameDescription2);
             name.setText(game.getName());
             description.setText(game.getDescription());
         }
     }
-        private void deleteGame() {
-        Intent intent = getIntent();
-        int gameIndex = intent.getIntExtra("game_index", -1);
 
+    private void populateList() {
+        List<String> list = game.getMatchList();
+        int matches = game.getNumMatchesPlayed();
+        if(game.getNumMatchesPlayed() > 0){
+            TextView matchesPlayed = findViewById(R.id.tvGamesPlayed);
+            matchesPlayed.setText("Games Played: " + matches);
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                this, R.layout.list_matches,list);
+        ListView lvManager = findViewById(R.id.lvMatchView);
+        lvManager.setAdapter(adapter);
+    }
+
+    private int getGameIndex() {
+        Intent intent = getIntent();
+        return intent.getIntExtra("game_index", -1);
+    }
+
+    private void deleteGame() {
+        int gameIndex = getGameIndex();
         if(gameIndex >= 0){
             gameConfig.deleteGame(gameIndex);
             System.out.println("Number of games left " + gameConfig.getNumGame());
@@ -86,11 +115,17 @@ public class gamesplayed extends AppCompatActivity {
                 dialog.show();
                 return true;
             default:
+                EditText name = findViewById(R.id.editTextGameName2);
+                EditText desc = findViewById(R.id.editTextGameDescription2);
+                game.setName(name.getText().toString());
+                game.setDescription(desc.getText().toString());
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    private void switchScreen() {
+
+    private void createNewMatch() {
+        gameConfig.setAccessedMatches(true);
         Intent intent = new Intent(this, AddScore.class);
         startActivity(intent);
     }

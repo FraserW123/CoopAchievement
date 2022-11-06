@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
@@ -16,6 +17,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.coopachievement.model.Game;
+import com.example.coopachievement.model.GameConfig;
 import com.example.coopachievement.model.ScoreCalculator;
 
 public class AddScore extends AppCompatActivity {
@@ -46,8 +49,7 @@ public class AddScore extends AppCompatActivity {
         }
         return true;
     }
-
-    @RequiresApi(api = Build.VERSION_CODES.O)
+    
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch(item.getItemId()) {
@@ -74,9 +76,18 @@ public class AddScore extends AppCompatActivity {
         if(!st_players.equals("") && !st_score.equals("") && !st_players.equals("0")){
             int players = Integer.parseInt(st_players);
             int score = Integer.parseInt(st_score);
-            ScoreCalculator score_calc = ScoreCalculator.getCalculatorInstatnce();
+            ScoreCalculator score_calc = new ScoreCalculator();
+//            ScoreCalculator score_calc = ScoreCalculator.getCalculatorInstance();
             score_calc.setNumPlayers(players);
             score_calc.setScore(score);
+            score_calc.setAchievementLevel();
+            score_calc.setMatchName();
+
+            System.out.println("the name is " + score_calc.getAchievementLevel());
+            GameConfig gameConfig = GameConfig.getInstance();
+            Game game = gameConfig.getCurrentGame();
+            game.addMatch(score_calc);
+            game.addMatchesPlayed();
 
             FragmentManager manager = getSupportFragmentManager();
             AlertMessageFragment alert = new AlertMessageFragment();
@@ -100,4 +111,5 @@ public class AddScore extends AppCompatActivity {
         AlertDialog areYouSure = builder.create();
         areYouSure.show();
     }
+
 }

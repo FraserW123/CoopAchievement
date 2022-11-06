@@ -28,7 +28,7 @@ public class GameTitle extends AppCompatActivity {
         //refreshDisplay();
 
 
-        findViewById(R.id.saveConfig).setOnClickListener(v-> saveGame());
+        //findViewById(R.id.saveConfig).setOnClickListener(v-> saveGame());
         //findViewById(R.id.deleteConfig).setOnClickListener(v->deleteGame());
         findViewById(R.id.startGame).setOnClickListener(v-> switchScreen());
     }
@@ -55,18 +55,6 @@ public class GameTitle extends AppCompatActivity {
 
     }
 
-//    private void refreshDisplay() {
-//        Intent intent = getIntent();
-//        int gameIndex = intent.getIntExtra("game_index", -1);
-//        if(gameIndex >= 0){
-//            edited = true;
-//            game = gameConfig.getGame(gameIndex);
-//            EditText name = findViewById(R.id.editTextGameName);
-//            EditText description = findViewById(R.id.editTextGameDescription);
-//            name.setText(game.getName());
-//            description.setText(game.getDescription());
-//        }
-//    }
 
     private void backToMain() {
         Intent intent = new Intent(this, MainActivity.class);
