@@ -1,14 +1,12 @@
 package com.example.coopachievement;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,15 +17,13 @@ import android.widget.TextView;
 
 import com.example.coopachievement.model.Game;
 import com.example.coopachievement.model.GameConfig;
-import com.example.coopachievement.model.ScoreCalculator;
 
 import java.util.List;
 
-@RequiresApi(api = Build.VERSION_CODES.O)
 public class gamesplayed extends AppCompatActivity {
 
     GameConfig gameConfig = GameConfig.getInstance();
-    ScoreCalculator scoreCalculator = ScoreCalculator.getCalculatorInstance();
+    //ScoreCalculator scoreCalculator = ScoreCalculator.getCalculatorInstance();
     Game game;
     Boolean edited = false;
 
@@ -39,28 +35,32 @@ public class gamesplayed extends AppCompatActivity {
         setContentView(R.layout.activity_gamesplayed);
         refreshDisplay();
         populateList();
-        findViewById(R.id.playGame).setOnClickListener(v-> switchScreen());
+        findViewById(R.id.playGame).setOnClickListener(v-> createNewMatch());
     }
 
     private void refreshDisplay() {
         int gameIndex = getGameIndex();
-        if(gameIndex == -1 && scoreCalculator.isAccessed()){
-            gameIndex = scoreCalculator.getGameIndex();
+        if(gameIndex == -1 && gameConfig.isAccessedMatches()){
+            gameIndex = gameConfig.getCurrentGameIndex();
         }
         if(gameIndex >= 0){
             edited = true;
             game = gameConfig.getGame(gameIndex);
+
             EditText name = findViewById(R.id.editTextGameName2);
             EditText description = findViewById(R.id.editTextGameDescription2);
             name.setText(game.getName());
             description.setText(game.getDescription());
-            scoreCalculator.accessed(false);
         }
     }
 
-
     private void populateList() {
-        List<String> list = scoreCalculator.getMatches();
+        List<String> list = game.getMatchList();
+        int matches = game.getNumMatchesPlayed();
+        if(game.getNumMatchesPlayed() > 0){
+            TextView matchesPlayed = findViewById(R.id.tvGamesPlayed);
+            matchesPlayed.setText("Games Played: " + matches);
+        }
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 this, R.layout.list_matches,list);
         ListView lvManager = findViewById(R.id.lvMatchView);
@@ -125,12 +125,9 @@ public class gamesplayed extends AppCompatActivity {
     }
 
 
-    private void switchScreen() {
-        int gameIndex = getGameIndex();
-        ScoreCalculator scoreCalculator = ScoreCalculator.getCalculatorInstance();
-        scoreCalculator.accessed(true);
+    private void createNewMatch() {
+        gameConfig.setAccessedMatches(true);
         Intent intent = new Intent(this, AddScore.class);
-        intent.getIntExtra("game_index", gameIndex);
         startActivity(intent);
     }
 }

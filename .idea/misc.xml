@@ -3,25 +3,20 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Fraser/AndroidStudioProjects/CoopAchievement/app/src/main/res/drawable/ic_launcher_save.xml" value="0.2705" />
+        <entry key="..\:/Users/Fraser/AndroidStudioProjects/CoopAchievement/app/src/main/res/layout/activity_add_score.xml" value="0.17831813576494426" />
         <entry key="..\:/Users/Fraser/AndroidStudioProjects/CoopAchievement/app/src/main/res/layout/activity_game_title.xml" value="0.33" />
+        <entry key="..\:/Users/Fraser/AndroidStudioProjects/CoopAchievement/app/src/main/res/layout/activity_gamesplayed.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Fraser/AndroidStudioProjects/CoopAchievement/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Fraser/AndroidStudioProjects/CoopAchievement/app/src/main/res/layout/alert_message_layout.xml" value="0.26358695652173914" />
         <entry key="..\:/Users/Fraser/AndroidStudioProjects/CoopAchievement/app/src/main/res/layout/game_title.xml" value="0.3151041666666667" />
         <entry key="..\:/Users/Fraser/AndroidStudioProjects/CoopAchievement/app/src/main/res/layout/list_game_config.xml" value="0.33" />
         <entry key="..\:/Users/Fraser/AndroidStudioProjects/CoopAchievement/app/src/main/res/layout/list_games_config.xml" value="0.1" />
-        <entry key="..\:/Users/frase/AndroidStudioProjects/CoopAchievement/app/src/main/res/layout/activity_gamesplayed.xml" value="0.264" />
-        <entry key="..\:/Users/frase/AndroidStudioProjects/CoopAchievement/app/src/main/res/layout/activity_main.xml" value="0.23233695652173914" />
-        <entry key="..\:/Users/frase/AndroidStudioProjects/CoopAchievement/app/src/main/res/layout/alert_message_layout.xml" value="0.23233695652173914" />
-        <entry key="..\:/Users/frase/AndroidStudioProjects/CoopAchievement/app/src/main/res/layout/list_matches.xml" value="0.23233695652173914" />
-        <entry key="..\:/Users/lazar/AndroidStudioProjects/Iteration1/CoopAchievement/app/src/main/res/drawable/ic_launcher_delete.xml" value="0.2775" />
-        <entry key="..\:/Users/lazar/AndroidStudioProjects/Iteration1/CoopAchievement/app/src/main/res/drawable/ic_launcher_delete_background.xml" value="0.2775" />
-        <entry key="..\:/Users/lazar/AndroidStudioProjects/Iteration1/CoopAchievement/app/src/main/res/drawable/ic_launcher_delete_foreground.xml" value="0.2775" />
-        <entry key="..\:/Users/lazar/AndroidStudioProjects/Iteration1/CoopAchievement/app/src/main/res/layout/activity_add_score.xml" value="0.4" />
-        <entry key="..\:/Users/lazar/AndroidStudioProjects/Iteration1/CoopAchievement/app/src/main/res/layout/activity_game_title.xml" value="0.4" />
-        <entry key="..\:/Users/lazar/AndroidStudioProjects/Iteration1/CoopAchievement/app/src/main/res/layout/activity_gamesplayed.xml" value="0.19655797101449277" />
-        <entry key="..\:/Users/lazar/AndroidStudioProjects/Iteration1/CoopAchievement/app/src/main/res/layout/activity_score_calculator.xml" value="0.4" />
-        <entry key="..\:/Users/lazar/AndroidStudioProjects/Iteration1/CoopAchievement/app/src/main/res/layout/alert_message_layout.xml" value="0.39895833333333336" />
-        <entry key="..\:/Users/lazar/AndroidStudioProjects/Iteration1/CoopAchievement/app/src/main/res/menu/menu_add_score.xml" value="0.39895833333333336" />
-        <entry key="..\:/Users/lazar/AndroidStudioProjects/Iteration1/CoopAchievement/app/src/main/res/menu/menu_edit_score.xml" value="0.4" />
+        <entry key="..\:/Users/Fraser/AndroidStudioProjects/CoopAchievement/app/src/main/res/layout/list_matches.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Fraser/AndroidStudioProjects/CoopAchievement/app/src/main/res/menu/delete.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Fraser/AndroidStudioProjects/CoopAchievement/app/src/main/res/menu/menu_add_score.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Fraser/AndroidStudioProjects/CoopAchievement/app/src/main/res/menu/menu_edit_score.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/frase/AndroidStudioProjects/CoopAchievement/app/src/main/res/layout/list_game_config.xml" value="0.10989583333333333" />
       </map>
     </option>
   </component>

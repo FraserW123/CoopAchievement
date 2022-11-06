@@ -9,43 +9,31 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-//@RequiresApi(api = Build.VERSION_CODES.O)
-@RequiresApi(api = Build.VERSION_CODES.O)
+
 public class ScoreCalculator {
-    private static ScoreCalculator instance;
+
     int numPlayers;
     int Score;
     int PoorScore = 100;
     int GreatScore = 1000;
-    LocalDateTime time = LocalDateTime.now();
-    DateTimeFormatter format = DateTimeFormatter.ofPattern("MMM d @ HH:mm a");
-    String date = time.format(format);
+    String level;
+    String name;
+
+
+    int matchesPlayed = 0;
     private ArrayList<String> matchName = new ArrayList<>();
 
+
+    LocalDateTime time = LocalDateTime.now();
+    DateTimeFormatter format = DateTimeFormatter.ofPattern("HH:mm a");
+    String date = time.format(format);
 
     boolean accessed = false;
     int gameIndex = 0;
 
 
-    private ScoreCalculator(){
-
-    }
-
-    public static ScoreCalculator getCalculatorInstance(){
-
-        if(instance == null){
-            instance = new ScoreCalculator();
-        }
-        return instance;
-    }
     public List<String> getMatches(){
         return matchName;
-    }
-    public void accessed(boolean choice){
-        accessed = choice;
-    }
-    public boolean isAccessed(){
-        return accessed;
     }
 
     public int getGameIndex() {
@@ -56,8 +44,17 @@ public class ScoreCalculator {
     }
 
     public void setMatchName(){
-        String ret = "Date: " + date+" Players: "+numPlayers + " Total score: " +Score;
-        matchName.add(ret);
+        name = "Date: " + date+" Players: "+numPlayers + " Total score: " +Score + " "+getAchievementLevel();
+        matchesPlayed++;
+        matchName.add(name);
+    }
+
+    public String getMatchName(){
+        return name;
+    }
+
+    public int getMatchesPlayed() {
+        return matchesPlayed;
     }
 
 
@@ -68,13 +65,18 @@ public class ScoreCalculator {
     public int getScore(){return Score;}
 
 
-    public String achievementLevel(){
+    public void setAchievementLevel(){
         if (Score <= PoorScore*numPlayers){
-            return "Goofy Goblins!";
+            level = "Goofy Goblins!";
         }
         else if (Score >= GreatScore*numPlayers){
-            return "Dancing Dragons!";
+            level = "Dancing Dragons!";
         }
-        return "Upright Unicorns!";
+        else{
+            level = "Upright Unicorns!";
+        }
+    }
+    public String getAchievementLevel(){
+        return level;
     }
 }
