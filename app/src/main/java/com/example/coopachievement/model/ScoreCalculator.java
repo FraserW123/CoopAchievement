@@ -1,7 +1,17 @@
 package com.example.coopachievement.model;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+
+
 public class ScoreCalculator {
-    private static ScoreCalculator instance;
+
     int numPlayers;
     int Score;
     int WorstScore = 100;
@@ -14,15 +24,45 @@ public class ScoreCalculator {
     int SuperbScore = 800;
     int AmazingScore = 900;
 
-    private ScoreCalculator(){
+    String level;
+    String name;
 
+
+    int matchesPlayed = 0;
+    private ArrayList<String> matchName = new ArrayList<>();
+
+
+    LocalDateTime time = LocalDateTime.now();
+    DateTimeFormatter format = DateTimeFormatter.ofPattern("HH:mm a");
+    String date = time.format(format);
+
+    boolean accessed = false;
+    int gameIndex = 0;
+
+
+    public List<String> getMatches(){
+        return matchName;
     }
 
-    public static ScoreCalculator getCalculatorInstatnce(){
-        if(instance == null){
-            instance = new ScoreCalculator();
-        }
-        return instance;
+    public int getGameIndex() {
+        return gameIndex;
+    }
+    public void setGameIndex(int gameIndex) {
+        this.gameIndex = gameIndex;
+    }
+
+    public void setMatchName(){
+        name = "Date: " + date+" Players: "+numPlayers + " Total score: " +Score + " "+getAchievementLevel();
+        matchesPlayed++;
+        matchName.add(name);
+    }
+
+    public String getMatchName(){
+        return name;
+    }
+
+    public int getMatchesPlayed() {
+        return matchesPlayed;
     }
 
     public void setNumPlayers(int num_players){numPlayers = num_players;}

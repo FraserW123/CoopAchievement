@@ -10,6 +10,15 @@ public class GameConfig {
     private int numGames = 0;
     private boolean isDelete;
 
+
+
+    private boolean accessedMatches;
+
+
+
+
+    int currentGameIndex;
+
     private static GameConfig instance;
     private GameConfig(){
 
@@ -20,6 +29,14 @@ public class GameConfig {
             instance = new GameConfig();
         }
         return instance;
+    }
+
+    public boolean isAccessedMatches() {
+        return accessedMatches;
+    }
+
+    public void setAccessedMatches(boolean accessedMatches) {
+        this.accessedMatches = accessedMatches;
     }
 
     public void addGame(Game game){
@@ -34,6 +51,18 @@ public class GameConfig {
         numGames--;
         isDelete = true;
         Log.i("after","games after " + getNumGame());
+    }
+
+    public Game getCurrentGame() {
+        return gameName.get(currentGameIndex);
+    }
+
+    public void setCurrentGameIndex(int currentGameIndex) {
+        this.currentGameIndex = currentGameIndex;
+    }
+
+    public int getCurrentGameIndex() {
+        return currentGameIndex;
     }
 
     public boolean getisDelete(){return isDelete;}
