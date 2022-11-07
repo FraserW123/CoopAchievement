@@ -2,6 +2,7 @@ package com.example.coopachievement;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -28,12 +29,13 @@ public class MainActivity extends AppCompatActivity {
 
         findViewById(R.id.addGameConfig).setOnClickListener(v->{
             Intent intent = new Intent(this, GameTitle.class);
+            System.out.println("game played so far "+gameConfig.getNumGame());
+            intent.putExtra("new_game", gameConfig.getNumGame());
             startActivity(intent);
         });
 
-
-        listClick();
         populateListView();
+        listClick();
         storeGameList();
 
     }
@@ -49,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void populateListView() {
+        System.out.println("doing this");
         GameConfig gameConfig = GameConfig.getInstance();
         List<String> list = gameConfig.getGamesNameList();
         if((gameConfig.getGamesNameList().isEmpty() && !gameConfig.getisDelete())){
@@ -110,5 +113,6 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("game_index", position);
         startActivity(intent);
     }
+
 
 }

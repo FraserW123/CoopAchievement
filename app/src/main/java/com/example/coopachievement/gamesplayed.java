@@ -23,7 +23,6 @@ import java.util.List;
 public class gamesplayed extends AppCompatActivity {
 
     GameConfig gameConfig = GameConfig.getInstance();
-    //ScoreCalculator scoreCalculator = ScoreCalculator.getCalculatorInstance();
     Game game;
     Boolean edited = false;
 
@@ -96,7 +95,8 @@ public class gamesplayed extends AppCompatActivity {
     }
 
     private void deleteGame() {
-        int gameIndex = getGameIndex();
+        int gameIndex = gameConfig.getCurrentGameIndex();
+        System.out.println("deleting game at index " + gameIndex);
         if(gameIndex >= 0){
             gameConfig.deleteGame(gameIndex);
             System.out.println("Number of games left " + gameConfig.getNumGame());
@@ -124,13 +124,12 @@ public class gamesplayed extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int id) {
                                 // CONFIRM
                                 deleteGame();
-                                backToMain();
                             }
                         })
                         .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 // CANCEL
-                                //finish();
+                                finish();
                             }
                         });
 // Create the AlertDialog object and return it

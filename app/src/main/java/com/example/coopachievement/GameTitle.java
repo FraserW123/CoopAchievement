@@ -18,19 +18,15 @@ public class GameTitle extends AppCompatActivity {
 
     GameConfig gameConfig = GameConfig.getInstance();
     Game game;
-    Boolean edited = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_title);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        //refreshDisplay();
 
-
-        //findViewById(R.id.saveConfig).setOnClickListener(v-> saveGame());
-        //findViewById(R.id.deleteConfig).setOnClickListener(v->deleteGame());
-        findViewById(R.id.startGame).setOnClickListener(v-> switchScreen());
+        findViewById(R.id.startGame).setOnClickListener(v-> createNewMatch());
     }
 
     @Override
@@ -45,14 +41,9 @@ public class GameTitle extends AppCompatActivity {
         EditText name = findViewById(R.id.editTextGameName);
         EditText description = findViewById(R.id.editTextGameDescription);
         if(!name.getText().toString().isEmpty() && !description.getText().toString().isEmpty()){
-            if(!edited){
-                Game game = new Game(name.getText().toString(), description.getText().toString());
-                gameConfig.addGame(game);
-                edited = false;
-            } else{
-                game.setName(name.getText().toString());
-                game.setDescription(description.getText().toString());
-            }
+
+            Game game = new Game(name.getText().toString(), description.getText().toString());
+            gameConfig.addGame(game);
             backToMain();
 
         }
@@ -69,9 +60,28 @@ public class GameTitle extends AppCompatActivity {
         finish();
     }
 
-    private void switchScreen() {
-        Intent intent = new Intent(this, AddScore.class);
-        startActivity(intent);
+    private void createNewMatch() {
+        EditText name = findViewById(R.id.editTextGameName);
+        EditText description = findViewById(R.id.editTextGameDescription);
+        if(!name.getText().toString().isEmpty() && !description.getText().toString().isEmpty()){
+            Intent intent = getIntent();
+            int gameIndex = intent.getIntExtra("new_game", -1);
+            System.out.println("this happened " + gameIndex);
+            if(gameIndex >= 0){
+
+                gameConfig.setCurrentGameIndex(gameIndex);
+            }
+            Game game = new Game(name.getText().toString(), description.getText().toString());
+            gameConfig.addGame(game);
+            gameConfig.setAccessedMatches(true);
+            game.setCurrentMatch(game.getNumMatchesPlayed());
+            Intent switching = new Intent(this, AddScore.class);
+            startActivity(switching);
+        }
+        else{
+            Toast.makeText(this, "One or more required items missing", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     @Override
@@ -83,7 +93,5 @@ public class GameTitle extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public static Intent makeIntent(Context context){
-        return new Intent(context, GameTitle.class);
-    }
+
 }
