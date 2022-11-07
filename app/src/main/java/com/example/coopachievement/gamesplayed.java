@@ -35,7 +35,16 @@ public class gamesplayed extends AppCompatActivity {
         refreshDisplay();
         populateList();
         listClick();
+        storeMatchList();
+        getMatchList();
         findViewById(R.id.playGame).setOnClickListener(v-> createNewMatch());
+    }
+
+    private void storeMatchList() {
+    }
+
+    private List<String> getMatchList() {
+        return null;
     }
 
     private void refreshDisplay() {
@@ -129,7 +138,7 @@ public class gamesplayed extends AppCompatActivity {
                         .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 // CANCEL
-                                finish();
+                                //finish();
                             }
                         });
 // Create the AlertDialog object and return it
