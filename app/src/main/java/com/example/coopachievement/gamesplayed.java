@@ -10,8 +10,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -25,7 +27,10 @@ public class gamesplayed extends AppCompatActivity {
     GameConfig gameConfig = GameConfig.getInstance();
     Game game;
     Boolean edited = false;
-
+    List<String> list;
+    ListView lvManager;
+    ImageView nogameplayed;
+    TextView nogametext;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,7 +41,12 @@ public class gamesplayed extends AppCompatActivity {
         populateList();
         listClick();
         findViewById(R.id.playGame).setOnClickListener(v-> createNewMatch());
+        nogameplayed = findViewById(R.id.nogamesplayed);
+        nogametext = findViewById(R.id.textView4);
+        lvManager.setEmptyView(nogameplayed);
+        lvManager.setEmptyView(nogametext);
     }
+
 
     private void refreshDisplay() {
         int gameIndex = getGameIndex();
@@ -66,7 +76,7 @@ public class gamesplayed extends AppCompatActivity {
 
     private void populateList() {
         System.out.println("\n\nRunning this function right now\n\n");
-        List<String> list = game.getMatchesNamesList();
+        list = game.getMatchesNamesList();
         for(int i = 0; i<list.size(); i++){
             System.out.println("list item "+ (i+1) + " " + list.get(i));
         }
@@ -77,7 +87,7 @@ public class gamesplayed extends AppCompatActivity {
         }
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 this, R.layout.list_matches,list);
-        ListView lvManager = findViewById(R.id.lvMatchView);
+        lvManager = findViewById(R.id.lvMatchView);
         lvManager.setAdapter(adapter);
     }
 

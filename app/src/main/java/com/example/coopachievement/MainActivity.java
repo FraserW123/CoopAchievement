@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,19 +22,21 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     GameConfig gameConfig = GameConfig.getInstance();
     boolean startup = true;
+    ListView lvManager;
+    ImageView nogames;
+    ImageView nolist;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
         findViewById(R.id.addGameConfig).setOnClickListener(v->{
             Intent intent = new Intent(this, GameTitle.class);
             System.out.println("game played so far "+gameConfig.getNumGame());
             intent.putExtra("new_game", gameConfig.getNumGame());
             startActivity(intent);
         });
-
+        nogames = findViewById(R.id.nogames);
+        nolist = findViewById(R.id.nolist);
         populateListView();
         listClick();
         storeGameList();
@@ -41,8 +44,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void listClick() {
-        ListView lvManager = findViewById(R.id.ListofGames);
-        lvManager.setOnItemClickListener((parent, view, position, id) -> {
+        ListView lvManager1 = findViewById(R.id.ListofGames);
+        lvManager1.setOnItemClickListener((parent, view, position, id) -> {
             TextView textView = (TextView) view;
             String message = "You clicked # " + position + ", which is game: " + textView.getText().toString();
             Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
@@ -61,8 +64,10 @@ public class MainActivity extends AppCompatActivity {
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 this, R.layout.list_game_config, list);
-        ListView lvManager = findViewById(R.id.ListofGames);
+        lvManager = findViewById(R.id.ListofGames);
         lvManager.setAdapter(adapter);
+        lvManager.setEmptyView(nolist);
+        lvManager.setEmptyView(nogames);
     }
 
 
