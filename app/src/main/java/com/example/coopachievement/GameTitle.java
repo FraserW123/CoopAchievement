@@ -14,6 +14,9 @@ import android.widget.Toast;
 import com.example.coopachievement.model.Game;
 import com.example.coopachievement.model.GameConfig;
 
+/**
+ *This class describes the game title i.e. name and description and also let users to save it
+ */
 public class GameTitle extends AppCompatActivity {
 
     GameConfig gameConfig = GameConfig.getInstance();

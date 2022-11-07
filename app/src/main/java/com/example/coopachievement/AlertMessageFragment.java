@@ -18,6 +18,10 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 import com.example.coopachievement.model.Game;
 import com.example.coopachievement.model.GameConfig;
 
+/**
+ * This class facilitates the users to view there achievement level after putting in scores
+ * it also changes the achievement level on increase of the scores
+ */
 public class AlertMessageFragment extends AppCompatDialogFragment  {
     ImageView iv_changing_image;
 

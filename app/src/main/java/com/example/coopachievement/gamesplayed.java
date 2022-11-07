@@ -22,6 +22,12 @@ import com.example.coopachievement.model.GameConfig;
 
 import java.util.List;
 
+/**
+ * This class describes the list of games played in a specific format under a specific game name
+ * it also persists the history and previous games played and also gives users a click to edit the game
+ * they want to change
+ * also shows the empty state on gamesplayed list view when no game is there
+ */
 public class gamesplayed extends AppCompatActivity {
 
     GameConfig gameConfig = GameConfig.getInstance();

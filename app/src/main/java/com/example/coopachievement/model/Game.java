@@ -3,6 +3,10 @@ package com.example.coopachievement.model;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class describes/creates the structure for games played under the specific game name and description
+ * also sets the name,description. also provides players to add delete, save matches and delete game/save
+ */
 public class Game {
 
     String name;

@@ -18,6 +18,10 @@ import com.example.coopachievement.model.Game;
 import com.example.coopachievement.model.GameConfig;
 import com.example.coopachievement.model.ScoreCalculator;
 
+/**
+ * This class give opportunity to players to add a new game score
+ * as well as edit the previous game score
+ */
 public class AddScore extends AppCompatActivity {
 
     GameConfig gameConfig = GameConfig.getInstance();

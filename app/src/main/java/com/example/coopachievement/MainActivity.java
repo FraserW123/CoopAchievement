@@ -19,6 +19,10 @@ import com.example.coopachievement.model.GameConfig;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *This main activity class shows the list of games and also persists the game list
+ * it also persists the previous and history of games in the listview
+ */
 public class MainActivity extends AppCompatActivity {
     GameConfig gameConfig = GameConfig.getInstance();
     boolean startup = true;

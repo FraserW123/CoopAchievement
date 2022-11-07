@@ -5,6 +5,10 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *  This class describes/creates the structure for game configuration which gives the opportunity to add,
+ *  delete,getcurrent games and matches. also provides the gamelist, it is a singleton class.
+ */
 public class GameConfig {
     private List<Game> gameName = new ArrayList<>();
     private int numGames = 0;

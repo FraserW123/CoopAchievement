@@ -9,7 +9,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * This class describes the calculation of scores and assign setAchievementLevel according to the scores
+ * also set up the worst/poor/good/great/okay/low scores with respect to number of players.
+ */
 public class ScoreCalculator {
 
     int numPlayers;
