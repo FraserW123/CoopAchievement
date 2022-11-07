@@ -120,7 +120,7 @@ public class AddScore extends AppCompatActivity {
                 score_calc.setAchievementLevel();
                 score_calc.setMatchName();
             }
-            System.out.println("the name is " + score_calc.getAchievementLevel());
+            //System.out.println("the name is " + score_calc.getAchievementLevel());
 
 
 

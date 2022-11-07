@@ -36,7 +36,7 @@ public class AlertMessageFragment extends AppCompatDialogFragment  {
         });
         GameConfig gameConfig = GameConfig.getInstance();
         Game game = gameConfig.getCurrentGame();
-        String level = game.getLatestMatch().getAchievementLevel();
+        String level = game.getLatestMatch().setAchievementLevel();
 
 
         iv_changing_image = v.findViewById(R.id.iv_changing_image);
