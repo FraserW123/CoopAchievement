@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 
 import com.example.coopachievement.model.Game;
 import com.example.coopachievement.model.GameConfig;
+import com.example.coopachievement.model.ScoreCalculator;
 
 import java.util.List;
 
@@ -41,14 +43,42 @@ public class gamesplayed extends AppCompatActivity {
     }
 
     private void storeMatchList() {
+        List<ScoreCalculator> matchList = game.getMatchList();
+        StringBuilder stringBuilder = new StringBuilder();
+        for(int i = 0; i<matchList.size(); i++){
+            stringBuilder.append(matchList.get(i).getNumPlayers());
+            stringBuilder.append(",");
+            stringBuilder.append(matchList.get(i).getScore());
+            stringBuilder.append(",");
+            stringBuilder.append(matchList.get(i).getDate());
+            stringBuilder.append(",");
+        }
+        SharedPreferences prefs = getSharedPreferences("matches_list", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("MatchesList",stringBuilder.toString());
+        editor.apply();
     }
 
     private List<String> getMatchList() {
+        game = gameConfig.getCurrentGame();
+
+        SharedPreferences prefs = getSharedPreferences("matches_list", MODE_PRIVATE);
+        String extractedText = prefs.getString("MatchesList","");
+        System.out.println(extractedText);
+        String[] matchInfo = extractedText.split(",");
+        if(!extractedText.equals("")){
+            for(int i = 0; i<matchInfo.length; i+=3){
+                ScoreCalculator scoreCalculator = new ScoreCalculator();
+                scoreCalculator.setNumPlayers(Integer.parseInt(matchInfo[i]));
+                scoreCalculator.setScore(Integer.parseInt(matchInfo[i+1]));
+            }
+        }
         return null;
     }
 
     private void refreshDisplay() {
         int gameIndex = getGameIndex();
+        getMatchList();
         if(gameIndex == -1 && gameConfig.isAccessedMatches()){
             gameIndex = gameConfig.getCurrentGameIndex();
         }

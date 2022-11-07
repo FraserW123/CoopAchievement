@@ -57,7 +57,7 @@ public class Game {
 
 
 
-
+    public List<ScoreCalculator> getMatchList(){return matchesPlayed;}
     public List<String> getMatchesNamesList(){
         ArrayList<String> matchList = new ArrayList<>();
         System.out.println("current number of matches is " + matchesPlayed.size());
@@ -82,5 +82,6 @@ public class Game {
     public String getDescription() {
         return description;
     }
+
 
 }

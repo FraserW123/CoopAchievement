@@ -45,7 +45,7 @@ public class ScoreCalculator {
     public String getMatchName(){
         return name;
     }
-
+    public String getDate(){return date;}
     public int getMatchesPlayed() {
         return matchesPlayed;
     }
