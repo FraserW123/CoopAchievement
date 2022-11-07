@@ -36,7 +36,7 @@ public class AlertMessageFragment extends AppCompatDialogFragment  {
         });
         GameConfig gameConfig = GameConfig.getInstance();
         Game game = gameConfig.getCurrentGame();
-        String level = game.getMatch().getAchievementLevel();
+        String level = game.getMatch().setAchievementLevel();
         System.out.println(game.getNumMatchesPlayed());
         System.out.println(game.getMatchList().get(0));
 

@@ -83,7 +83,7 @@ public class AddScore extends AppCompatActivity {
             score_calc.setAchievementLevel();
             score_calc.setMatchName();
 
-            System.out.println("the name is " + score_calc.getAchievementLevel());
+            System.out.println("the name is " + score_calc.setAchievementLevel());
             GameConfig gameConfig = GameConfig.getInstance();
             Game game = gameConfig.getCurrentGame();
             game.addMatch(score_calc);

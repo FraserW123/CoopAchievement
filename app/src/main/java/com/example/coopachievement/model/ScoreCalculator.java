@@ -52,7 +52,7 @@ public class ScoreCalculator {
     }
 
     public void setMatchName(){
-        name = "Date: " + date+" Players: "+numPlayers + " Total score: " +Score + " "+getAchievementLevel();
+        name = "Date: " + date+" Players: "+numPlayers + " Total score: " +Score + " "+setAchievementLevel();
         matchesPlayed++;
         matchName.add(name);
     }
@@ -71,7 +71,7 @@ public class ScoreCalculator {
     public void setScore(int score){Score = score;}
     public int getScore(){return Score;}
 
-    public String achievementLevel(){
+    public String setAchievementLevel(){
         if (Score <= WorstScore*numPlayers){
             return "Goofy Goblins!";
         }
