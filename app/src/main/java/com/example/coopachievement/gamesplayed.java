@@ -38,7 +38,8 @@ public class gamesplayed extends AppCompatActivity {
     ImageView nogameplayed;
     TextView nogametext;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
@@ -54,12 +55,15 @@ public class gamesplayed extends AppCompatActivity {
     }
 
 
-    private void refreshDisplay() {
+    private void refreshDisplay()
+    {
         int gameIndex = getGameIndex();
-        if(gameIndex == -1 && gameConfig.isAccessedMatches()){
+        if(gameIndex == -1 && gameConfig.isAccessedMatches())
+        {
             gameIndex = gameConfig.getCurrentGameIndex();
         }
-        if(gameIndex >= 0){
+        if(gameIndex >= 0)
+        {
             edited = true;
             game = gameConfig.getGame(gameIndex);
 
@@ -70,7 +74,8 @@ public class gamesplayed extends AppCompatActivity {
         }
     }
 
-    private void listClick(){
+    private void listClick()
+    {
         ListView matchManager = findViewById(R.id.lvMatchView);
         matchManager.setOnItemClickListener(((parent, view, position, id) -> {
             Intent intent = new Intent(this, AddScore.class);
@@ -80,14 +85,17 @@ public class gamesplayed extends AppCompatActivity {
         }));
     }
 
-    private void populateList() {
+    private void populateList()
+    {
         System.out.println("\n\nRunning this function right now\n\n");
         list = game.getMatchesNamesList();
-        for(int i = 0; i<list.size(); i++){
+        for(int i = 0; i<list.size(); i++)
+        {
             System.out.println("list item "+ (i+1) + " " + list.get(i));
         }
         int matches = game.getNumMatchesPlayed();
-        if(game.getNumMatchesPlayed() > 0){
+        if(game.getNumMatchesPlayed() > 0)
+        {
             TextView matchesPlayed = findViewById(R.id.tvGamesPlayed);
             matchesPlayed.setText("Games Played: " + matches);
         }
@@ -97,53 +105,66 @@ public class gamesplayed extends AppCompatActivity {
         lvManager.setAdapter(adapter);
     }
 
-    private void createNewMatch() {
+    private void createNewMatch()
+    {
         gameConfig.setAccessedMatches(true);
         game.setCurrentMatch(game.getNumMatchesPlayed());
-
         Intent intent = new Intent(this, AddScore.class);
         startActivity(intent);
     }
 
-    private int getGameIndex() {
+    private int getGameIndex()
+    {
         Intent intent = getIntent();
         return intent.getIntExtra("game_index", -1);
     }
 
-    private void deleteGame() {
+    private void deleteGame()
+    {
         int gameIndex = gameConfig.getCurrentGameIndex();
         System.out.println("deleting game at index " + gameIndex);
-        if(gameIndex >= 0){
+        if(gameIndex >= 0)
+        {
             gameConfig.deleteGame(gameIndex);
             System.out.println("Number of games left " + gameConfig.getNumGame());
         }
         backToMain();
-
     }
-    private void backToMain() {
+
+    private void backToMain()
+    {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
     }
-    public boolean onCreateOptionsMenu(Menu menu) {
+
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
         getMenuInflater().inflate(R.menu.delete, menu);
         return true;
     }
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
+
+    public boolean onOptionsItemSelected(@NonNull MenuItem item)
+    {
+        switch (item.getItemId())
+        {
             case R.id.action_delete:
                 //Reference from StackOverflow
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setMessage(R.string.confirm_dialog_message)
+                 builder.setMessage(R.string.confirm_dialog_message)
                         .setTitle(R.string.confirm_dialog_title)
-                        .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
+                        .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener()
+                        {
+                            public void onClick(DialogInterface dialog, int id)
+                            {
                                 // CONFIRM
                                 deleteGame();
                             }
                         })
-                        .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
+                        .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener()
+                        {
+                            public void onClick(DialogInterface dialog, int id)
+                            {
                                 // CANCEL
                                 finish();
                             }
@@ -160,7 +181,5 @@ public class gamesplayed extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-
-
 
 }

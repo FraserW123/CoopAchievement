@@ -27,7 +27,8 @@ public class AlertMessageFragment extends AppCompatDialogFragment  {
 
     @NonNull
     //@Override
-    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState)
+    {
         //Create view
         View v = LayoutInflater.from(getActivity())
                 .inflate(R.layout.alert_message_layout, null);
@@ -42,10 +43,8 @@ public class AlertMessageFragment extends AppCompatDialogFragment  {
         Game game = gameConfig.getCurrentGame();
         String level = game.getLatestMatch().setAchievementLevel();
 
-
         iv_changing_image = v.findViewById(R.id.iv_changing_image);
         change(level);
-
         //Build the alert dialog
         return new AlertDialog.Builder(getActivity())
                 .setTitle("Congratulations!")
@@ -54,35 +53,46 @@ public class AlertMessageFragment extends AppCompatDialogFragment  {
                 .create();
     }
 
-    public void change(String achieve_level) {
-        if (achieve_level.equals("Goofy Goblins!")){
+    public void change(String achieve_level)
+    {
+        if (achieve_level.equals("Goofy Goblins!"))
+        {
             iv_changing_image.setImageResource(R.drawable.goblin);
         }
-        else if (achieve_level.equals("Timid Trolls!")){
+        else if (achieve_level.equals("Timid Trolls!"))
+        {
             iv_changing_image.setImageResource(R.drawable.troll);
         }
-        else if (achieve_level.equals("Zippy Zombies!")){
+        else if (achieve_level.equals("Zippy Zombies!"))
+        {
             iv_changing_image.setImageResource(R.drawable.zombies);
         }
-        else if (achieve_level.equals("Spooky Spiders!")){
+        else if (achieve_level.equals("Spooky Spiders!"))
+        {
             iv_changing_image.setImageResource(R.drawable.spiders);
         }
-        else if (achieve_level.equals("Vicious Vampires!")){
+        else if (achieve_level.equals("Vicious Vampires!"))
+        {
             iv_changing_image.setImageResource(R.drawable.vampires);
         }
-        else if (achieve_level.equals("Lucky Lions!")){
+        else if (achieve_level.equals("Lucky Lions!"))
+        {
             iv_changing_image.setImageResource(R.drawable.lions);
         }
-        else if (achieve_level.equals("Fantastic Fairies!")){
+        else if (achieve_level.equals("Fantastic Fairies!"))
+        {
             iv_changing_image.setImageResource(R.drawable.fairies);
         }
-        else if (achieve_level.equals("Supreme Serpents!")){
+        else if (achieve_level.equals("Supreme Serpents!"))
+        {
             iv_changing_image.setImageResource(R.drawable.serpent);
         }
-        else if (achieve_level.equals("Dancing Dragons!")){
+        else if (achieve_level.equals("Dancing Dragons!"))
+        {
             iv_changing_image.setImageResource(R.drawable.dragon);
         }
-        else{
+        else
+        {
             iv_changing_image.setImageResource(R.drawable.unicorn);
         }
     }

@@ -30,16 +30,15 @@ public class ScoreCalculator {
     String level;
     String name;
 
-
     int matchesPlayed = 0;
     private ArrayList<String> matchName = new ArrayList<>();
-
 
     LocalDateTime time = LocalDateTime.now();
     DateTimeFormatter format = DateTimeFormatter.ofPattern("HH:mm a");
     String date = time.format(format);
 
-    public void setMatchName(){
+    public void setMatchName()
+    {
         name = "Date: " + date+" Players: "+numPlayers + " Total score: " +Score + " "+setAchievementLevel();
         matchesPlayed++;
         matchName.add(name);
@@ -54,40 +53,53 @@ public class ScoreCalculator {
     }
 
     public void setNumPlayers(int num_players){numPlayers = num_players;}
+
     public int getNumPlayers(){return numPlayers;}
 
     public void setScore(int score){Score = score;}
+
     public int getScore(){return Score;}
 
-    public String setAchievementLevel(){
-        if (Score <= WorstScore*numPlayers){
+    public String setAchievementLevel()
+    {
+        if (Score <= WorstScore*numPlayers)
+        {
             return "Goofy Goblins!";
         }
-        else if (Score <= PoorScore*numPlayers){
+        else if (Score <= PoorScore*numPlayers)
+        {
             return "Timid Trolls!";
         }
-        else if (Score <= LowScore*numPlayers){
+        else if (Score <= LowScore*numPlayers)
+        {
             return "Zippy Zombies!";
         }
-        else if (Score <= OkayScore*numPlayers){
+        else if (Score <= OkayScore*numPlayers)
+        {
             return "Spooky Spiders!";
         }
-        else if (Score <= AlrightScore*numPlayers){
+        else if (Score <= AlrightScore*numPlayers)
+        {
             return "Vicious Vampires!";
         }
-        else if (Score <= GoodScore*numPlayers){
+        else if (Score <= GoodScore*numPlayers)
+        {
             return "Lucky Lions!";
         }
-        else if (Score <= GreatScore*numPlayers){
+        else if (Score <= GreatScore*numPlayers)
+        {
             return "Fantastic Fairies!";
         }
-        else if (Score <= SuperbScore*numPlayers){
+        else if (Score <= SuperbScore*numPlayers)
+        {
             return "Supreme Serpents!";
         }
-        else if (Score <= AmazingScore*numPlayers){
+        else if (Score <= AmazingScore*numPlayers)
+        {
             return "Dancing Dragons!";
         }
-        else{
+        else
+        {
             return "Ultimate Unicorns!";
         }
     }

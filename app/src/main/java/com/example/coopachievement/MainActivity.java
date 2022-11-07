@@ -29,8 +29,10 @@ public class MainActivity extends AppCompatActivity {
     ListView lvManager;
     ImageView nogames;
     ImageView nolist;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         findViewById(R.id.addGameConfig).setOnClickListener(v->{
@@ -47,7 +49,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void listClick() {
+    private void listClick()
+    {
         ListView lvManager1 = findViewById(R.id.ListofGames);
         lvManager1.setOnItemClickListener((parent, view, position, id) -> {
             TextView textView = (TextView) view;
@@ -57,11 +60,13 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void populateListView() {
+    private void populateListView()
+    {
         System.out.println("doing this");
         GameConfig gameConfig = GameConfig.getInstance();
         List<String> list = gameConfig.getGamesNameList();
-        if((gameConfig.getGamesNameList().isEmpty() && !gameConfig.getisDelete())){
+        if((gameConfig.getGamesNameList().isEmpty() && !gameConfig.getisDelete()))
+        {
             list = getGameList();
             gameConfig.setisDelete();
         }
@@ -75,7 +80,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private List<String> getGameList(){
+    private List<String> getGameList()
+    {
         GameConfig gameConfig = GameConfig.getInstance();
         SharedPreferences prefs = getSharedPreferences("games_list", MODE_PRIVATE);
         String extractedText = prefs.getString("StartGameList","");
@@ -83,26 +89,32 @@ public class MainActivity extends AppCompatActivity {
 
         String[] gameInfo = extractedText.split(",");
 
-        if(!extractedText.equals("") && !gameConfig.getisDelete()){
-            for(int i = 0; i<gameInfo.length; i+=2){
+        if(!extractedText.equals("") && !gameConfig.getisDelete())
+        {
+            for(int i = 0; i<gameInfo.length; i+=2)
+            {
                 Game game = new Game(gameInfo[i], gameInfo[i+1]);
                 gameConfig.addGame(game);
             }
         }
         List<String> items = new ArrayList<>();
-        for(int i = 0; i<gameInfo.length; i+=2){
+        for(int i = 0; i<gameInfo.length; i+=2)
+        {
             if(!gameInfo[i].equals("") && !gameConfig.getisDelete())
+            {
                 items.add(gameInfo[i]);
+            }
         }
         return items;
     }
 
-    private void storeGameList(){
+    private void storeGameList()
+    {
 
         List<Game> gameList = gameConfig.getGameList();
         StringBuilder stringBuilder = new StringBuilder();
-
-        for(int i = 0; i<gameList.size(); i++){
+        for(int i = 0; i<gameList.size(); i++)
+        {
             stringBuilder.append(gameList.get(i).getName());
             stringBuilder.append(",");
             stringBuilder.append(gameList.get(i).getDescription());
@@ -116,7 +128,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void SwitchActivity(int position) {
+    public void SwitchActivity(int position)
+    {
         Intent intent = new Intent(this, gamesplayed.class);
         gameConfig.setCurrentGameIndex(position);
         intent.putExtra("game_index", position);
