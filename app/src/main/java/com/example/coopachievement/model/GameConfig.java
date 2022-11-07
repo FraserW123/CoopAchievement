@@ -8,16 +8,10 @@ import java.util.List;
 public class GameConfig {
     private List<Game> gameName = new ArrayList<>();
     private int numGames = 0;
+    int currentGameIndex;
     private boolean isDelete;
-
-
-
     private boolean accessedMatches;
 
-
-
-
-    int currentGameIndex;
 
     private static GameConfig instance;
     private GameConfig(){

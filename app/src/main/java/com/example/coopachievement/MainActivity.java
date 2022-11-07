@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    GameConfig gameConfig = GameConfig.getInstance();
     boolean startup = true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,11 +70,9 @@ public class MainActivity extends AppCompatActivity {
         System.out.println(extractedText);
 
         String[] gameInfo = extractedText.split(",");
-        //System.out.println("length " +gameInfo.length);
 
         if(!extractedText.equals("") && !gameConfig.getisDelete()){
             for(int i = 0; i<gameInfo.length; i+=2){
-                //System.out.println("\n\nAdding game with name " + gameInfo[i]+ " and description " +gameInfo[i+1]);
                 Game game = new Game(gameInfo[i], gameInfo[i+1]);
                 gameConfig.addGame(game);
             }
@@ -87,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void storeGameList(){
-        GameConfig gameConfig = GameConfig.getInstance();
+
         List<Game> gameList = gameConfig.getGameList();
         StringBuilder stringBuilder = new StringBuilder();
 
@@ -98,7 +97,6 @@ public class MainActivity extends AppCompatActivity {
             stringBuilder.append(",");
         }
 
-        //System.out.println("the result is "+ stringBuilder);
         SharedPreferences prefs = getSharedPreferences("games_list", MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString("StartGameList", stringBuilder.toString());
@@ -108,6 +106,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void SwitchActivity(int position) {
         Intent intent = new Intent(this, gamesplayed.class);
+        gameConfig.setCurrentGameIndex(position);
         intent.putExtra("game_index", position);
         startActivity(intent);
     }

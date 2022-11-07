@@ -33,6 +33,13 @@ public class GameTitle extends AppCompatActivity {
         findViewById(R.id.startGame).setOnClickListener(v-> switchScreen());
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_add_score,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+
 
     private void saveGame() {
         EditText name = findViewById(R.id.editTextGameName);
@@ -69,6 +76,9 @@ public class GameTitle extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.action_save) {
+            saveGame();
+        }
         finish();
         return super.onOptionsItemSelected(item);
     }

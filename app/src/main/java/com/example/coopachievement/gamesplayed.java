@@ -66,7 +66,11 @@ public class gamesplayed extends AppCompatActivity {
     }
 
     private void populateList() {
+        System.out.println("\n\nRunning this function right now\n\n");
         List<String> list = game.getMatchesNamesList();
+        for(int i = 0; i<list.size(); i++){
+            System.out.println("list item "+ (i+1) + " " + list.get(i));
+        }
         int matches = game.getNumMatchesPlayed();
         if(game.getNumMatchesPlayed() > 0){
             TextView matchesPlayed = findViewById(R.id.tvGamesPlayed);
@@ -81,6 +85,7 @@ public class gamesplayed extends AppCompatActivity {
     private void createNewMatch() {
         gameConfig.setAccessedMatches(true);
         game.setCurrentMatch(game.getNumMatchesPlayed());
+
         Intent intent = new Intent(this, AddScore.class);
         startActivity(intent);
     }
@@ -119,13 +124,13 @@ public class gamesplayed extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int id) {
                                 // CONFIRM
                                 deleteGame();
-                                finish();
+                                backToMain();
                             }
                         })
                         .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 // CANCEL
-                                finish();
+                                //finish();
                             }
                         });
 // Create the AlertDialog object and return it

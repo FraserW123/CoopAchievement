@@ -9,6 +9,7 @@ public class Game {
     String description;
     int numMatchesPlayed = 0;
     int currentMatch = 0;
+    boolean isAccessed;
 
     public boolean isAccessed() {
         return isAccessed;
@@ -18,7 +19,7 @@ public class Game {
         isAccessed = accessed;
     }
 
-    boolean isAccessed;
+
 
     ArrayList<ScoreCalculator> matchesPlayed = new ArrayList<>();
 
@@ -59,8 +60,9 @@ public class Game {
 
     public List<String> getMatchesNamesList(){
         ArrayList<String> matchList = new ArrayList<>();
-        System.out.println("current number of matches is " + matchList.size());
+        System.out.println("current number of matches is " + matchesPlayed.size());
         for(int i = 0; i<numMatchesPlayed; i++){
+            System.out.println("adding " + i +"'th games to the list");
             matchList.add(matchesPlayed.get(i).getMatchName());
         }
         return matchList;

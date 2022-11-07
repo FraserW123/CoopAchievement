@@ -142,7 +142,8 @@ public class AddScore extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         System.out.println("removing match at index " +getMatchIndex());
                         game.removeMatch(getMatchIndex());
-                        finish();
+                        Intent intent = new Intent(AddScore.this, gamesplayed.class);
+                        startActivity(intent);
                     }
                 }).setNegativeButton("Cancel", null);
         AlertDialog areYouSure = builder.create();
