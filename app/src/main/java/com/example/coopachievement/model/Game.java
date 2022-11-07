@@ -29,17 +29,35 @@ public class Game {
 
     public void addMatch(ScoreCalculator match){
         matchesPlayed.add(match);
+        numMatchesPlayed++;
         System.out.println("added a match the size is now" + matchesPlayed.size());
     }
 
-    public ScoreCalculator getMatch(){
-        return matchesPlayed.get(numMatchesPlayed-1);
+    public void removeMatch(int index){
+        matchesPlayed.remove(index);
+        numMatchesPlayed--;
+
+        for(int i = 0; i<numMatchesPlayed; i++){
+            System.out.println(getMatchesNamesList().get(i));
+        }
     }
+
+    public ScoreCalculator getLatestMatch(){
+        return matchesPlayed.get(currentMatch);
+    }
+    public ScoreCalculator getMatch(int index){return matchesPlayed.get(index);}
+    public void setCurrentMatch(int index){currentMatch = index;}
+
+
 
     public int getNumMatchesPlayed(){
         return numMatchesPlayed;
     }
-    public List<String> getMatchList(){
+
+
+
+
+    public List<String> getMatchesNamesList(){
         ArrayList<String> matchList = new ArrayList<>();
         System.out.println("current number of matches is " + matchList.size());
         for(int i = 0; i<numMatchesPlayed; i++){
@@ -63,7 +81,4 @@ public class Game {
         return description;
     }
 
-    public void addMatchesPlayed(){
-        numMatchesPlayed++;
-    }
 }

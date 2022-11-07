@@ -1,7 +1,6 @@
 package com.example.coopachievement;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,12 +8,10 @@ import androidx.fragment.app.FragmentManager;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.coopachievement.model.Game;
@@ -23,18 +20,48 @@ import com.example.coopachievement.model.ScoreCalculator;
 
 public class AddScore extends AppCompatActivity {
 
+    GameConfig gameConfig = GameConfig.getInstance();
+    Game game = gameConfig.getCurrentGame();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_score);
-
+        refreshDisplay();
         ActionBar toolbar = getSupportActionBar();
-        toolbar.setTitle("Adding a new game!");
+        if(getMatchIndex() == -1){
+            toolbar.setTitle("Adding a new match!");
+        }else{
+            toolbar.setTitle("Editing match");
+        }
+
         toolbar.setDisplayHomeAsUpEnabled(true);
+
+    }
+
+    private void refreshDisplay() {
+
+        int matchIndex = getMatchIndex();
+
+        if(matchIndex >= 0 ){
+
+            EditText players = findViewById(R.id.etn_num_players);
+            EditText score  = findViewById(R.id.etn_score);
+
+            players.setText(String.valueOf(game.getMatch(matchIndex).getNumPlayers()));
+            score.setText(String.valueOf(game.getMatch(matchIndex).getScore()));
+        }
+
+    }
+
+    private int getMatchIndex(){
+        Intent intent = getIntent();
+        return intent.getIntExtra("match_index", -1);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        refreshDisplay();
         EditText et_players = findViewById(R.id.etn_num_players);
         String st_players = et_players.getText().toString();
 
@@ -45,6 +72,7 @@ public class AddScore extends AppCompatActivity {
             getMenuInflater().inflate(R.menu.menu_edit_score, menu);
         }
         else{
+
             getMenuInflater().inflate(R.menu.menu_add_score, menu);
         }
         return true;
@@ -76,18 +104,26 @@ public class AddScore extends AppCompatActivity {
         if(!st_players.equals("") && !st_score.equals("") && !st_players.equals("0")){
             int players = Integer.parseInt(st_players);
             int score = Integer.parseInt(st_score);
-            ScoreCalculator score_calc = new ScoreCalculator();
-//            ScoreCalculator score_calc = ScoreCalculator.getCalculatorInstance();
-            score_calc.setNumPlayers(players);
-            score_calc.setScore(score);
-            score_calc.setAchievementLevel();
-            score_calc.setMatchName();
-
+            int matchIndex = getMatchIndex();
+            ScoreCalculator score_calc;
+            if(matchIndex == -1){
+                score_calc = new ScoreCalculator();
+                score_calc.setNumPlayers(players);
+                score_calc.setScore(score);
+                score_calc.setAchievementLevel();
+                score_calc.setMatchName();
+                game.addMatch(score_calc);
+            } else{
+                score_calc = game.getMatch(matchIndex);
+                score_calc.setNumPlayers(players);
+                score_calc.setScore(score);
+                score_calc.setAchievementLevel();
+                score_calc.setMatchName();
+            }
             System.out.println("the name is " + score_calc.getAchievementLevel());
-            GameConfig gameConfig = GameConfig.getInstance();
-            Game game = gameConfig.getCurrentGame();
-            game.addMatch(score_calc);
-            game.addMatchesPlayed();
+
+
+
 
             FragmentManager manager = getSupportFragmentManager();
             AlertMessageFragment alert = new AlertMessageFragment();
@@ -104,7 +140,8 @@ public class AddScore extends AppCompatActivity {
                 .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
+                        System.out.println("removing match at index " +getMatchIndex());
+                        game.removeMatch(getMatchIndex());
                         finish();
                     }
                 }).setNegativeButton("Cancel", null);

@@ -28,21 +28,6 @@ public class ScoreCalculator {
     DateTimeFormatter format = DateTimeFormatter.ofPattern("HH:mm a");
     String date = time.format(format);
 
-    boolean accessed = false;
-    int gameIndex = 0;
-
-
-    public List<String> getMatches(){
-        return matchName;
-    }
-
-    public int getGameIndex() {
-        return gameIndex;
-    }
-    public void setGameIndex(int gameIndex) {
-        this.gameIndex = gameIndex;
-    }
-
     public void setMatchName(){
         name = "Date: " + date+" Players: "+numPlayers + " Total score: " +Score + " "+getAchievementLevel();
         matchesPlayed++;

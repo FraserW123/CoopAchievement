@@ -35,6 +35,7 @@ public class gamesplayed extends AppCompatActivity {
         setContentView(R.layout.activity_gamesplayed);
         refreshDisplay();
         populateList();
+        listClick();
         findViewById(R.id.playGame).setOnClickListener(v-> createNewMatch());
     }
 
@@ -54,8 +55,18 @@ public class gamesplayed extends AppCompatActivity {
         }
     }
 
+    private void listClick(){
+        ListView matchManager = findViewById(R.id.lvMatchView);
+        matchManager.setOnItemClickListener(((parent, view, position, id) -> {
+            Intent intent = new Intent(this, AddScore.class);
+            intent.putExtra("match_index", position);
+            game.setCurrentMatch(position);
+            startActivity(intent);
+        }));
+    }
+
     private void populateList() {
-        List<String> list = game.getMatchList();
+        List<String> list = game.getMatchesNamesList();
         int matches = game.getNumMatchesPlayed();
         if(game.getNumMatchesPlayed() > 0){
             TextView matchesPlayed = findViewById(R.id.tvGamesPlayed);
@@ -65,6 +76,13 @@ public class gamesplayed extends AppCompatActivity {
                 this, R.layout.list_matches,list);
         ListView lvManager = findViewById(R.id.lvMatchView);
         lvManager.setAdapter(adapter);
+    }
+
+    private void createNewMatch() {
+        gameConfig.setAccessedMatches(true);
+        game.setCurrentMatch(game.getNumMatchesPlayed());
+        Intent intent = new Intent(this, AddScore.class);
+        startActivity(intent);
     }
 
     private int getGameIndex() {
@@ -124,9 +142,5 @@ public class gamesplayed extends AppCompatActivity {
     }
 
 
-    private void createNewMatch() {
-        gameConfig.setAccessedMatches(true);
-        Intent intent = new Intent(this, AddScore.class);
-        startActivity(intent);
-    }
+
 }
