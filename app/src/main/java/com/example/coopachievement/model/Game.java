@@ -7,6 +7,8 @@ public class Game {
 
     String name;
     String description;
+    int poor_score;
+    int great_score;
     int numMatchesPlayed = 0;
     int currentMatch = 0;
     boolean isAccessed;
@@ -23,9 +25,11 @@ public class Game {
 
     ArrayList<ScoreCalculator> matchesPlayed = new ArrayList<>();
 
-    public Game(String name, String description) {
+    public Game(String name, String description, int poorScore, int greatScore) {
         this.name = name;
         this.description = description;
+        this.poor_score = poorScore;
+        this.great_score = greatScore;
     }
 
     public void addMatch(ScoreCalculator match){
@@ -83,4 +87,17 @@ public class Game {
         return description;
     }
 
+    public void setPoorScore(int poorScore) {
+        this.poor_score = poorScore;
+    }
+    public int getPoorScore() {
+        return poor_score;
+    }
+
+    public void setGreatScore(int greatScore) {
+        this.great_score = greatScore;
+    }
+    public int getGreatScore() {
+        return great_score;
+    }
 }

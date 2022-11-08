@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.example.coopachievement.model.Game;
 import com.example.coopachievement.model.GameConfig;
+import com.example.coopachievement.model.ScoreCalculator;
 
 public class GameTitle extends AppCompatActivity {
 
@@ -40,17 +41,42 @@ public class GameTitle extends AppCompatActivity {
     private void saveGame() {
         EditText name = findViewById(R.id.editTextGameName);
         EditText description = findViewById(R.id.editTextGameDescription);
-        if(!name.getText().toString().isEmpty() && !description.getText().toString().isEmpty()){
 
-            Game game = new Game(name.getText().toString(), description.getText().toString());
+        if (!name.getText().toString().isEmpty() && !description.getText().toString().isEmpty() && differenceOf10()) {
+            EditText poorScore = findViewById(R.id.etn_poor_score);
+            EditText greatScore = findViewById(R.id.etn_great_score);
+
+            int num_poor_score = Integer.parseInt(poorScore.getText().toString());
+            int num_great_score = Integer.parseInt(greatScore.getText().toString());
+
+            System.out.println("poor: " + num_poor_score);
+
+            Game game = new Game(name.getText().toString(), description.getText().toString(), num_poor_score, num_great_score);
+            num_poor_score = game.getPoorScore();
+            System.out.println("poor: " + num_poor_score);
             gameConfig.addGame(game);
             backToMain();
 
-        }
-        else{
-            Toast.makeText(this, "One or more required items missing", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "One or more required items are missing or invalid!", Toast.LENGTH_SHORT).show();
         }
 
+    }
+
+    private boolean differenceOf10(){
+        EditText poorScore = findViewById(R.id.etn_poor_score);
+        EditText greatScore = findViewById(R.id.etn_great_score);
+
+        String st_poor_score = poorScore.getText().toString();
+        String st_great_score = greatScore.getText().toString();
+
+        if(!st_poor_score.equals("") && !st_great_score.equals("")) {
+            int num_poor_score = Integer.parseInt(st_poor_score);
+            int num_great_score = Integer.parseInt(st_great_score);
+            return (num_great_score - num_poor_score) >= 9;
+        }
+
+        return false;
     }
 
 
@@ -63,7 +89,13 @@ public class GameTitle extends AppCompatActivity {
     private void createNewMatch() {
         EditText name = findViewById(R.id.editTextGameName);
         EditText description = findViewById(R.id.editTextGameDescription);
-        if(!name.getText().toString().isEmpty() && !description.getText().toString().isEmpty()){
+        if(!name.getText().toString().isEmpty() && !description.getText().toString().isEmpty() && differenceOf10()){
+            EditText poorScore = findViewById(R.id.etn_poor_score);
+            EditText greatScore = findViewById(R.id.etn_great_score);
+
+            int num_poor_score = Integer.parseInt(poorScore.getText().toString());
+            int num_great_score = Integer.parseInt(greatScore.getText().toString());
+
             Intent intent = getIntent();
             int gameIndex = intent.getIntExtra("new_game", -1);
             System.out.println("this happened " + gameIndex);
@@ -71,7 +103,9 @@ public class GameTitle extends AppCompatActivity {
 
                 gameConfig.setCurrentGameIndex(gameIndex);
             }
-            Game game = new Game(name.getText().toString(), description.getText().toString());
+
+
+            Game game = new Game(name.getText().toString(), description.getText().toString(), num_poor_score, num_great_score);
             gameConfig.addGame(game);
             gameConfig.setAccessedMatches(true);
             game.setCurrentMatch(game.getNumMatchesPlayed());
@@ -79,7 +113,7 @@ public class GameTitle extends AppCompatActivity {
             startActivity(switching);
         }
         else{
-            Toast.makeText(this, "One or more required items missing", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "One or more required items are missing or invalid!", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -89,7 +123,7 @@ public class GameTitle extends AppCompatActivity {
         if (item.getItemId() == R.id.action_save) {
             saveGame();
         }
-        finish();
+        //finish();
         return super.onOptionsItemSelected(item);
     }
 

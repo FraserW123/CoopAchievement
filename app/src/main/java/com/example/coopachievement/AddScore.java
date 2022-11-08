@@ -108,6 +108,8 @@ public class AddScore extends AppCompatActivity {
             ScoreCalculator score_calc;
             if(matchIndex == -1){
                 score_calc = new ScoreCalculator();
+                score_calc.setPoorScore(game.getPoorScore());
+                score_calc.setGreatScore(game.getGreatScore());
                 score_calc.setNumPlayers(players);
                 score_calc.setScore(score);
                 score_calc.setAchievementLevel();
@@ -115,15 +117,16 @@ public class AddScore extends AppCompatActivity {
                 game.addMatch(score_calc);
             } else{
                 score_calc = game.getMatch(matchIndex);
+                score_calc.setPoorScore(game.getPoorScore());
+                System.out.println("poor is "+score_calc.getPoorScore());
+                score_calc.setGreatScore(game.getGreatScore());
+                System.out.println("great is "+score_calc.getGreatScore());
                 score_calc.setNumPlayers(players);
                 score_calc.setScore(score);
                 score_calc.setAchievementLevel();
                 score_calc.setMatchName();
             }
             //System.out.println("the name is " + score_calc.getAchievementLevel());
-
-
-
 
             FragmentManager manager = getSupportFragmentManager();
             AlertMessageFragment alert = new AlertMessageFragment();

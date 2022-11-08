@@ -75,13 +75,13 @@ public class MainActivity extends AppCompatActivity {
         String[] gameInfo = extractedText.split(",");
 
         if(!extractedText.equals("") && !gameConfig.getisDelete()){
-            for(int i = 0; i<gameInfo.length; i+=2){
-                Game game = new Game(gameInfo[i], gameInfo[i+1]);
+            for(int i = 0; i<gameInfo.length; i+=4){
+                Game game = new Game(gameInfo[i], gameInfo[i+1], Integer.parseInt(gameInfo[i+2]), Integer.parseInt(gameInfo[i+3]));
                 gameConfig.addGame(game);
             }
         }
         List<String> items = new ArrayList<>();
-        for(int i = 0; i<gameInfo.length; i+=2){
+        for(int i = 0; i<gameInfo.length; i+=4){
             if(!gameInfo[i].equals("") && !gameConfig.getisDelete())
                 items.add(gameInfo[i]);
         }
@@ -97,6 +97,10 @@ public class MainActivity extends AppCompatActivity {
             stringBuilder.append(gameList.get(i).getName());
             stringBuilder.append(",");
             stringBuilder.append(gameList.get(i).getDescription());
+            stringBuilder.append(",");
+            stringBuilder.append(gameList.get(i).getPoorScore());
+            stringBuilder.append(",");
+            stringBuilder.append(gameList.get(i).getGreatScore());
             stringBuilder.append(",");
         }
 

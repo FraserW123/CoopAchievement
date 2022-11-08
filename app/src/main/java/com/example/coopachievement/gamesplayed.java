@@ -1,12 +1,14 @@
 package com.example.coopachievement;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.coopachievement.model.Game;
 import com.example.coopachievement.model.GameConfig;
@@ -49,19 +52,29 @@ public class gamesplayed extends AppCompatActivity {
 
             EditText name = findViewById(R.id.editTextGameName2);
             EditText description = findViewById(R.id.editTextGameDescription2);
+            EditText poor_score = findViewById(R.id.etn_poorScore);
+            EditText great_score = findViewById(R.id.etn_greatScore);
+
             name.setText(game.getName());
             description.setText(game.getDescription());
+            poor_score.setText(String.valueOf(game.getPoorScore()));
+            great_score.setText(String.valueOf(game.getGreatScore()));
         }
     }
 
     private void listClick(){
-        ListView matchManager = findViewById(R.id.lvMatchView);
-        matchManager.setOnItemClickListener(((parent, view, position, id) -> {
-            Intent intent = new Intent(this, AddScore.class);
-            intent.putExtra("match_index", position);
-            game.setCurrentMatch(position);
-            startActivity(intent);
-        }));
+        if(differenceOf10()) {
+            ListView matchManager = findViewById(R.id.lvMatchView);
+            matchManager.setOnItemClickListener(((parent, view, position, id) -> {
+                Intent intent = new Intent(this, AddScore.class);
+                intent.putExtra("match_index", position);
+                game.setCurrentMatch(position);
+                startActivity(intent);
+            }));
+        }
+        else{
+            Toast.makeText(this, "One or more required items are missing or invalid!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void populateList() {
@@ -82,11 +95,16 @@ public class gamesplayed extends AppCompatActivity {
     }
 
     private void createNewMatch() {
-        gameConfig.setAccessedMatches(true);
-        game.setCurrentMatch(game.getNumMatchesPlayed());
+        if(differenceOf10()) {
+            gameConfig.setAccessedMatches(true);
+            game.setCurrentMatch(game.getNumMatchesPlayed());
 
-        Intent intent = new Intent(this, AddScore.class);
-        startActivity(intent);
+            Intent intent = new Intent(this, AddScore.class);
+            startActivity(intent);
+        }
+        else{
+            Toast.makeText(this, "One or more required items are missing or invalid!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private int getGameIndex() {
@@ -129,22 +147,56 @@ public class gamesplayed extends AppCompatActivity {
                         .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 // CANCEL
-                                finish();
+                                //finish();
                             }
                         });
 // Create the AlertDialog object and return it
                 AlertDialog dialog = builder.create();
                 dialog.show();
                 return true;
+            case android.R.id.home:
+                this.onBackPressed();
+                return true;
             default:
-                EditText name = findViewById(R.id.editTextGameName2);
-                EditText desc = findViewById(R.id.editTextGameDescription2);
-                game.setName(name.getText().toString());
-                game.setDescription(desc.getText().toString());
                 return super.onOptionsItemSelected(item);
         }
     }
 
+    @Override
+    public void onBackPressed(){
+        if(differenceOf10()) {
+            EditText name = findViewById(R.id.editTextGameName2);
+            EditText desc = findViewById(R.id.editTextGameDescription2);
+            EditText poor_score = findViewById(R.id.etn_poorScore);
+            EditText great_score = findViewById(R.id.etn_greatScore);
 
+            game.setName(name.getText().toString());
+            game.setDescription(desc.getText().toString());
+
+            game.setPoorScore(Integer.parseInt(poor_score.getText().toString()));
+            game.setGreatScore(Integer.parseInt(great_score.getText().toString()));
+            Intent intent = new Intent(gamesplayed.this, MainActivity.class);
+            startActivity(intent);
+        }
+        else{
+            Toast.makeText(this, "One or more required items are missing or invalid!", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private boolean differenceOf10(){
+        EditText poorScore = findViewById(R.id.etn_poorScore);
+        EditText greatScore = findViewById(R.id.etn_greatScore);
+
+        String st_poor_score = poorScore.getText().toString();
+        String st_great_score = greatScore.getText().toString();
+
+        if(!st_poor_score.equals("") && !st_great_score.equals("")) {
+            int num_poor_score = Integer.parseInt(st_poor_score);
+            int num_great_score = Integer.parseInt(st_great_score);
+            return (num_great_score - num_poor_score) >= 9;
+        }
+
+        return false;
+    }
 
 }

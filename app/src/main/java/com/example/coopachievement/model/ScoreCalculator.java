@@ -1,36 +1,26 @@
 package com.example.coopachievement.model;
 
-import android.os.Build;
-
-import androidx.annotation.RequiresApi;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class ScoreCalculator {
-
     int numPlayers;
     int Score;
-    int WorstScore = 100;
-    int PoorScore = 200;
-    int LowScore = 300;
-    int OkayScore = 400;
-    int AlrightScore = 500;
-    int GoodScore = 600;
-    int GreatScore = 700;
-    int SuperbScore = 800;
-    int AmazingScore = 900;
-
+    int poorScore;
+    int greatScore;
     String level;
     String name;
 
+    public void setPoorScore(int poor_score){poorScore = poor_score;}
+    public int getPoorScore(){return poorScore;}
+
+    public void setGreatScore(int great_score){greatScore = great_score;}
+    public int getGreatScore(){return greatScore;}
 
     int matchesPlayed = 0;
     private ArrayList<String> matchName = new ArrayList<>();
-
 
     LocalDateTime time = LocalDateTime.now();
     DateTimeFormatter format = DateTimeFormatter.ofPattern("HH:mm a");
@@ -57,31 +47,33 @@ public class ScoreCalculator {
     public int getScore(){return Score;}
 
     public String setAchievementLevel(){
-        if (Score <= WorstScore*numPlayers){
+        int increment = (greatScore - poorScore) / 8;
+
+        if (Score <= poorScore * numPlayers){
             return "Goofy Goblins!";
         }
-        else if (Score <= PoorScore*numPlayers){
+        else if (Score <= (poorScore + increment) * numPlayers){
             return "Timid Trolls!";
         }
-        else if (Score <= LowScore*numPlayers){
+        else if (Score <= (poorScore + 2 * increment) * numPlayers){
             return "Zippy Zombies!";
         }
-        else if (Score <= OkayScore*numPlayers){
+        else if (Score <= (poorScore + 3 * increment) * numPlayers){
             return "Spooky Spiders!";
         }
-        else if (Score <= AlrightScore*numPlayers){
+        else if (Score <= (poorScore + 4 * increment) * numPlayers){
             return "Vicious Vampires!";
         }
-        else if (Score <= GoodScore*numPlayers){
+        else if (Score <= (poorScore + 5 * increment) * numPlayers){
             return "Lucky Lions!";
         }
-        else if (Score <= GreatScore*numPlayers){
+        else if (Score <= (poorScore + 6 * increment) * numPlayers){
             return "Fantastic Fairies!";
         }
-        else if (Score <= SuperbScore*numPlayers){
+        else if (Score <= (poorScore + 7 * increment) * numPlayers){
             return "Supreme Serpents!";
         }
-        else if (Score <= AmazingScore*numPlayers){
+        else if (Score < (greatScore) * numPlayers){
             return "Dancing Dragons!";
         }
         else{
