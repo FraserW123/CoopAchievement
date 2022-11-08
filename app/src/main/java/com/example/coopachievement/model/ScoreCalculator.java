@@ -1,10 +1,18 @@
 package com.example.coopachievement.model;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 
-
+/**
+ * This class describes the calculation of scores and assign setAchievementLevel according to the scores
+ * also set up the worst/poor/good/great/okay/low scores with respect to number of players.
+ */
 public class ScoreCalculator {
     int numPlayers;
     int Score;
@@ -26,7 +34,8 @@ public class ScoreCalculator {
     DateTimeFormatter format = DateTimeFormatter.ofPattern("HH:mm a");
     String date = time.format(format);
 
-    public void setMatchName(){
+    public void setMatchName()
+    {
         name = "Date: " + date+" Players: "+numPlayers + " Total score: " +Score + " "+setAchievementLevel();
         matchesPlayed++;
         matchName.add(name);
@@ -41,9 +50,11 @@ public class ScoreCalculator {
     }
 
     public void setNumPlayers(int num_players){numPlayers = num_players;}
+
     public int getNumPlayers(){return numPlayers;}
 
     public void setScore(int score){Score = score;}
+
     public int getScore(){return Score;}
 
     public String setAchievementLevel(){

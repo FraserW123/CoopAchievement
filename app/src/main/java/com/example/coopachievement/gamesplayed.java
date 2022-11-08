@@ -12,8 +12,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,14 +25,24 @@ import com.example.coopachievement.model.GameConfig;
 
 import java.util.List;
 
+/**
+ * This class describes the list of games played in a specific format under a specific game name
+ * it also persists the history and previous games played and also gives users a click to edit the game
+ * they want to change
+ * also shows the empty state on gamesplayed list view when no game is there
+ */
 public class gamesplayed extends AppCompatActivity {
 
     GameConfig gameConfig = GameConfig.getInstance();
     Game game;
     Boolean edited = false;
-
+    List<String> list;
+    ListView lvManager;
+    ImageView nogameplayed;
+    TextView nogametext;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
@@ -39,14 +51,22 @@ public class gamesplayed extends AppCompatActivity {
         populateList();
         listClick();
         findViewById(R.id.playGame).setOnClickListener(v-> createNewMatch());
+        nogameplayed = findViewById(R.id.nogamesplayed);
+        nogametext = findViewById(R.id.textView4);
+        lvManager.setEmptyView(nogameplayed);
+        lvManager.setEmptyView(nogametext);
     }
 
-    private void refreshDisplay() {
+
+    private void refreshDisplay()
+    {
         int gameIndex = getGameIndex();
-        if(gameIndex == -1 && gameConfig.isAccessedMatches()){
+        if(gameIndex == -1 && gameConfig.isAccessedMatches())
+        {
             gameIndex = gameConfig.getCurrentGameIndex();
         }
-        if(gameIndex >= 0){
+        if(gameIndex >= 0)
+        {
             edited = true;
             game = gameConfig.getGame(gameIndex);
 
@@ -62,7 +82,8 @@ public class gamesplayed extends AppCompatActivity {
         }
     }
 
-    private void listClick(){
+    private void listClick()
+    {
         if(differenceOf10()) {
             ListView matchManager = findViewById(R.id.lvMatchView);
             matchManager.setOnItemClickListener(((parent, view, position, id) -> {
@@ -77,24 +98,28 @@ public class gamesplayed extends AppCompatActivity {
         }
     }
 
-    private void populateList() {
+    private void populateList()
+    {
         System.out.println("\n\nRunning this function right now\n\n");
-        List<String> list = game.getMatchesNamesList();
-        for(int i = 0; i<list.size(); i++){
+        list = game.getMatchesNamesList();
+        for(int i = 0; i<list.size(); i++)
+        {
             System.out.println("list item "+ (i+1) + " " + list.get(i));
         }
         int matches = game.getNumMatchesPlayed();
-        if(game.getNumMatchesPlayed() > 0){
+        if(game.getNumMatchesPlayed() > 0)
+        {
             TextView matchesPlayed = findViewById(R.id.tvGamesPlayed);
             matchesPlayed.setText("Games Played: " + matches);
         }
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 this, R.layout.list_matches,list);
-        ListView lvManager = findViewById(R.id.lvMatchView);
+        lvManager = findViewById(R.id.lvMatchView);
         lvManager.setAdapter(adapter);
     }
 
-    private void createNewMatch() {
+    private void createNewMatch()
+    {
         if(differenceOf10()) {
             gameConfig.setAccessedMatches(true);
             game.setCurrentMatch(game.getNumMatchesPlayed());
@@ -107,45 +132,58 @@ public class gamesplayed extends AppCompatActivity {
         }
     }
 
-    private int getGameIndex() {
+    private int getGameIndex()
+    {
         Intent intent = getIntent();
         return intent.getIntExtra("game_index", -1);
     }
 
-    private void deleteGame() {
+    private void deleteGame()
+    {
         int gameIndex = gameConfig.getCurrentGameIndex();
         System.out.println("deleting game at index " + gameIndex);
-        if(gameIndex >= 0){
+        if(gameIndex >= 0)
+        {
             gameConfig.deleteGame(gameIndex);
             System.out.println("Number of games left " + gameConfig.getNumGame());
         }
         backToMain();
-
     }
-    private void backToMain() {
+
+    private void backToMain()
+    {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
     }
-    public boolean onCreateOptionsMenu(Menu menu) {
+
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
         getMenuInflater().inflate(R.menu.delete, menu);
         return true;
     }
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
+
+    public boolean onOptionsItemSelected(@NonNull MenuItem item)
+    {
+        switch (item.getItemId())
+        {
             case R.id.action_delete:
                 //Reference from StackOverflow
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setMessage(R.string.confirm_dialog_message)
                         .setTitle(R.string.confirm_dialog_title)
-                        .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
+                        .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener()
+                        {
+                            public void onClick(DialogInterface dialog, int id)
+                            {
                                 // CONFIRM
                                 deleteGame();
                             }
                         })
-                        .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
+                        .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener()
+                        {
+                            public void onClick(DialogInterface dialog, int id)
+                            {
                                 // CANCEL
                                 //finish();
                             }

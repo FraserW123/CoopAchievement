@@ -18,20 +18,27 @@ import com.example.coopachievement.model.Game;
 import com.example.coopachievement.model.GameConfig;
 import com.example.coopachievement.model.ScoreCalculator;
 
+/**
+ * This class give opportunity to players to add a new game score
+ * as well as edit the previous game score
+ */
 public class AddScore extends AppCompatActivity {
 
     GameConfig gameConfig = GameConfig.getInstance();
     Game game = gameConfig.getCurrentGame();
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_score);
         refreshDisplay();
         ActionBar toolbar = getSupportActionBar();
-        if(getMatchIndex() == -1){
+        if(getMatchIndex() == -1)
+        {
             toolbar.setTitle("Adding a new match!");
-        }else{
+        }else
+        {
             toolbar.setTitle("Editing match");
         }
 
@@ -39,48 +46,49 @@ public class AddScore extends AppCompatActivity {
 
     }
 
-    private void refreshDisplay() {
-
+    private void refreshDisplay()
+    {
         int matchIndex = getMatchIndex();
-
-        if(matchIndex >= 0 ){
-
+        if(matchIndex >= 0 )
+        {
             EditText players = findViewById(R.id.etn_num_players);
             EditText score  = findViewById(R.id.etn_score);
-
             players.setText(String.valueOf(game.getMatch(matchIndex).getNumPlayers()));
             score.setText(String.valueOf(game.getMatch(matchIndex).getScore()));
         }
-
     }
 
-    private int getMatchIndex(){
+    private int getMatchIndex()
+    {
         Intent intent = getIntent();
         return intent.getIntExtra("match_index", -1);
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
         refreshDisplay();
         EditText et_players = findViewById(R.id.etn_num_players);
         String st_players = et_players.getText().toString();
-
         EditText et_score = findViewById(R.id.etn_score);
         String st_score = et_score.getText().toString();
 
-        if(!st_players.equals("") && !st_score.equals("")) {
+        if(!st_players.equals("") && !st_score.equals(""))
+        {
             getMenuInflater().inflate(R.menu.menu_edit_score, menu);
         }
-        else{
-
+        else
+        {
             getMenuInflater().inflate(R.menu.menu_add_score, menu);
         }
         return true;
     }
     
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch(item.getItemId()) {
+    public boolean onOptionsItemSelected(@NonNull MenuItem item)
+    {
+        switch(item.getItemId())
+        {
             case R.id.action_save:
                 alertMessage();
                 return true;
@@ -94,19 +102,22 @@ public class AddScore extends AppCompatActivity {
         }
     }
 
-    private void alertMessage(){
+    private void alertMessage()
+    {
         EditText et_players = findViewById(R.id.etn_num_players);
         String st_players = et_players.getText().toString();
-
         EditText et_score = findViewById(R.id.etn_score);
         String st_score = et_score.getText().toString();
 
-        if(!st_players.equals("") && !st_score.equals("") && !st_players.equals("0")){
+        if(!st_players.equals("") && !st_score.equals("") && !st_players.equals("0"))
+        {
             int players = Integer.parseInt(st_players);
             int score = Integer.parseInt(st_score);
             int matchIndex = getMatchIndex();
             ScoreCalculator score_calc;
-            if(matchIndex == -1){
+
+            if(matchIndex == -1)
+            {
                 score_calc = new ScoreCalculator();
                 score_calc.setPoorScore(game.getPoorScore());
                 score_calc.setGreatScore(game.getGreatScore());
@@ -115,12 +126,14 @@ public class AddScore extends AppCompatActivity {
                 score_calc.setAchievementLevel();
                 score_calc.setMatchName();
                 game.addMatch(score_calc);
-            } else{
+            }
+            else
+            {
                 score_calc = game.getMatch(matchIndex);
                 score_calc.setPoorScore(game.getPoorScore());
-                System.out.println("poor is "+score_calc.getPoorScore());
+                //System.out.println("poor is "+score_calc.getPoorScore());
                 score_calc.setGreatScore(game.getGreatScore());
-                System.out.println("great is "+score_calc.getGreatScore());
+                //System.out.println("great is "+score_calc.getGreatScore());
                 score_calc.setNumPlayers(players);
                 score_calc.setScore(score);
                 score_calc.setAchievementLevel();
@@ -132,17 +145,21 @@ public class AddScore extends AppCompatActivity {
             AlertMessageFragment alert = new AlertMessageFragment();
             alert.show(manager, "AlertMessage");
         }
-        else {
+        else
+        {
             Toast.makeText(AddScore.this, "Some values are missing or invalid!", Toast.LENGTH_LONG).show();
         }
     }
 
-    private void deleteMessageConfirm(){
+    private void deleteMessageConfirm()
+    {
         AlertDialog.Builder builder = new AlertDialog.Builder(AddScore.this);
         builder.setMessage("Are you sure you want to DELETE this match?")
-                .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                .setPositiveButton("Confirm", new DialogInterface.OnClickListener()
+                {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                    public void onClick(DialogInterface dialog, int which)
+                    {
                         System.out.println("removing match at index " +getMatchIndex());
                         game.removeMatch(getMatchIndex());
                         Intent intent = new Intent(AddScore.this, gamesplayed.class);

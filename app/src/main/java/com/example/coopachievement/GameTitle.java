@@ -15,14 +15,17 @@ import com.example.coopachievement.model.Game;
 import com.example.coopachievement.model.GameConfig;
 import com.example.coopachievement.model.ScoreCalculator;
 
+/**
+ *This class describes the game title i.e. name and description and also let users to save it
+ */
 public class GameTitle extends AppCompatActivity {
 
     GameConfig gameConfig = GameConfig.getInstance();
     Game game;
 
-
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_title);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -31,14 +34,14 @@ public class GameTitle extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
         getMenuInflater().inflate(R.menu.menu_add_score,menu);
         return super.onCreateOptionsMenu(menu);
     }
 
-
-
-    private void saveGame() {
+    private void saveGame()
+    {
         EditText name = findViewById(R.id.editTextGameName);
         EditText description = findViewById(R.id.editTextGameDescription);
 
@@ -79,14 +82,15 @@ public class GameTitle extends AppCompatActivity {
         return false;
     }
 
-
-    private void backToMain() {
+    private void backToMain()
+    {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
     }
 
-    private void createNewMatch() {
+    private void createNewMatch()
+    {
         EditText name = findViewById(R.id.editTextGameName);
         EditText description = findViewById(R.id.editTextGameDescription);
         if(!name.getText().toString().isEmpty() && !description.getText().toString().isEmpty() && differenceOf10()){
@@ -99,11 +103,10 @@ public class GameTitle extends AppCompatActivity {
             Intent intent = getIntent();
             int gameIndex = intent.getIntExtra("new_game", -1);
             System.out.println("this happened " + gameIndex);
-            if(gameIndex >= 0){
-
+            if(gameIndex >= 0)
+            {
                 gameConfig.setCurrentGameIndex(gameIndex);
             }
-
 
             Game game = new Game(name.getText().toString(), description.getText().toString(), num_poor_score, num_great_score);
             gameConfig.addGame(game);
@@ -115,17 +118,16 @@ public class GameTitle extends AppCompatActivity {
         else{
             Toast.makeText(this, "One or more required items are missing or invalid!", Toast.LENGTH_SHORT).show();
         }
-
     }
 
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.action_save) {
+    public boolean onOptionsItemSelected(@NonNull MenuItem item)
+    {
+        if (item.getItemId() == R.id.action_save)
+        {
             saveGame();
         }
         //finish();
         return super.onOptionsItemSelected(item);
     }
-
-
 }
