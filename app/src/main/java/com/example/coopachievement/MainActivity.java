@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
         lvManager1.setOnItemClickListener((parent, view, position, id) -> {
             TextView textView = (TextView) view;
             String message = "You clicked # " + position + ", which is game: " + textView.getText().toString();
+            gameConfig.setAccessedMatches(false);
             Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
             SwitchActivity(position);
         });
@@ -92,10 +93,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if(!extractedText.equals("") && !gameConfig.getisDelete()){
-            for(int i = 0; i<gameInfo.length; i+=3){
-                Game game = new Game(gameInfo[i], gameInfo[i+1]);
-                if(gameInfo.length - i >= 3){
-                    String[] matches = gameInfo[i+2].split(";");
+            for(int i = 0; i<gameInfo.length; i+=5){
+                Game game = new Game(gameInfo[i], gameInfo[i+1], Integer.parseInt(gameInfo[i+2]), Integer.parseInt(gameInfo[i+3]));
+                if(gameInfo.length - i >= 5){
+                    String[] matches = gameInfo[i+4].split(";");
                     for(int j = 0; j<matches.length; j+=3){
                         ScoreCalculator scoreCalculator = new ScoreCalculator();
                         scoreCalculator.setNumPlayers(Integer.parseInt(matches[j]));
@@ -111,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         List<String> items = new ArrayList<>();
-        for(int i = 0; i<gameInfo.length; i+=3){
+        for(int i = 0; i<gameInfo.length; i+=5){
             if(!gameInfo[i].equals("") && !gameConfig.getisDelete())
             {
                 items.add(gameInfo[i]);
@@ -130,6 +131,10 @@ public class MainActivity extends AppCompatActivity {
             stringBuilder.append(game.getName());
             stringBuilder.append(",");
             stringBuilder.append(game.getDescription());
+            stringBuilder.append(",");
+            stringBuilder.append(game.getPoorScore());
+            stringBuilder.append(",");
+            stringBuilder.append(game.getGreatScore());
             stringBuilder.append(",");
 
             List<ScoreCalculator> matchList = game.getMatchList();

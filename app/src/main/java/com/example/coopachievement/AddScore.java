@@ -96,7 +96,8 @@ public class AddScore extends AppCompatActivity {
                 return true;
 
             case android.R.id.home:
-                Intent intent = new Intent(AddScore.this, gamesplayed.class);
+                GameConfig gameConfig = GameConfig.getInstance();
+                Intent intent = new Intent(this, gamesplayed.class);
                 intent.putExtra("game_index", gameConfig.getCurrentGameIndex());
                 startActivity(intent);
 

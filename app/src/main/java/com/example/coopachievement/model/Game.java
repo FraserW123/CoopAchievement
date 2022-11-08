@@ -52,7 +52,9 @@ public class Game {
             System.out.println(getMatchesNamesList().get(i));
         }
     }
-
+    public List<ScoreCalculator> getMatchList(){
+        return matchesPlayed;
+    }
     public ScoreCalculator getLatestMatch(){
         return matchesPlayed.get(currentMatch);
     }

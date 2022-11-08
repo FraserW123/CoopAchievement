@@ -105,9 +105,10 @@ public class gamesplayed extends AppCompatActivity {
         System.out.println("\n\nRunning this function right now\n\n");
         int gameIndex = getGameIndex();
         if(gameIndex == -1 && gameConfig.isAccessedMatches()){
-
             gameIndex = gameConfig.getCurrentGameIndex();
         }
+        //gameIndex = gameConfig.getCurrentGameIndex();
+
         System.out.println("went here");
         game = gameConfig.getGame(gameIndex);
         List<String> list = game.getMatchesNamesList();
