@@ -45,7 +45,12 @@ public class ScoreCalculator {
     public String getMatchName(){
         return name;
     }
+
+    public void setDate(String date){this.date = date;}
     public String getDate(){return date;}
+
+
+
     public int getMatchesPlayed() {
         return matchesPlayed;
     }

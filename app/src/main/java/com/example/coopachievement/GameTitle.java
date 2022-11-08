@@ -64,12 +64,14 @@ public class GameTitle extends AppCompatActivity {
         EditText name = findViewById(R.id.editTextGameName);
         EditText description = findViewById(R.id.editTextGameDescription);
         if(!name.getText().toString().isEmpty() && !description.getText().toString().isEmpty()){
-            Intent intent = getIntent();
-            int gameIndex = intent.getIntExtra("new_game", -1);
-            System.out.println("this happened " + gameIndex);
-            if(gameIndex >= 0){
-                gameConfig.setCurrentGameIndex(gameIndex);
-            }
+//            Intent intent = getIntent();
+//            int gameIndex = intent.getIntExtra("new_game", -1);
+//            System.out.println("this happened " + gameIndex);
+//            if(gameIndex >= 0){
+//                gameConfig.setCurrentGameIndex(gameIndex);
+//            }
+            int numGames = gameConfig.getNumGame();
+            gameConfig.setCurrentGameIndex(numGames);
             Game game = new Game(name.getText().toString(), description.getText().toString());
             gameConfig.addGame(game);
             gameConfig.setAccessedMatches(true);
