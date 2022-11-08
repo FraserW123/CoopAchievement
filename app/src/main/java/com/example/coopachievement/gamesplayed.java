@@ -27,6 +27,7 @@ public class gamesplayed extends AppCompatActivity {
     GameConfig gameConfig = GameConfig.getInstance();
     Game game;
     Boolean edited = false;
+    boolean checkStore = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,55 +38,60 @@ public class gamesplayed extends AppCompatActivity {
         refreshDisplay();
         populateList();
         listClick();
-        storeMatchList();
+//        if(checkStore){
+//            storeMatchList();
+//        }
+        //storeMatchList();
+
         findViewById(R.id.playGame).setOnClickListener(v-> createNewMatch());
     }
 
-    private void storeMatchList() {
-
-        List<ScoreCalculator> matchList = game.getMatchList();
-        StringBuilder stringBuilder = new StringBuilder();
-        for(int i = 0; i<matchList.size(); i++){
-            stringBuilder.append(matchList.get(i).getNumPlayers());
-            stringBuilder.append(",");
-            stringBuilder.append(matchList.get(i).getScore());
-            stringBuilder.append(",");
-            stringBuilder.append(matchList.get(i).getDate());
-            stringBuilder.append(",");
-            stringBuilder.append(gameConfig.getCurrentGameIndex());
-            stringBuilder.append(",");
-        }
-        SharedPreferences prefs = getSharedPreferences("matches_list", MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putString("MatchesList",stringBuilder.toString());
-        editor.apply();
-
-
-    }
-
-    private void loadMatch() {
-        System.out.println("Loading previous data");
-        int gameIndex = getGameIndex();
-        game = gameConfig.getGame(gameIndex);
-        SharedPreferences prefs = getSharedPreferences("matches_list", MODE_PRIVATE);
-        String extractedText = prefs.getString("MatchesList","");
-        System.out.println("should be stuff here "+extractedText);
-        String[] matchInfo = extractedText.split(",");
-
-        if(!extractedText.equals("") && matchInfo.length >= 4){
-            System.out.println("look at this thing " + matchInfo[3]);
-            if(Integer.parseInt(matchInfo[3]) == gameConfig.getCurrentGameIndex()){
-                for(int i = 0; i<matchInfo.length; i+=4){
-                    ScoreCalculator scoreCalculator = new ScoreCalculator();
-                    scoreCalculator.setNumPlayers(Integer.parseInt(matchInfo[i]));
-                    scoreCalculator.setScore(Integer.parseInt(matchInfo[i+1]));
-                    scoreCalculator.setDate(matchInfo[i+2]);
-                    scoreCalculator.setMatchName();
-                    game.addMatch(scoreCalculator);
-                }
-            }
-        }
-    }
+//    private void storeMatchList() {
+//
+//        List<ScoreCalculator> matchList = game.getMatchList();
+//        StringBuilder stringBuilder = new StringBuilder();
+//        for(int i = 0; i<matchList.size(); i++){
+//            stringBuilder.append(matchList.get(i).getNumPlayers());
+//            stringBuilder.append(",");
+//            stringBuilder.append(matchList.get(i).getScore());
+//            stringBuilder.append(",");
+//            stringBuilder.append(matchList.get(i).getDate());
+//            stringBuilder.append(",");
+//            stringBuilder.append(gameConfig.getCurrentGameIndex());
+//            stringBuilder.append(",");
+//        }
+//        SharedPreferences prefs = getSharedPreferences("matches_list", MODE_PRIVATE);
+//        SharedPreferences.Editor editor = prefs.edit();
+//        editor.putString("MatchesList",stringBuilder.toString());
+//        //editor.putStringSet("MatchesList")
+//        editor.apply();
+//
+//
+//    }
+//
+//    private void loadMatch() {
+//        System.out.println("Loading previous data");
+//        int gameIndex = getGameIndex();
+//        game = gameConfig.getGame(gameIndex);
+//        SharedPreferences prefs = getSharedPreferences("matches_list", MODE_PRIVATE);
+//        String extractedText = prefs.getString("MatchesList","");
+//        System.out.println("should be stuff here "+extractedText);
+//        String[] matchInfo = extractedText.split(",");
+//
+//        if(!extractedText.equals("") && matchInfo.length >= 4){
+//            System.out.println("look at this thing " + matchInfo[3]);
+//            if(Integer.parseInt(matchInfo[3]) == gameConfig.getCurrentGameIndex()){
+//                for(int i = 0; i<matchInfo.length; i+=4){
+//                    ScoreCalculator scoreCalculator = new ScoreCalculator();
+//                    scoreCalculator.setNumPlayers(Integer.parseInt(matchInfo[i]));
+//                    scoreCalculator.setScore(Integer.parseInt(matchInfo[i+1]));
+//                    scoreCalculator.setDate(matchInfo[i+2]);
+//                    scoreCalculator.setMatchName();
+//                    game.addMatch(scoreCalculator);
+//                }
+//            }
+//        }
+//    }
 
     private void refreshDisplay() {
         int gameIndex = getGameIndex();
@@ -124,7 +130,7 @@ public class gamesplayed extends AppCompatActivity {
 
         if(list.isEmpty()){
             System.out.println("going through here");
-            loadMatch();
+            //loadMatch();
             list = game.getMatchesNamesList();
         }
         for(int i = 0; i<list.size(); i++){
@@ -139,6 +145,8 @@ public class gamesplayed extends AppCompatActivity {
                 this, R.layout.list_matches,list);
         ListView lvManager = findViewById(R.id.lvMatchView);
         lvManager.setAdapter(adapter);
+
+
     }
 
     private void createNewMatch() {
@@ -160,7 +168,7 @@ public class gamesplayed extends AppCompatActivity {
             for(int i = 0; i<game.getMatchList().size(); i++){
                 game.removeMatch(i);
             }
-            storeMatchList();
+            //storeMatchList();
             gameConfig.deleteGame(gameIndex);
         }
         backToMain();

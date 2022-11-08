@@ -13,6 +13,9 @@ public class GameConfig {
     private boolean accessedMatches;
 
     private static GameConfig instance;
+
+    //private List<String>
+
     private GameConfig(){
 
     }

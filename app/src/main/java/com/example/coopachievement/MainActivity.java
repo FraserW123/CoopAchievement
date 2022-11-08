@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.coopachievement.model.Game;
 import com.example.coopachievement.model.GameConfig;
+import com.example.coopachievement.model.ScoreCalculator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,12 +71,41 @@ public class MainActivity extends AppCompatActivity {
         String extractedText = prefs.getString("StartGameList","");
         System.out.println(extractedText);
 
-        String[] gameInfo = extractedText.split(",");
+        String[] gameInfo = new String[0];
+
+        for(int i = 0; extractedText.charAt(i) != ':' ; i++){
+            if(extractedText.charAt(i) != ','){
+                gameInfo[i] += extractedText.charAt(i);
+            }
+            if(extractedText.charAt(i) == ';'){
+
+            }
+        }
+
+
+
+
+
+
+
+
+        for(int i = 0; i< gameInfo.length; i++){
+            System.out.println("game info " + gameInfo[i]);
+        }
 
         if(!extractedText.equals("") && !gameConfig.getisDelete()){
-            for(int i = 0; i<gameInfo.length; i+=2){
-                Game game = new Game(gameInfo[i], gameInfo[i+1]);
-                gameConfig.addGame(game);
+            for(int i = 0; i<gameInfo.length; i++){
+                for(int j = 0; j<gameInfo[i].length(); i++){
+                    Game game = new Game(gameInfo[j], gameInfo[i+1]);
+
+                    ScoreCalculator scoreCalculator = new ScoreCalculator();
+
+
+                    gameConfig.addGame(game);
+                }
+
+
+
             }
         }
         List<String> items = new ArrayList<>();
@@ -92,11 +122,27 @@ public class MainActivity extends AppCompatActivity {
         StringBuilder stringBuilder = new StringBuilder();
 
         for(int i = 0; i<gameList.size(); i++){
-            stringBuilder.append(gameList.get(i).getName());
+            Game game = gameList.get(i);
+
+            stringBuilder.append(game.getName());
             stringBuilder.append(",");
-            stringBuilder.append(gameList.get(i).getDescription());
+            stringBuilder.append(game.getDescription());
             stringBuilder.append(",");
+
+
+            List<ScoreCalculator> matches = game.getMatchList();
+            for(int j = 0; j<matches.size(); j++){
+                stringBuilder.append(matches.get(j).getNumPlayers());
+                stringBuilder.append(",");
+                stringBuilder.append(matches.get(j).getScore());
+                stringBuilder.append(",");
+                stringBuilder.append(matches.get(j).getDate());
+                stringBuilder.append(",");
+            }
+            stringBuilder.append(";");
+
         }
+        stringBuilder.append(":");
 
         SharedPreferences prefs = getSharedPreferences("games_list", MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
