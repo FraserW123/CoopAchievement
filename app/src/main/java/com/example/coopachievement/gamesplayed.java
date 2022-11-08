@@ -9,6 +9,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,6 +23,7 @@ import android.widget.Toast;
 
 import com.example.coopachievement.model.Game;
 import com.example.coopachievement.model.GameConfig;
+import com.example.coopachievement.model.ScoreCalculator;
 
 import java.util.List;
 
@@ -101,9 +103,16 @@ public class gamesplayed extends AppCompatActivity {
     private void populateList()
     {
         System.out.println("\n\nRunning this function right now\n\n");
-        list = game.getMatchesNamesList();
-        for(int i = 0; i<list.size(); i++)
-        {
+        int gameIndex = getGameIndex();
+        if(gameIndex == -1 && gameConfig.isAccessedMatches()){
+
+            gameIndex = gameConfig.getCurrentGameIndex();
+        }
+        System.out.println("went here");
+        game = gameConfig.getGame(gameIndex);
+        List<String> list = game.getMatchesNamesList();
+
+        for(int i = 0; i<list.size(); i++){
             System.out.println("list item "+ (i+1) + " " + list.get(i));
         }
         int matches = game.getNumMatchesPlayed();
@@ -141,11 +150,12 @@ public class gamesplayed extends AppCompatActivity {
     private void deleteGame()
     {
         int gameIndex = gameConfig.getCurrentGameIndex();
-        System.out.println("deleting game at index " + gameIndex);
-        if(gameIndex >= 0)
-        {
+        if(gameIndex >= 0){
+            for(int i = 0; i<game.getMatchList().size(); i++){
+                game.removeMatch(i);
+            }
+            //storeMatchList();
             gameConfig.deleteGame(gameIndex);
-            System.out.println("Number of games left " + gameConfig.getNumGame());
         }
         backToMain();
     }

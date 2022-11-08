@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.coopachievement.model.Game;
 import com.example.coopachievement.model.GameConfig;
+import com.example.coopachievement.model.ScoreCalculator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,8 +38,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         findViewById(R.id.addGameConfig).setOnClickListener(v->{
             Intent intent = new Intent(this, GameTitle.class);
-            System.out.println("game played so far "+gameConfig.getNumGame());
-            intent.putExtra("new_game", gameConfig.getNumGame());
             startActivity(intent);
         });
         nogames = findViewById(R.id.nogames);
@@ -88,15 +87,31 @@ public class MainActivity extends AppCompatActivity {
         System.out.println(extractedText);
 
         String[] gameInfo = extractedText.split(",");
+        for(int i = 0; i<gameInfo.length; i++){
+            System.out.println("this one " + gameInfo[i]);
+        }
 
         if(!extractedText.equals("") && !gameConfig.getisDelete()){
-            for(int i = 0; i<gameInfo.length; i+=4){
-                Game game = new Game(gameInfo[i], gameInfo[i+1], Integer.parseInt(gameInfo[i+2]), Integer.parseInt(gameInfo[i+3]));
+            for(int i = 0; i<gameInfo.length; i+=3){
+                Game game = new Game(gameInfo[i], gameInfo[i+1]);
+                if(gameInfo.length - i >= 3){
+                    String[] matches = gameInfo[i+2].split(";");
+                    for(int j = 0; j<matches.length; j+=3){
+                        ScoreCalculator scoreCalculator = new ScoreCalculator();
+                        scoreCalculator.setNumPlayers(Integer.parseInt(matches[j]));
+                        scoreCalculator.setScore(Integer.parseInt(matches[j+1]));
+                        scoreCalculator.setDate(matches[j+2]);
+                        scoreCalculator.setMatchName();
+                        game.addMatch(scoreCalculator);
+                    }
+
+                }
+
                 gameConfig.addGame(game);
             }
         }
         List<String> items = new ArrayList<>();
-        for(int i = 0; i<gameInfo.length; i+=4){
+        for(int i = 0; i<gameInfo.length; i+=3){
             if(!gameInfo[i].equals("") && !gameConfig.getisDelete())
             {
                 items.add(gameInfo[i]);
@@ -109,16 +124,30 @@ public class MainActivity extends AppCompatActivity {
     {
         List<Game> gameList = gameConfig.getGameList();
         StringBuilder stringBuilder = new StringBuilder();
-        for(int i = 0; i<gameList.size(); i++)
-        {
-            stringBuilder.append(gameList.get(i).getName());
+
+        for(int i = 0; i<gameList.size(); i++){
+            Game game = gameList.get(i);
+            stringBuilder.append(game.getName());
             stringBuilder.append(",");
-            stringBuilder.append(gameList.get(i).getDescription());
+            stringBuilder.append(game.getDescription());
             stringBuilder.append(",");
-            stringBuilder.append(gameList.get(i).getPoorScore());
-            stringBuilder.append(",");
-            stringBuilder.append(gameList.get(i).getGreatScore());
-            stringBuilder.append(",");
+
+            List<ScoreCalculator> matchList = game.getMatchList();
+            if(!matchList.isEmpty()){
+                StringBuilder matchString = new StringBuilder();
+                for(int j = 0; j<matchList.size(); j++){
+                    ScoreCalculator matches = matchList.get(j);
+                    matchString.append(matches.getNumPlayers());
+                    matchString.append(";");
+                    matchString.append(matches.getScore());
+                    matchString.append(";");
+                    matchString.append(matches.getDate());
+                    matchString.append(";");
+                }
+                stringBuilder.append(matchString);
+                stringBuilder.append(",");
+            }
+
         }
 
         SharedPreferences prefs = getSharedPreferences("games_list", MODE_PRIVATE);

@@ -41,9 +41,7 @@ public class AddScore extends AppCompatActivity {
         {
             toolbar.setTitle("Editing match");
         }
-
         toolbar.setDisplayHomeAsUpEnabled(true);
-
     }
 
     private void refreshDisplay()
@@ -97,7 +95,13 @@ public class AddScore extends AppCompatActivity {
                 deleteMessageConfirm();
                 return true;
 
+            case android.R.id.home:
+                Intent intent = new Intent(AddScore.this, gamesplayed.class);
+                intent.putExtra("game_index", gameConfig.getCurrentGameIndex());
+                startActivity(intent);
+
             default:
+
                 return super.onOptionsItemSelected(item);
         }
     }
@@ -141,6 +145,7 @@ public class AddScore extends AppCompatActivity {
             }
             //System.out.println("the name is " + score_calc.getAchievementLevel());
 
+
             FragmentManager manager = getSupportFragmentManager();
             AlertMessageFragment alert = new AlertMessageFragment();
             alert.show(manager, "AlertMessage");
@@ -163,6 +168,7 @@ public class AddScore extends AppCompatActivity {
                         System.out.println("removing match at index " +getMatchIndex());
                         game.removeMatch(getMatchIndex());
                         Intent intent = new Intent(AddScore.this, gamesplayed.class);
+                        intent.putExtra("game_index", gameConfig.getCurrentGameIndex());
                         startActivity(intent);
                     }
                 }).setNegativeButton("Cancel", null);
