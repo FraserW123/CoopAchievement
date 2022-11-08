@@ -86,7 +86,14 @@ public class AddScore extends AppCompatActivity {
             case R.id.action_delete:
                 deleteMessageConfirm();
                 return true;
+
+            case android.R.id.home:
+                Intent intent = new Intent(AddScore.this, gamesplayed.class);
+                intent.putExtra("game_index", gameConfig.getCurrentGameIndex());
+                startActivity(intent);
+
             default:
+
                 return super.onOptionsItemSelected(item);
         }
     }
