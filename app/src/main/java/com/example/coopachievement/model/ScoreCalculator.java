@@ -41,11 +41,13 @@ public class ScoreCalculator {
         matchName.add(name);
     }
 
-    public String getMatchName(){
+    public String getMatchName()
+    {
         return name;
     }
 
-    public int getMatchesPlayed() {
+    public int getMatchesPlayed() 
+    {
         return matchesPlayed;
     }
 
@@ -57,7 +59,8 @@ public class ScoreCalculator {
 
     public int getScore(){return Score;}
 
-    public String setAchievementLevel(){
+    public String setAchievementLevel()
+    {
         int increment = (greatScore - poorScore) / 8;
 
         if (Score <= poorScore * numPlayers){
