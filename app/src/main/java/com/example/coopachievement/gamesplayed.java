@@ -38,7 +38,6 @@ public class gamesplayed extends AppCompatActivity {
         populateList();
         listClick();
         storeMatchList();
-        getMatchList();
         findViewById(R.id.playGame).setOnClickListener(v-> createNewMatch());
     }
 
@@ -50,8 +49,6 @@ public class gamesplayed extends AppCompatActivity {
             stringBuilder.append(",");
             stringBuilder.append(matchList.get(i).getScore());
             stringBuilder.append(",");
-            stringBuilder.append(matchList.get(i).getDate());
-            stringBuilder.append(",");
         }
         SharedPreferences prefs = getSharedPreferences("matches_list", MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
@@ -59,27 +56,28 @@ public class gamesplayed extends AppCompatActivity {
         editor.apply();
     }
 
-    private List<String> getMatchList() {
-        game = gameConfig.getCurrentGame();
+    private void getMatchList() {
+        int gameIndex = getGameIndex();
+        game = gameConfig.getGame(gameIndex);
 
         SharedPreferences prefs = getSharedPreferences("matches_list", MODE_PRIVATE);
         String extractedText = prefs.getString("MatchesList","");
         System.out.println(extractedText);
         String[] matchInfo = extractedText.split(",");
         if(!extractedText.equals("")){
-            for(int i = 0; i<matchInfo.length; i+=3){
+            for(int i = 0; i<matchInfo.length; i+=2){
                 ScoreCalculator scoreCalculator = new ScoreCalculator();
                 scoreCalculator.setNumPlayers(Integer.parseInt(matchInfo[i]));
                 scoreCalculator.setScore(Integer.parseInt(matchInfo[i+1]));
+                scoreCalculator.setMatchName();
+                game.addMatch(scoreCalculator);
             }
         }
-        return null;
     }
 
     private void refreshDisplay() {
         int gameIndex = getGameIndex();
-        getMatchList();
-        if(gameIndex == -1 && gameConfig.isAccessedMatches()){
+        if(gameIndex == -1 && !gameConfig.isAccessedMatches()){
             gameIndex = gameConfig.getCurrentGameIndex();
         }
         if(gameIndex >= 0){
@@ -105,7 +103,17 @@ public class gamesplayed extends AppCompatActivity {
 
     private void populateList() {
         System.out.println("\n\nRunning this function right now\n\n");
+        int gameIndex = getGameIndex();
+        if(gameIndex == -1 && !gameConfig.isAccessedMatches()){
+            System.out.println("this happened");
+            gameIndex = gameConfig.getCurrentGameIndex();
+        }
+        game = gameConfig.getGame(gameIndex);
         List<String> list = game.getMatchesNamesList();
+        if(list.isEmpty()){
+            getMatchList();
+            list = game.getMatchesNamesList();
+        }
         for(int i = 0; i<list.size(); i++){
             System.out.println("list item "+ (i+1) + " " + list.get(i));
         }

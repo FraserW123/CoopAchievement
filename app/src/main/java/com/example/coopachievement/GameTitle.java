@@ -68,7 +68,6 @@ public class GameTitle extends AppCompatActivity {
             int gameIndex = intent.getIntExtra("new_game", -1);
             System.out.println("this happened " + gameIndex);
             if(gameIndex >= 0){
-
                 gameConfig.setCurrentGameIndex(gameIndex);
             }
             Game game = new Game(name.getText().toString(), description.getText().toString());
