@@ -17,6 +17,7 @@ import com.example.coopachievement.model.ScoreCalculator;
 
 /**
  *This class describes the game title i.e. name and description and also let users to save it
+ * poor and good score should have difference of 10
  */
 public class GameTitle extends AppCompatActivity {
 
