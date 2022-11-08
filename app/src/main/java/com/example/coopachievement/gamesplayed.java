@@ -121,6 +121,11 @@ public class gamesplayed extends AppCompatActivity {
     private void createNewMatch()
     {
         if(differenceOf10()) {
+            EditText poor_score = findViewById(R.id.etn_poorScore);
+            EditText great_score = findViewById(R.id.etn_greatScore);
+
+            game.setPoorScore(Integer.parseInt(poor_score.getText().toString()));
+            game.setGreatScore(Integer.parseInt(great_score.getText().toString()));
             gameConfig.setAccessedMatches(true);
             game.setCurrentMatch(game.getNumMatchesPlayed());
 

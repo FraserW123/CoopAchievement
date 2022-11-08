@@ -11,12 +11,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.coopachievement.model.Game;
 import com.example.coopachievement.model.GameConfig;
 import com.example.coopachievement.model.ScoreCalculator;
+
+import java.util.List;
 
 /**
  * This class give opportunity to players to add a new game score
@@ -44,6 +48,35 @@ public class AddScore extends AppCompatActivity {
 
         toolbar.setDisplayHomeAsUpEnabled(true);
 
+        findViewById(R.id.btn_display_levels).setOnClickListener(v->displayLevels());
+    }
+
+    private void displayLevels() {
+        EditText display_level_players = findViewById(R.id.etn_enter_num_players);
+        String dl_players = display_level_players.getText().toString();
+
+        if(!dl_players.equals("")) {
+            int players = Integer.parseInt(dl_players);
+            if (players > 0) {
+                ScoreCalculator scoreCalc = new ScoreCalculator();
+                scoreCalc.setPoorScore(game.getPoorScore());
+                scoreCalc.setGreatScore(game.getGreatScore());
+
+                scoreCalc.setNumPlayers(players);
+
+                List<String> list = scoreCalc.fillLevelsList();
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                        this, R.layout.list_game_config, list);
+                ListView lvLevelManager = findViewById(R.id.lv_display_levels);
+                lvLevelManager.setAdapter(adapter);
+            }
+            else{
+                Toast.makeText(AddScore.this, "Please enter a valid number of players!", Toast.LENGTH_LONG).show();
+            }
+        }
+        else{
+            Toast.makeText(AddScore.this, "Please enter a valid number of players!", Toast.LENGTH_LONG).show();
+        }
     }
 
     private void refreshDisplay()

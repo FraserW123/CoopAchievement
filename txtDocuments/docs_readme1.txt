@@ -1,6 +1,6 @@
 Features implemented
 
-A.game configuration
+A. Game configuration
 1. Created a new game configuration with all the features as requirement such as each game configuration have a name, description, per player score and also set up the poor score that a player might earn and great score that a player might earn.
 2. Provided the display of achievement levels for an existing game configuration with all the requirements needed to be fulfilled such as
       a. view of achievement when number of players entered
@@ -13,7 +13,7 @@ A.game configuration
 5. Persist game i.e. shared preferences in the list view of games names
 6. also shows the empty state on first launching the application
 
-B.Game plays
+B. Game plays
 1. Record the games played and also shows the achievements earned
    a. Also have the feature to enter number of players and combined score to record new game play
    b. Displays the achievement level earned

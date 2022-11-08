@@ -21,6 +21,8 @@ public class ScoreCalculator {
     String level;
     String name;
 
+    List<String> levels = new ArrayList<>();
+
     public void setPoorScore(int poor_score){poorScore = poor_score;}
     public int getPoorScore(){return poorScore;}
 
@@ -93,5 +95,22 @@ public class ScoreCalculator {
         else{
             return "Ultimate Unicorns!";
         }
+    }
+
+    public List<String> fillLevelsList(){
+        int increment = (greatScore - poorScore) / 8;
+
+        levels.add("Goofy Goblins! is equal to and greater than " + 0);
+        levels.add("Timid Trolls! is equal to and greater than " + (poorScore));
+        levels.add("Zippy Zombies! is equal to and greater than " + ((poorScore + increment) * numPlayers));
+        levels.add("Spooky Spiders! is equal to and greater than " + ((poorScore + 2 * increment) * numPlayers));
+        levels.add("Vicious Vampires! is equal to and greater than " + ((poorScore + 3 * increment) * numPlayers));
+        levels.add("Lucky Lions! is equal to and greater than " + ((poorScore + 4 * increment) * numPlayers));
+        levels.add("Fantastic Fairies! is equal to and greater than " + ((poorScore + 5 * increment) * numPlayers));
+        levels.add("Supreme Serpents! is equal to and greater than " + ((poorScore + 6 * increment) * numPlayers));
+        levels.add("Dancing Dragons! is equal to and greater than " +((poorScore + 7 * increment) * numPlayers));
+        levels.add("Ultimate Unicorns! is equal to and greater than " + (greatScore * numPlayers - 1));
+
+        return levels;
     }
 }
