@@ -9,19 +9,17 @@ public class Game {
     String description;
     int numMatchesPlayed = 0;
     int currentMatch = 0;
-    boolean isAccessed;
+    boolean isMatchesAccessed;
 
-    public boolean isAccessed() {
-        return isAccessed;
+    public boolean isMatchesAccessed() {
+        return isMatchesAccessed;
     }
-
-    public void setAccessed(boolean accessed) {
-        isAccessed = accessed;
+    public void setMatchesAccessed(boolean matchesAccessed) {
+        isMatchesAccessed = matchesAccessed;
     }
-
-
 
     ArrayList<ScoreCalculator> matchesPlayed = new ArrayList<>();
+
 
     public Game(String name, String description) {
         this.name = name;
@@ -31,7 +29,6 @@ public class Game {
     public void addMatch(ScoreCalculator match){
         matchesPlayed.add(match);
         numMatchesPlayed++;
-        System.out.println("added a match the size is now" + matchesPlayed.size());
     }
 
     public void removeMatch(int index){
@@ -60,9 +57,7 @@ public class Game {
     public List<ScoreCalculator> getMatchList(){return matchesPlayed;}
     public List<String> getMatchesNamesList(){
         ArrayList<String> matchList = new ArrayList<>();
-        System.out.println("current number of matches is " + matchesPlayed.size());
         for(int i = 0; i<numMatchesPlayed; i++){
-            System.out.println("adding " + i +"'th games to the list");
             matchList.add(matchesPlayed.get(i).getMatchName());
         }
         return matchList;

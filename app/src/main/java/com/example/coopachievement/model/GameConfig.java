@@ -12,11 +12,6 @@ public class GameConfig {
     private boolean isDelete;
     private boolean accessedMatches;
 
-
-
-    private boolean isRestart = false;
-
-
     private static GameConfig instance;
     private GameConfig(){
 
@@ -51,13 +46,6 @@ public class GameConfig {
         Log.i("after","games after " + getNumGame());
     }
 
-    public boolean isRestart() {
-        return isRestart;
-    }
-
-    public void setRestart(boolean restart) {
-        isRestart = restart;
-    }
 
     public Game getCurrentGame() {
         return gameName.get(currentGameIndex);

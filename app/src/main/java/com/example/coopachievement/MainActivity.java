@@ -29,8 +29,6 @@ public class MainActivity extends AppCompatActivity {
 
         findViewById(R.id.addGameConfig).setOnClickListener(v->{
             Intent intent = new Intent(this, GameTitle.class);
-//            System.out.println("game played so far "+gameConfig.getNumGame());
-//            intent.putExtra("new_game", gameConfig.getNumGame());
             startActivity(intent);
         });
 

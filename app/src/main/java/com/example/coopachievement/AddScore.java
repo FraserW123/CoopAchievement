@@ -34,9 +34,7 @@ public class AddScore extends AppCompatActivity {
         }else{
             toolbar.setTitle("Editing match");
         }
-
         toolbar.setDisplayHomeAsUpEnabled(true);
-
     }
 
     private void refreshDisplay() {
@@ -88,11 +86,6 @@ public class AddScore extends AppCompatActivity {
             case R.id.action_delete:
                 deleteMessageConfirm();
                 return true;
-            case android.R.id.home:
-                Intent intent = new Intent(this, gamesplayed.class);
-                intent.putExtra("game_index", gameConfig.getCurrentGameIndex());
-                startActivity(intent);
-
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -124,10 +117,6 @@ public class AddScore extends AppCompatActivity {
                 score_calc.setAchievementLevel();
                 score_calc.setMatchName();
             }
-            //System.out.println("the name is " + score_calc.getAchievementLevel());
-
-
-
 
             FragmentManager manager = getSupportFragmentManager();
             AlertMessageFragment alert = new AlertMessageFragment();
