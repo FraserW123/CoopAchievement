@@ -17,11 +17,13 @@ public class Game {
     int currentMatch = 0;
     boolean isAccessed;
 
-    public boolean isAccessed() {
+    public boolean isAccessed() 
+    {
         return isAccessed;
     }
 
-    public void setAccessed(boolean accessed) {
+    public void setAccessed(boolean accessed) 
+    {
         isAccessed = accessed;
     }
 
@@ -60,7 +62,8 @@ public class Game {
 
     public void setCurrentMatch(int index){currentMatch = index;}
 
-    public int getNumMatchesPlayed(){
+    public int getNumMatchesPlayed()
+    {
         return numMatchesPlayed;
     }
 
@@ -76,33 +79,41 @@ public class Game {
         return matchList;
     }
 
-    public void setName(String name) {
+    public void setName(String name)
+    {
         this.name = name;
     }
 
-    public String getName() {
+    public String getName() 
+    {
         return name;
     }
 
-    public void setDescription(String description) {
+    public void setDescription(String description) 
+    {
         this.description = description;
     }
 
-    public String getDescription() {
+    public String getDescription() 
+    {
         return description;
     }
 
-    public void setPoorScore(int poorScore) {
+    public void setPoorScore(int poorScore) 
+    {
         this.poor_score = poorScore;
     }
-    public int getPoorScore() {
+    public int getPoorScore() 
+    {
         return poor_score;
     }
 
-    public void setGreatScore(int greatScore) {
+    public void setGreatScore(int greatScore) 
+    {
         this.great_score = greatScore;
     }
-    public int getGreatScore() {
+    public int getGreatScore() 
+    {
         return great_score;
     }
 }
