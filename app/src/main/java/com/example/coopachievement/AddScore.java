@@ -66,7 +66,7 @@ public class AddScore extends AppCompatActivity {
 
                 List<String> list = scoreCalc.fillLevelsList();
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                        this, R.layout.list_game_config, list);
+                        this, R.layout.list_matches, list);
                 ListView lvLevelManager = findViewById(R.id.lv_display_levels);
                 lvLevelManager.setAdapter(adapter);
             }

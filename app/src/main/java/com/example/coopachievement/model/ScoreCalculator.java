@@ -65,28 +65,28 @@ public class ScoreCalculator {
     {
         int increment = (greatScore - poorScore) / 8;
 
-        if (Score <= poorScore * numPlayers){
+        if (Score < poorScore * numPlayers){
             return "Goofy Goblins!";
         }
-        else if (Score <= (poorScore + increment) * numPlayers){
+        else if (Score < (poorScore + increment) * numPlayers){
             return "Timid Trolls!";
         }
-        else if (Score <= (poorScore + 2 * increment) * numPlayers){
+        else if (Score < (poorScore + 2 * increment) * numPlayers){
             return "Zippy Zombies!";
         }
-        else if (Score <= (poorScore + 3 * increment) * numPlayers){
+        else if (Score < (poorScore + 3 * increment) * numPlayers){
             return "Spooky Spiders!";
         }
-        else if (Score <= (poorScore + 4 * increment) * numPlayers){
+        else if (Score < (poorScore + 4 * increment) * numPlayers){
             return "Vicious Vampires!";
         }
-        else if (Score <= (poorScore + 5 * increment) * numPlayers){
+        else if (Score < (poorScore + 5 * increment) * numPlayers){
             return "Lucky Lions!";
         }
-        else if (Score <= (poorScore + 6 * increment) * numPlayers){
+        else if (Score < (poorScore + 6 * increment) * numPlayers){
             return "Fantastic Fairies!";
         }
-        else if (Score <= (poorScore + 7 * increment) * numPlayers){
+        else if (Score < (poorScore + 7 * increment) * numPlayers){
             return "Supreme Serpents!";
         }
         else if (Score < (greatScore) * numPlayers){
