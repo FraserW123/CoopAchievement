@@ -56,6 +56,7 @@ public class GameConfig {
         Log.i("after","games after " + getNumGame());
     }
 
+
     public Game getCurrentGame() {
         return gameName.get(currentGameIndex);
     }

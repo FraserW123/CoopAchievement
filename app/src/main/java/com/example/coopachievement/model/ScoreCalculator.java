@@ -53,6 +53,9 @@ public class ScoreCalculator {
         return matchesPlayed;
     }
 
+    public void setDate(String time){date = time;}
+    public String getDate(){return date;}
+
     public void setNumPlayers(int num_players){numPlayers = num_players;}
 
     public int getNumPlayers(){return numPlayers;}
