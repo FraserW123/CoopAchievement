@@ -8,7 +8,7 @@ A.game configuration
       c. Lowest expected level and highest expected level
       d. Have 8 achievement levels
       e. Also add achievement level for score less than expected lowest level
-3.Edit game configuration i.e. name, description
+3.Edit a game configuration to change its name or per-player expected scores so that when I realize an error, or need to recalibrate poor/great scores for a game, it is easy to do so.
 4.Delete the game which shows alert dialog box to ask user cancel delete or confirm
 5.Persist game i.e. shared preferences in the list view of games names
 6.also shows the empty state on first launching the application
