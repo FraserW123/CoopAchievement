@@ -16,13 +16,13 @@
         <activity
             android:name=".AddScore"
             android:exported="false"
-            android:parentActivityName = ".gamesplayed"/>
+            android:parentActivityName = ".GamesPlayed"/>
         <activity
             android:name=".GameTitle"
             android:exported="false"
             android:parentActivityName=".MainActivity"/>
         <activity
-            android:name=".gamesplayed"
+            android:name=".GamesPlayed"
             android:exported="false"
             android:parentActivityName=".MainActivity"/>
         <activity

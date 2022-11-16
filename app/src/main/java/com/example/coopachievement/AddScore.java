@@ -30,6 +30,7 @@ public class AddScore extends AppCompatActivity {
 
     GameConfig gameConfig = GameConfig.getInstance();
     Game game = gameConfig.getCurrentGame();
+    boolean unsaved = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -123,7 +124,13 @@ public class AddScore extends AppCompatActivity {
         switch(item.getItemId())
         {
             case R.id.action_save:
-                alertMessage();
+                if(unsaved){
+                    alertMessage();
+                    unsaved = false;
+                }else{
+                    Toast.makeText(this,"match already saved",Toast.LENGTH_SHORT).show();
+                }
+
                 return true;
 
             case R.id.action_delete:
@@ -132,7 +139,7 @@ public class AddScore extends AppCompatActivity {
 
             case android.R.id.home:
                 GameConfig gameConfig = GameConfig.getInstance();
-                Intent intent = new Intent(this, gamesplayed.class);
+                Intent intent = new Intent(this, GamesPlayed.class);
                 intent.putExtra("game_index", gameConfig.getCurrentGameIndex());
                 startActivity(intent);
                 return true;
@@ -157,7 +164,7 @@ public class AddScore extends AppCompatActivity {
             int matchIndex = getMatchIndex();
             ScoreCalculator score_calc;
 
-            if(matchIndex == -1)
+            if(matchIndex == -1 && unsaved)
             {
                 score_calc = new ScoreCalculator();
                 score_calc.setPoorScore(game.getPoorScore());
@@ -200,7 +207,7 @@ public class AddScore extends AppCompatActivity {
                     {
                         System.out.println("removing match at index " +getMatchIndex());
                         game.removeMatch(getMatchIndex());
-                        Intent intent = new Intent(AddScore.this, gamesplayed.class);
+                        Intent intent = new Intent(AddScore.this, GamesPlayed.class);
                         intent.putExtra("game_index", gameConfig.getCurrentGameIndex());
                         startActivity(intent);
                     }

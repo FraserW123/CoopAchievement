@@ -37,7 +37,7 @@ public class AlertMessageFragment extends AppCompatDialogFragment  {
         Button button = v.findViewById(R.id.btn_confirmation);
         button.setOnClickListener(w->{
             GameConfig gameConfig = GameConfig.getInstance();
-            Intent intent = new Intent(getActivity(), gamesplayed.class);
+            Intent intent = new Intent(getActivity(), GamesPlayed.class);
             intent.putExtra("game_index", gameConfig.getCurrentGameIndex());
             startActivity(intent);
         });

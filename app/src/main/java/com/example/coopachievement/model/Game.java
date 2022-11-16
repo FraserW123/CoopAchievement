@@ -20,6 +20,8 @@ public class Game {
     int numMatchesPlayed = 0;
     int currentMatch = 0;
     boolean isAccessed;
+    ArrayList<ScoreCalculator> matchesPlayed = new ArrayList<>();
+
 
     public boolean isAccessed()
     {
@@ -30,7 +32,7 @@ public class Game {
         isAccessed = accessed;
     }
 
-    ArrayList<ScoreCalculator> matchesPlayed = new ArrayList<>();
+
 
     public Game(String name, String description, int poorScore, int greatScore)
     {

@@ -1,5 +1,6 @@
 package com.example.coopachievement.model;
 
+import android.content.Context;
 import android.os.Build;
 
 import androidx.annotation.RequiresApi;
@@ -20,8 +21,6 @@ public class ScoreCalculator {
     int greatScore;
     int increment;
     String[] achievementNames = {"Goofy Goblins!","Timid Trolls!","Zippy Zombies!","Spooky Spiders!","Vicious Vampires!","Lucky Lions!","Fantastic Fairies!","Supreme Serpents!","Dancing Dragons!","Ultimate Unicorns!"};
-
-
 
     String difficulty = "";
     String name;
@@ -85,7 +84,7 @@ public class ScoreCalculator {
                 case "Easy":
                     return 0.75;
                 case "Hard":
-                    return 2.0;
+                    return 1.25;
                 default:
                     return 1.0;
             }

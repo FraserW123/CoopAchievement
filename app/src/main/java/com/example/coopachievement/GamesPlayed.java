@@ -1,19 +1,15 @@
 package com.example.coopachievement;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Build;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -25,7 +21,6 @@ import android.widget.Toast;
 
 import com.example.coopachievement.model.Game;
 import com.example.coopachievement.model.GameConfig;
-import com.example.coopachievement.model.ScoreCalculator;
 
 import java.util.List;
 
@@ -35,7 +30,7 @@ import java.util.List;
  * they want to change
  * also shows the empty state on gamesplayed list view when no game is there
  */
-public class gamesplayed extends AppCompatActivity {
+public class GamesPlayed extends AppCompatActivity {
 
     GameConfig gameConfig = GameConfig.getInstance();
     Game game;
@@ -256,7 +251,7 @@ public class gamesplayed extends AppCompatActivity {
 
             game.setPoorScore(Integer.parseInt(poor_score.getText().toString()));
             game.setGreatScore(Integer.parseInt(great_score.getText().toString()));
-            Intent intent = new Intent(gamesplayed.this, MainActivity.class);
+            Intent intent = new Intent(GamesPlayed.this, MainActivity.class);
             startActivity(intent);
         }
         else{

@@ -2,11 +2,9 @@ package com.example.coopachievement;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -166,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void SwitchActivity(int position)
     {
-        Intent intent = new Intent(this, gamesplayed.class);
+        Intent intent = new Intent(this, GamesPlayed.class);
         gameConfig.setCurrentGameIndex(position);
         intent.putExtra("game_index", position);
         startActivity(intent);
