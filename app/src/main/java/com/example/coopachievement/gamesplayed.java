@@ -18,6 +18,8 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,6 +51,7 @@ public class gamesplayed extends AppCompatActivity {
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.activity_gamesplayed);
+        createDifficultyButtons();
         refreshDisplay();
         populateList();
         listClick();
@@ -57,6 +60,25 @@ public class gamesplayed extends AppCompatActivity {
         nogametext = findViewById(R.id.textView4);
         lvManager.setEmptyView(nogameplayed);
         lvManager.setEmptyView(nogametext);
+    }
+
+    private void createDifficultyButtons() {
+        RadioGroup group = findViewById(R.id.rgDifficulty);
+        String[] difficultyOptions = getResources().getStringArray(R.array.Difficulty_Options);
+
+        //creating the buttons
+        for(int i = 0; i<difficultyOptions.length; i++){
+            String difficulty = difficultyOptions[i];
+            RadioButton button = new RadioButton(this);
+            button.setText(difficulty);
+
+            button.setOnClickListener(v->{
+                game.setDifficulty(difficulty);
+            });
+
+            group.addView(button);
+
+        }
     }
 
 
@@ -86,18 +108,23 @@ public class gamesplayed extends AppCompatActivity {
 
     private void listClick()
     {
-        if(differenceOf10()) {
             ListView matchManager = findViewById(R.id.lvMatchView);
             matchManager.setOnItemClickListener(((parent, view, position, id) -> {
-                Intent intent = new Intent(this, AddScore.class);
-                intent.putExtra("match_index", position);
-                game.setCurrentMatch(position);
-                startActivity(intent);
+                if(differenceOf10()){
+                    Intent intent = new Intent(this, AddScore.class);
+                    intent.putExtra("match_index", position);
+                    EditText poor_score = findViewById(R.id.etn_poorScore);
+                    EditText great_score = findViewById(R.id.etn_greatScore);
+                    game.setCurrentMatch(position);
+                    game.setPoorScore(Integer.parseInt(poor_score.getText().toString()));
+                    game.setGreatScore(Integer.parseInt(great_score.getText().toString()));
+                    startActivity(intent);
+                }
+                else{
+                    Toast.makeText(this, "One or more required items are missing or invalid!", Toast.LENGTH_SHORT).show();
+                }
             }));
-        }
-        else{
-            Toast.makeText(this, "One or more required items are missing or invalid!", Toast.LENGTH_SHORT).show();
-        }
+
     }
 
     private void populateList()
@@ -247,9 +274,10 @@ public class gamesplayed extends AppCompatActivity {
         if(!st_poor_score.equals("") && !st_great_score.equals("")) {
             int num_poor_score = Integer.parseInt(st_poor_score);
             int num_great_score = Integer.parseInt(st_great_score);
+            System.out.println(" this is " + (num_great_score - num_poor_score));
             return (num_great_score - num_poor_score) >= 9;
         }
-
+        System.out.println("WHY ARE YOU HERE!!!!!!");
         return false;
     }
 

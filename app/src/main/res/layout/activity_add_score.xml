@@ -54,34 +54,15 @@
 
     <TextView
         android:id="@+id/tv_see_achiev_levels"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        android:text="See achievement levels:"
+        android:layout_width="281dp"
+        android:layout_height="19dp"
+        android:layout_marginTop="56dp"
+        android:gravity="center_horizontal"
+        android:text="Enter the number of players to view levels"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etn_score" />
-
-    <TextView
-        android:id="@+id/tv_enter_num_players"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="20dp"
-        android:text="Enter Number of Players to see:"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_see_achiev_levels" />
-
-    <EditText
-        android:id="@+id/etn_enter_num_players"
-        android:layout_width="148dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:inputType="number"
-        app:layout_constraintStart_toEndOf="@+id/tv_enter_num_players"
-        app:layout_constraintTop_toBottomOf="@+id/tv_see_achiev_levels" />
 
     <ListView
         android:id="@+id/lv_display_levels"
@@ -99,10 +80,10 @@
         android:id="@+id/btn_display_levels"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:text="Display Levels:"
+        android:layout_marginTop="15dp"
+        android:text="Load Levels:"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etn_enter_num_players" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_see_achiev_levels" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

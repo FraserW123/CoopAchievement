@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.example.coopachievement.model.Game;
@@ -30,7 +32,7 @@ public class GameTitle extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_title);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        createDifficultyButtons();
         findViewById(R.id.startGame).setOnClickListener(v-> createNewMatch());
     }
 
@@ -65,6 +67,25 @@ public class GameTitle extends AppCompatActivity {
             Toast.makeText(this, "One or more required items are missing or invalid!", Toast.LENGTH_SHORT).show();
         }
 
+    }
+
+    private void createDifficultyButtons() {
+        RadioGroup group = findViewById(R.id.rgNewDifficulty);
+        String[] difficultyOptions = getResources().getStringArray(R.array.Difficulty_Options);
+
+        //creating the buttons
+        for(int i = 0; i<difficultyOptions.length; i++){
+            String difficulty = difficultyOptions[i];
+            RadioButton button = new RadioButton(this);
+            button.setText(difficulty);
+
+            button.setOnClickListener(v->{
+                game.setDifficulty(difficulty);
+            });
+
+            group.addView(button);
+
+        }
     }
 
     private boolean differenceOf10(){

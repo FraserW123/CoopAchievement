@@ -11,6 +11,10 @@ public class Game {
 
     String name;
     String description;
+
+
+
+    String difficulty = "";
     int poor_score;
     int great_score;
     int numMatchesPlayed = 0;
@@ -21,7 +25,6 @@ public class Game {
     {
         return isAccessed;
     }
-
     public void setAccessed(boolean accessed)
     {
         isAccessed = accessed;
@@ -35,6 +38,14 @@ public class Game {
         this.description = description;
         this.poor_score = poorScore;
         this.great_score = greatScore;
+    }
+
+    public String getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(String difficulty) {
+        this.difficulty = difficulty;
     }
 
     public void addMatch(ScoreCalculator match)

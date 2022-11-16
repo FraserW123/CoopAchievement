@@ -18,10 +18,25 @@ public class ScoreCalculator {
     int Score;
     int poorScore;
     int greatScore;
-    String level;
+    int increment;
+    String[] achievementNames = {"Goofy Goblins!","Timid Trolls!","Zippy Zombies!","Spooky Spiders!","Vicious Vampires!","Lucky Lions!","Fantastic Fairies!","Supreme Serpents!","Dancing Dragons!","Ultimate Unicorns!"};
+
+
+
+    String difficulty = "";
     String name;
 
     List<String> levels = new ArrayList<>();
+
+
+    public String getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(String difficulty) {
+        this.difficulty = difficulty;
+    }
+
 
     public void setPoorScore(int poor_score){poorScore = poor_score;}
     public int getPoorScore(){return poorScore;}
@@ -64,55 +79,47 @@ public class ScoreCalculator {
 
     public int getScore(){return Score;}
 
-    public String setAchievementLevel()
-    {
-        int increment = (greatScore - poorScore) / 8;
+    public double difficultyMultiplier(){
+        if(!difficulty.equals("")){
+            switch (difficulty) {
+                case "Easy":
+                    return 0.75;
+                case "Hard":
+                    return 2.0;
+                default:
+                    return 1.0;
+            }
 
-        if (Score < poorScore * numPlayers){
-            return "Goofy Goblins!";
         }
-        else if (Score < (poorScore + increment) * numPlayers){
-            return "Timid Trolls!";
-        }
-        else if (Score < (poorScore + 2 * increment) * numPlayers){
-            return "Zippy Zombies!";
-        }
-        else if (Score < (poorScore + 3 * increment) * numPlayers){
-            return "Spooky Spiders!";
-        }
-        else if (Score < (poorScore + 4 * increment) * numPlayers){
-            return "Vicious Vampires!";
-        }
-        else if (Score < (poorScore + 5 * increment) * numPlayers){
-            return "Lucky Lions!";
-        }
-        else if (Score < (poorScore + 6 * increment) * numPlayers){
-            return "Fantastic Fairies!";
-        }
-        else if (Score < (poorScore + 7 * increment) * numPlayers){
-            return "Supreme Serpents!";
-        }
-        else if (Score < (greatScore) * numPlayers){
-            return "Dancing Dragons!";
-        }
-        else{
-            return "Ultimate Unicorns!";
-        }
+        return 1.0;
+
     }
 
-    public List<String> fillLevelsList(){
-        int increment = (greatScore - poorScore) / 8;
+    public String setAchievementLevel()
+    {
 
-        levels.add("Goofy Goblins! is equal to and greater than " + 0);
-        levels.add("Timid Trolls! is equal to and greater than " + (poorScore));
-        levels.add("Zippy Zombies! is equal to and greater than " + ((poorScore + increment) * numPlayers));
-        levels.add("Spooky Spiders! is equal to and greater than " + ((poorScore + 2 * increment) * numPlayers));
-        levels.add("Vicious Vampires! is equal to and greater than " + ((poorScore + 3 * increment) * numPlayers));
-        levels.add("Lucky Lions! is equal to and greater than " + ((poorScore + 4 * increment) * numPlayers));
-        levels.add("Fantastic Fairies! is equal to and greater than " + ((poorScore + 5 * increment) * numPlayers));
-        levels.add("Supreme Serpents! is equal to and greater than " + ((poorScore + 6 * increment) * numPlayers));
-        levels.add("Dancing Dragons! is equal to and greater than " +((poorScore + 7 * increment) * numPlayers));
-        levels.add("Ultimate Unicorns! is equal to and greater than " + (greatScore * numPlayers - 1));
+        increment = (greatScore - poorScore) / 8;
+        int length = achievementNames.length;
+        for(int i = 0; i<length; i++){
+            if(Score < (poorScore + (i*increment) * numPlayers)*difficultyMultiplier()){
+                return achievementNames[i];
+            }
+        }
+        return achievementNames[length-1];
+
+    }
+
+
+    public List<String> fillLevelsList(){
+        increment = (greatScore - poorScore) / 8;
+
+        levels.add(achievementNames[0] + " Score: "+ 0 + " - " + (poorScore)*difficultyMultiplier());
+        int length = achievementNames.length;
+        for(int i = 1; i<length-2; i++){
+            levels.add(achievementNames[i] + " Score: " + ((poorScore+(i*increment))*difficultyMultiplier()) + " - " + ((poorScore+(i*increment))*difficultyMultiplier()*numPlayers));
+        }
+        levels.add(achievementNames[length-1] + " Score: > " + ((greatScore*numPlayers))*difficultyMultiplier());
+
 
         return levels;
     }

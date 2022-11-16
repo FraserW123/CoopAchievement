@@ -51,31 +51,32 @@ public class AddScore extends AppCompatActivity {
     }
 
     private void displayLevels() {
-        EditText display_level_players = findViewById(R.id.etn_enter_num_players);
+        //EditText display_level_players = findViewById(R.id.etn_enter_num_players);
+        EditText display_level_players = findViewById(R.id.etn_num_players);
         String dl_players = display_level_players.getText().toString();
+        int players = 0;
+        if(!dl_players.equals("")){
+            players = Integer.parseInt(dl_players);
+        }
 
-        if(!dl_players.equals("")) {
-            int players = Integer.parseInt(dl_players);
-            if (players > 0) {
-                ScoreCalculator scoreCalc = new ScoreCalculator();
-                scoreCalc.setPoorScore(game.getPoorScore());
-                scoreCalc.setGreatScore(game.getGreatScore());
+        if (players > 0) {
+            ScoreCalculator scoreCalc = new ScoreCalculator();
+            scoreCalc.setPoorScore(game.getPoorScore());
+            scoreCalc.setGreatScore(game.getGreatScore());
+            scoreCalc.setDifficulty(game.getDifficulty());
+            scoreCalc.setNumPlayers(players);
 
-                scoreCalc.setNumPlayers(players);
-
-                List<String> list = scoreCalc.fillLevelsList();
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                        this, R.layout.list_matches, list);
-                ListView lvLevelManager = findViewById(R.id.lv_display_levels);
-                lvLevelManager.setAdapter(adapter);
-            }
-            else{
-                Toast.makeText(AddScore.this, "Please enter a valid number of players!", Toast.LENGTH_LONG).show();
-            }
+            List<String> list = scoreCalc.fillLevelsList();
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                    this, R.layout.list_matches, list);
+            ListView lvLevelManager = findViewById(R.id.lv_display_levels);
+            lvLevelManager.setAdapter(adapter);
         }
         else{
             Toast.makeText(AddScore.this, "Please enter a valid number of players!", Toast.LENGTH_LONG).show();
         }
+
+
     }
 
     private void refreshDisplay()
@@ -134,6 +135,7 @@ public class AddScore extends AppCompatActivity {
                 Intent intent = new Intent(this, gamesplayed.class);
                 intent.putExtra("game_index", gameConfig.getCurrentGameIndex());
                 startActivity(intent);
+                return true;
 
             default:
 
@@ -170,15 +172,12 @@ public class AddScore extends AppCompatActivity {
             {
                 score_calc = game.getMatch(matchIndex);
                 score_calc.setPoorScore(game.getPoorScore());
-                //System.out.println("poor is "+score_calc.getPoorScore());
                 score_calc.setGreatScore(game.getGreatScore());
-                //System.out.println("great is "+score_calc.getGreatScore());
                 score_calc.setNumPlayers(players);
                 score_calc.setScore(score);
                 score_calc.setAchievementLevel();
                 score_calc.setMatchName();
             }
-            //System.out.println("the name is " + score_calc.getAchievementLevel());
 
             FragmentManager manager = getSupportFragmentManager();
             AlertMessageFragment alert = new AlertMessageFragment();
