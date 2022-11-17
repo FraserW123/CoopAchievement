@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,23 +25,26 @@ import com.example.coopachievement.model.GameConfig;
  */
 public class AlertMessageFragment extends AppCompatDialogFragment  {
     ImageView iv_changing_image;
-
+    MediaPlayer player;
+    View v;
     @NonNull
     //@Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState)
     {
         //Create view
-        View v = LayoutInflater.from(getActivity())
+        v = LayoutInflater.from(getActivity())
                 .inflate(R.layout.alert_message_layout, null);
-
+        player = MediaPlayer.create(getActivity(),R.raw.congo);
+        playsong();
+        okaybutton();
         //Create a button listener
-        Button button = v.findViewById(R.id.btn_confirmation);
-        button.setOnClickListener(w->{
-            GameConfig gameConfig = GameConfig.getInstance();
-            Intent intent = new Intent(getActivity(), gamesplayed.class);
-            intent.putExtra("game_index", gameConfig.getCurrentGameIndex());
-            startActivity(intent);
-        });
+//        Button button = v.findViewById(R.id.btn_confirmation);
+//        button.setOnClickListener(w->{
+//            GameConfig gameConfig = GameConfig.getInstance();
+//            Intent intent = new Intent(getActivity(), gamesplayed.class);
+//            intent.putExtra("game_index", gameConfig.getCurrentGameIndex());
+//            startActivity(intent);
+//        });
         GameConfig gameConfig = GameConfig.getInstance();
         Game game = gameConfig.getCurrentGame();
         String level = game.getLatestMatch().setAchievementLevel();
@@ -53,6 +57,23 @@ public class AlertMessageFragment extends AppCompatDialogFragment  {
                 .setMessage("You are the " + level)
                 .setView(v)
                 .create();
+    }
+
+    private void okaybutton() {
+        Button button = v.findViewById(R.id.btn_confirmation);
+        button.setOnClickListener(w->{
+            GameConfig gameConfig = GameConfig.getInstance();
+            Intent intent = new Intent(getActivity(), gamesplayed.class);
+            intent.putExtra("game_index", gameConfig.getCurrentGameIndex());
+            player.stop();
+            player.setLooping(false);
+            startActivity(intent);
+        });
+    }
+
+    private void playsong() {
+        player.start();
+        player.setLooping(true);
     }
 
     public void change(String achieve_level)
