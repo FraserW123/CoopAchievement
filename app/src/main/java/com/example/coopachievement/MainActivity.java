@@ -97,11 +97,8 @@ public class MainActivity extends AppCompatActivity {
                 if(gameInfo.length - i >= 5){
                     String[] matches = gameInfo[i+4].split(";");
                     for(int j = 0; j<matches.length; j+=3){
-                        ScoreCalculator scoreCalculator = new ScoreCalculator();
-                        scoreCalculator.setNumPlayers(Integer.parseInt(matches[j]));
-                        scoreCalculator.setScore(Integer.parseInt(matches[j+1]));
-                        scoreCalculator.setPoorScore(Integer.parseInt(gameInfo[i+2]));
-                        scoreCalculator.setGreatScore(Integer.parseInt(gameInfo[i+3]));
+                        ScoreCalculator scoreCalculator = new ScoreCalculator(Integer.parseInt(matches[j])
+                                ,Integer.parseInt(matches[j+1]),Integer.parseInt(gameInfo[i+2]),Integer.parseInt(gameInfo[i+3]));
                         scoreCalculator.setDate(matches[j+2]);
                         scoreCalculator.setMatchName();
                         game.addMatch(scoreCalculator);

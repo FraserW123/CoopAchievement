@@ -1,15 +1,19 @@
 package com.example.coopachievement;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -113,6 +117,7 @@ public class GamesPlayed extends AppCompatActivity {
                     game.setCurrentMatch(position);
                     game.setPoorScore(Integer.parseInt(poor_score.getText().toString()));
                     game.setGreatScore(Integer.parseInt(great_score.getText().toString()));
+                    System.out.println("difficulty " + game.getDifficulty());
                     startActivity(intent);
                 }
                 else{
@@ -197,7 +202,7 @@ public class GamesPlayed extends AppCompatActivity {
 
     public boolean onCreateOptionsMenu(Menu menu)
     {
-        getMenuInflater().inflate(R.menu.delete, menu);
+        getMenuInflater().inflate(R.menu.menu_edit_score, menu);
         return true;
     }
 
@@ -230,6 +235,8 @@ public class GamesPlayed extends AppCompatActivity {
                 AlertDialog dialog = builder.create();
                 dialog.show();
                 return true;
+
+            case R.id.action_save:
             case android.R.id.home:
                 this.onBackPressed();
                 return true;

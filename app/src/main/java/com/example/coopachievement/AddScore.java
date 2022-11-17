@@ -166,11 +166,8 @@ public class AddScore extends AppCompatActivity {
 
             if(matchIndex == -1 && unsaved)
             {
-                score_calc = new ScoreCalculator();
-                score_calc.setPoorScore(game.getPoorScore());
-                score_calc.setGreatScore(game.getGreatScore());
-                score_calc.setNumPlayers(players);
-                score_calc.setScore(score);
+                score_calc = new ScoreCalculator(players,score,game.getPoorScore(),game.getGreatScore());
+                score_calc.setDifficulty(game.getDifficulty());
                 score_calc.setAchievementLevel();
                 score_calc.setMatchName();
                 game.addMatch(score_calc);
@@ -178,10 +175,7 @@ public class AddScore extends AppCompatActivity {
             else
             {
                 score_calc = game.getMatch(matchIndex);
-                score_calc.setPoorScore(game.getPoorScore());
-                score_calc.setGreatScore(game.getGreatScore());
-                score_calc.setNumPlayers(players);
-                score_calc.setScore(score);
+                score_calc.editMatch(players,score,game.getPoorScore(),game.getGreatScore());
                 score_calc.setAchievementLevel();
                 score_calc.setMatchName();
             }

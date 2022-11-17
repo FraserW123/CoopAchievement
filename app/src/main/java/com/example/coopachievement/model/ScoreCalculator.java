@@ -27,6 +27,24 @@ public class ScoreCalculator {
 
     List<String> levels = new ArrayList<>();
 
+    public ScoreCalculator(){
+
+    }
+
+    public ScoreCalculator(int numPlayers, int Score, int poorScore, int greatScore){
+        this.numPlayers = numPlayers;
+        this.Score = Score;
+        this.poorScore = poorScore;
+        this.greatScore = greatScore;
+    }
+
+    public void editMatch(int numPlayers, int Score, int poorScore, int greatScore){
+        this.numPlayers = numPlayers;
+        this.Score = Score;
+        this.poorScore = poorScore;
+        this.greatScore = greatScore;
+    }
+
 
     public String getDifficulty() {
         return difficulty;
@@ -98,26 +116,38 @@ public class ScoreCalculator {
     {
 
         increment = (greatScore - poorScore) / 8;
+
         int length = achievementNames.length;
-        for(int i = 0; i<length; i++){
-            if(Score < (poorScore + (i*increment) * numPlayers)*difficultyMultiplier()){
+        for(int i = 0; i<length-2; i++){
+            if(Score <= ((poorScore + ((i)*increment)) * numPlayers)*difficultyMultiplier()){
                 return achievementNames[i];
             }
         }
+        if(Score <= greatScore*numPlayers -1){
+            return achievementNames[length-2];
+        }
+
         return achievementNames[length-1];
 
     }
 
 
     public List<String> fillLevelsList(){
-        increment = (greatScore - poorScore) / 8;
+        increment = (greatScore-poorScore) / 8;
 
-        levels.add(achievementNames[0] + " Score: "+ 0 + " - " + (poorScore)*difficultyMultiplier());
+
+        levels.add(achievementNames[0] + " Score: "+ 0 + " - " + (poorScore)*difficultyMultiplier()*numPlayers);
         int length = achievementNames.length;
-        for(int i = 1; i<length-2; i++){
-            levels.add(achievementNames[i] + " Score: " + ((poorScore+(i*increment))*difficultyMultiplier()) + " - " + ((poorScore+(i*increment))*difficultyMultiplier()*numPlayers));
+        for(int i = 1; i<length-1; i++){
+            double minScore = ((poorScore + ((i-1)*increment)) * numPlayers)*difficultyMultiplier()+1;
+            double maxScore = (((poorScore + (i*increment)) * numPlayers)*difficultyMultiplier());
+            if(i == length-2){ // second last case
+                maxScore = (greatScore*numPlayers -1)*difficultyMultiplier();
+            }
+            levels.add(achievementNames[i] + " Score: " + minScore + " - " + maxScore);
+
         }
-        levels.add(achievementNames[length-1] + " Score: > " + ((greatScore*numPlayers))*difficultyMultiplier());
+        levels.add(achievementNames[length-1] + " Score: ≥ " + ((greatScore*numPlayers))*difficultyMultiplier());
 
 
         return levels;

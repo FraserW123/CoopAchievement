@@ -32,7 +32,7 @@ public class GameTitle extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_title);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        createDifficultyButtons();
+        //createDifficultyButtons();
         findViewById(R.id.startGame).setOnClickListener(v-> createNewMatch());
     }
 
@@ -69,24 +69,25 @@ public class GameTitle extends AppCompatActivity {
 
     }
 
-    private void createDifficultyButtons() {
-        RadioGroup group = findViewById(R.id.rgNewDifficulty);
-        String[] difficultyOptions = getResources().getStringArray(R.array.Difficulty_Options);
-
-        //creating the buttons
-        for(int i = 0; i<difficultyOptions.length; i++){
-            String difficulty = difficultyOptions[i];
-            RadioButton button = new RadioButton(this);
-            button.setText(difficulty);
-
-            button.setOnClickListener(v->{
-                game.setDifficulty(difficulty);
-            });
-
-            group.addView(button);
-
-        }
-    }
+//    private void createDifficultyButtons() {
+//        RadioGroup group = findViewById(R.id.rgNewDifficulty);
+//        String[] difficultyOptions = getResources().getStringArray(R.array.Difficulty_Options);
+//
+//        //creating the buttons
+//        for(int i = 0; i<difficultyOptions.length; i++){
+//            String difficulty = difficultyOptions[i];
+//            RadioButton button = new RadioButton(this);
+//            button.setText(difficulty);
+//
+//            button.setOnClickListener(v->{
+//
+//                game.setDifficulty(difficulty);
+//            });
+//
+//            group.addView(button);
+//
+//        }
+//    }
 
     private boolean differenceOf10(){
         EditText poorScore = findViewById(R.id.etn_poor_score);
