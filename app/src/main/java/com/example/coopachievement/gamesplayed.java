@@ -81,6 +81,7 @@ public class gamesplayed extends AppCompatActivity {
             description.setText(game.getDescription());
             poor_score.setText(String.valueOf(game.getPoorScore()));
             great_score.setText(String.valueOf(game.getGreatScore()));
+
         }
     }
 
