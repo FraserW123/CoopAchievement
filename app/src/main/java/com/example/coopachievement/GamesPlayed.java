@@ -50,7 +50,6 @@ public class GamesPlayed extends AppCompatActivity {
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.activity_gamesplayed);
-        createDifficultyButtons();
         refreshDisplay();
         populateList();
         listClick();
@@ -61,24 +60,7 @@ public class GamesPlayed extends AppCompatActivity {
         lvManager.setEmptyView(nogametext);
     }
 
-    private void createDifficultyButtons() {
-        RadioGroup group = findViewById(R.id.rgDifficulty);
-        String[] difficultyOptions = getResources().getStringArray(R.array.Difficulty_Options);
 
-        //creating the buttons
-        for(int i = 0; i<difficultyOptions.length; i++){
-            String difficulty = difficultyOptions[i];
-            RadioButton button = new RadioButton(this);
-            button.setText(difficulty);
-
-            button.setOnClickListener(v->{
-                game.setDifficulty(difficulty);
-            });
-
-            group.addView(button);
-
-        }
-    }
 
 
     private void refreshDisplay()

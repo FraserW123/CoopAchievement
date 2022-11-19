@@ -14,6 +14,8 @@ import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.example.coopachievement.model.Game;
@@ -38,6 +40,7 @@ public class AddScore extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_score);
         refreshDisplay();
+        createDifficultyButtons();
         ActionBar toolbar = getSupportActionBar();
         if(getMatchIndex() == -1)
         {
@@ -48,7 +51,27 @@ public class AddScore extends AppCompatActivity {
         }
         toolbar.setDisplayHomeAsUpEnabled(true);
 
-        findViewById(R.id.btn_display_levels).setOnClickListener(v->displayLevels());
+        //findViewById(R.id.btn_display_levels).setOnClickListener(v->displayLevels());
+    }
+
+    private void createDifficultyButtons() {
+        RadioGroup group = findViewById(R.id.rgDifficulty);
+        String[] difficultyOptions = getResources().getStringArray(R.array.Difficulty_Options);
+
+        //creating the buttons
+        for(int i = 0; i<difficultyOptions.length; i++){
+            String difficulty = difficultyOptions[i];
+            RadioButton button = new RadioButton(this);
+            button.setText(difficulty);
+
+            button.setOnClickListener(v->{
+                game.setDifficulty(difficulty);
+                displayLevels();
+            });
+
+            group.addView(button);
+
+        }
     }
 
     private void displayLevels() {
