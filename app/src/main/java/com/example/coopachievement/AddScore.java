@@ -23,6 +23,7 @@ import com.example.coopachievement.model.GameConfig;
 import com.example.coopachievement.model.ScoreCalculator;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * This class give opportunity to players to add a new game score
@@ -70,7 +71,12 @@ public class AddScore extends AppCompatActivity {
             });
 
             group.addView(button);
-
+            if(Objects.equals(difficulty, game.getDifficulty())){
+                button.setChecked(true);
+                displayLevels();
+            }else{
+                System.out.println("this didnt happen " + game.getDifficulty() + " vs " + difficulty);
+            }
         }
     }
 
@@ -106,6 +112,7 @@ public class AddScore extends AppCompatActivity {
     private void refreshDisplay()
     {
         int matchIndex = getMatchIndex();
+        System.out.println("match index " + matchIndex);
         if(matchIndex >= 0 )
         {
             EditText players = findViewById(R.id.etn_num_players);
@@ -199,6 +206,7 @@ public class AddScore extends AppCompatActivity {
             {
                 score_calc = game.getMatch(matchIndex);
                 score_calc.editMatch(players,score,game.getPoorScore(),game.getGreatScore());
+                score_calc.setDifficulty(game.getDifficulty());
                 score_calc.setAchievementLevel();
                 score_calc.setMatchName();
             }

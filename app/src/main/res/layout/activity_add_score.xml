@@ -6,24 +6,24 @@
     android:layout_height="match_parent"
     tools:context=".AddScore">
 
+
     <TextView
         android:id="@+id/tv_num_players"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
         android:text="Number of Players:"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
     <TextView
         android:id="@+id/DifficultySelection"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="36dp"
         android:text="Difficulty"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -58,7 +58,7 @@
         android:id="@+id/tv_score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:text="Score:"
         android:textSize="24sp"
@@ -80,7 +80,7 @@
         android:id="@+id/tv_see_achiev_levels"
         android:layout_width="289dp"
         android:layout_height="45dp"
-        android:layout_marginTop="72dp"
+        android:layout_marginTop="85dp"
         android:gravity="center_horizontal"
         android:text="Enter the number of players  and set difficulty to view levels"
         android:textSize="14sp"
@@ -92,9 +92,9 @@
         android:id="@+id/rgDifficulty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="24dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.52"
+        app:layout_constraintHorizontal_bias="0.518"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etn_score" />
 

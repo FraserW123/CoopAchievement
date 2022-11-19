@@ -118,7 +118,6 @@ public class GamesPlayed extends AppCompatActivity {
         }
         //gameIndex = gameConfig.getCurrentGameIndex();
 
-        System.out.println("went here");
         game = gameConfig.getGame(gameIndex);
         List<String> list = game.getMatchesNamesList();
 

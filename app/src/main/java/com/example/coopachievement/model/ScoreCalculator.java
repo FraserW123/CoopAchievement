@@ -47,6 +47,9 @@ public class ScoreCalculator {
 
 
     public String getDifficulty() {
+        if(difficulty.equals("")){
+            difficulty = "Normal";
+        }
         return difficulty;
     }
 
@@ -70,7 +73,7 @@ public class ScoreCalculator {
 
     public void setMatchName()
     {
-        name = "Date: " + date+" Players: "+numPlayers + " Total score: " +Score + " "+setAchievementLevel();
+        name = "Date: " + date+" Players: "+numPlayers + " Total score: " +Score + " "+setAchievementLevel() + " Difficulty " + getDifficulty();
         matchesPlayed++;
         matchName.add(name);
     }
@@ -95,6 +98,8 @@ public class ScoreCalculator {
     public void setScore(int score){Score = score;}
 
     public int getScore(){return Score;}
+
+
 
     public double difficultyMultiplier(){
         if(!difficulty.equals("")){

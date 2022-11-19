@@ -35,23 +35,25 @@ public class AlertMessageFragment extends AppCompatDialogFragment  {
 
         //Create a button listener
         Button button = v.findViewById(R.id.btn_confirmation);
-        button.setOnClickListener(w->{
-
-            GameConfig gameConfig = GameConfig.getInstance();
-            Intent intent = new Intent(getActivity(), GamesPlayed.class);
-            intent.putExtra("game_index", gameConfig.getCurrentGameIndex());
-            startActivity(intent);
-        });
         GameConfig gameConfig = GameConfig.getInstance();
         Game game = gameConfig.getCurrentGame();
         String level = game.getLatestMatch().setAchievementLevel();
+        String difficulty = game.getLatestMatch().getDifficulty();
+        button.setOnClickListener(w->{
+
+            Intent intent = new Intent(getActivity(), GamesPlayed.class);
+            System.out.println(gameConfig.getCurrentGameIndex()+" game index");
+            intent.putExtra("game_index", gameConfig.getCurrentGameIndex());
+            startActivity(intent);
+        });
+
 
         iv_changing_image = v.findViewById(R.id.iv_changing_image);
         change(level);
         //Build the alert dialog
         return new AlertDialog.Builder(getActivity())
                 .setTitle("Congratulations!")
-                .setMessage("You are the " + level)
+                .setMessage("You are the " + level + "\nDifficulty: " + difficulty)
                 .setView(v)
                 .create();
     }
