@@ -5,8 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.AnimationDrawable;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -30,7 +33,8 @@ public class MainActivity extends AppCompatActivity {
     ListView lvManager;
     ImageView nogames;
     ImageView nolist;
-
+    AnimationDrawable my_background_anime;
+    ImageView animationbackground;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -40,12 +44,21 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this, GameTitle.class);
             startActivity(intent);
         });
+        animationbackground = findViewById(R.id.animatedmainView);
         nogames = findViewById(R.id.nogames);
         nolist = findViewById(R.id.nolist);
+        back_anime();
         populateListView();
         listClick();
         storeGameList();
 
+
+    }
+
+    private void back_anime() {
+        animationbackground.setBackgroundResource(R.drawable.gradient);
+        my_background_anime =(AnimationDrawable) animationbackground.getBackground();
+        my_background_anime.start();
     }
 
     private void listClick()
@@ -56,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
             String message = "You clicked # " + position + ", which is game: " + textView.getText().toString();
             gameConfig.setAccessedMatches(false);
             Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+            my_background_anime.stop();
             SwitchActivity(position);
         });
     }
@@ -170,6 +184,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, gamesplayed.class);
         gameConfig.setCurrentGameIndex(position);
         storeGameList();
+        my_background_anime.stop();
         intent.putExtra("game_index", position);
         startActivity(intent);
     }
