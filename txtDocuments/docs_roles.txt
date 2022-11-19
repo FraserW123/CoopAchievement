@@ -1,5 +1,5 @@
-LISTING SCRUM ROLES FOR PROJECT FIRST ITERATION
-Product Owner - Lazar Pajic
-Scrum Master - Fraser Wong
-Repository Manager - Damanpreet Kaur Nanrhe
+LISTING SCRUM ROLES FOR PROJECT SECOND ITERATION
+Product Owner - Damanpreet Kaur Nanrhe
+Scrum Master - Lazar Pajic
+Repository Manager - Fraser Wong
 Team Members - Lazar Pajic, Fraser Wong, Damanpreet Kaur Nanrhe

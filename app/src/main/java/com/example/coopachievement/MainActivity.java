@@ -109,7 +109,6 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
 
-
                 }
 
                 gameConfig.addGame(game);
@@ -125,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
         return items;
     }
 
-    private void storeGameList()
+    public void storeGameList()
     {
         List<Game> gameList = gameConfig.getGameList();
         StringBuilder stringBuilder = new StringBuilder();
@@ -142,27 +141,7 @@ public class MainActivity extends AppCompatActivity {
             stringBuilder.append(",");
 
             List<ScoreCalculator> matchList = game.getMatchList();
-            StringBuilder matchString = new StringBuilder();
-            if(!matchList.isEmpty()){
-
-                for(int j = 0; j<matchList.size(); j++){
-                    ScoreCalculator matches = matchList.get(j);
-
-                    matchString.append(matches.getNumPlayers());
-                    matchString.append(";");
-                    matchString.append(matches.getScore());
-                    matchString.append(";");
-                    matchString.append(matches.getDate());
-                    matchString.append(";");
-                    matchString.append(matches.getDifficulty());
-                    matchString.append(";");
-                }
-
-            }else{
-                matchString.append("|");
-            }
-            stringBuilder.append(matchString);
-            stringBuilder.append(",");
+            store(stringBuilder, matchList);
 
         }
 
@@ -172,10 +151,37 @@ public class MainActivity extends AppCompatActivity {
         editor.apply();
     }
 
+    private static void store(StringBuilder stringBuilder, List<ScoreCalculator> matchList) {
+        StringBuilder matchString = new StringBuilder();
+        if(!matchList.isEmpty()){
+
+            for(int j = 0; j<matchList.size(); j++){
+                ScoreCalculator matches = matchList.get(j);
+
+                matchString.append(matches.getNumPlayers());
+                matchString.append(";");
+                matchString.append(matches.getScore());
+                matchString.append(";");
+                matchString.append(matches.getDate());
+                matchString.append(";");
+                matchString.append(matches.getDifficulty());
+                matchString.append(";");
+            }
+
+        }else{
+            matchString.append("|");
+        }
+        stringBuilder.append(matchString);
+        stringBuilder.append(",");
+
+    }
+
+
     public void SwitchActivity(int position)
     {
         Intent intent = new Intent(this, GamesPlayed.class);
         gameConfig.setCurrentGameIndex(position);
+        storeGameList();
         intent.putExtra("game_index", position);
         startActivity(intent);
     }
