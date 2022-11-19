@@ -46,25 +46,35 @@ public class GameTitle extends AppCompatActivity {
         EditText name = findViewById(R.id.editTextGameName);
         EditText description = findViewById(R.id.editTextGameDescription);
 
-        if (!name.getText().toString().isEmpty() && !description.getText().toString().isEmpty() && differenceOf10()) {
+        if (validInputFields()) {
             EditText poorScore = findViewById(R.id.etn_poor_score);
             EditText greatScore = findViewById(R.id.etn_great_score);
 
             int num_poor_score = Integer.parseInt(poorScore.getText().toString());
             int num_great_score = Integer.parseInt(greatScore.getText().toString());
 
-            System.out.println("poor: " + num_poor_score);
-
             Game game = new Game(name.getText().toString(), description.getText().toString(), num_poor_score, num_great_score);
-            num_poor_score = game.getPoorScore();
-            System.out.println("poor: " + num_poor_score);
+
             gameConfig.addGame(game);
             backToMain();
-
-        } else {
-            Toast.makeText(this, "One or more required items are missing or invalid!", Toast.LENGTH_SHORT).show();
         }
 
+    }
+
+    //Cannot use commas or semicolons in the name or description. Fields also cannot be empty
+    private boolean validInputFields(){
+        EditText name = findViewById(R.id.editTextGameName);
+        EditText description = findViewById(R.id.editTextGameDescription);
+        String gameName = name.getText().toString();
+        String gameDesc = description.getText().toString();
+        if(gameName.contains(",") || gameDesc.contains(",") || gameName.contains(";") || gameDesc.contains(";")){
+            Toast.makeText(this, "Items cannot contain commas or semicolons", Toast.LENGTH_SHORT).show();
+            return false;
+        }else if(gameName.isEmpty() || gameDesc.isEmpty() || !differenceOf10()){
+            Toast.makeText(this,"One or more fields missing or invalid!", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
     }
 
     private boolean differenceOf10(){
@@ -94,30 +104,21 @@ public class GameTitle extends AppCompatActivity {
     {
         EditText name = findViewById(R.id.editTextGameName);
         EditText description = findViewById(R.id.editTextGameDescription);
-        if(!name.getText().toString().isEmpty() && !description.getText().toString().isEmpty() && differenceOf10()){
+        if(validInputFields()){
             EditText poorScore = findViewById(R.id.etn_poor_score);
             EditText greatScore = findViewById(R.id.etn_great_score);
 
             int num_poor_score = Integer.parseInt(poorScore.getText().toString());
             int num_great_score = Integer.parseInt(greatScore.getText().toString());
-
-//            Intent intent = getIntent();
-//            int gameIndex = intent.getIntExtra("new_game", -1);
-//            System.out.println("this happened " + gameIndex);
-//            if(gameIndex >= 0)
-//            {
-//                gameConfig.setCurrentGameIndex(gameIndex+1);
-//            }
+            int gamesPlayed = gameConfig.getNumGame();
 
             Game game = new Game(name.getText().toString(), description.getText().toString(), num_poor_score, num_great_score);
+            gameConfig.setCurrentGameIndex(gamesPlayed);
             gameConfig.addGame(game);
             gameConfig.setAccessedMatches(true);
             game.setCurrentMatch(game.getNumMatchesPlayed());
             Intent switching = new Intent(this, AddScore.class);
             startActivity(switching);
-        }
-        else{
-            Toast.makeText(this, "One or more required items are missing or invalid!", Toast.LENGTH_SHORT).show();
         }
     }
 

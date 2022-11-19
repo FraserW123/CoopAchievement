@@ -24,7 +24,6 @@ import java.util.List;
  */
 public class MainActivity extends AppCompatActivity {
     GameConfig gameConfig = GameConfig.getInstance();
-    boolean startup = true;
     ListView lvManager;
     ImageView nogames;
     ImageView nolist;
@@ -86,9 +85,11 @@ public class MainActivity extends AppCompatActivity {
         System.out.println(extractedText);
 
         String[] gameInfo = extractedText.split(",");
-        for(int i = 0; i<gameInfo.length; i++){
+
+        for(int i = 0; i<gameInfo.length; i++){ //debugging
             System.out.println("this one " + gameInfo[i]);
         }
+
         int gameFields = 5;
         int matchFields = 4;
         if(!extractedText.equals("") && !gameConfig.getisDelete()){
