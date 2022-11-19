@@ -6,17 +6,31 @@
     android:layout_height="match_parent"
     tools:context=".AddScore">
 
+
     <TextView
         android:id="@+id/tv_num_players"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
         android:text="Number of Players:"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/DifficultySelection"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:text="Difficulty"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.05"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_score" />
 
     <EditText
         android:id="@+id/etn_score"
@@ -44,7 +58,7 @@
         android:id="@+id/tv_score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:text="Score:"
         android:textSize="24sp"
@@ -52,57 +66,37 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etn_num_players" />
 
-    <TextView
-        android:id="@+id/tv_see_achiev_levels"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        android:text="See achievement levels:"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etn_score" />
-
-    <TextView
-        android:id="@+id/tv_enter_num_players"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="20dp"
-        android:text="Enter Number of Players to see:"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_see_achiev_levels" />
-
-    <EditText
-        android:id="@+id/etn_enter_num_players"
-        android:layout_width="148dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:inputType="number"
-        app:layout_constraintStart_toEndOf="@+id/tv_enter_num_players"
-        app:layout_constraintTop_toBottomOf="@+id/tv_see_achiev_levels" />
-
     <ListView
         android:id="@+id/lv_display_levels"
-        android:layout_width="410dp"
-        android:layout_height="306dp"
+        android:layout_width="409dp"
+        android:layout_height="357dp"
         android:scrollbarSize="12sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_display_levels"
-        app:layout_constraintVertical_bias="0.106" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_see_achiev_levels" />
 
-    <Button
-        android:id="@+id/btn_display_levels"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:text="Display Levels:"
+    <TextView
+        android:id="@+id/tv_see_achiev_levels"
+        android:layout_width="289dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="85dp"
+        android:gravity="center_horizontal"
+        android:text="Enter the number of players  and set difficulty to view levels"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etn_enter_num_players" />
+        app:layout_constraintTop_toBottomOf="@+id/DifficultySelection" />
+
+    <RadioGroup
+        android:id="@+id/rgDifficulty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.518"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etn_score" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
