@@ -18,12 +18,13 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.coopachievement.model.Game;
 import com.example.coopachievement.model.GameConfig;
-import com.example.coopachievement.model.ScoreCalculator;
 
 import java.util.List;
 
@@ -33,12 +34,11 @@ import java.util.List;
  * they want to change
  * also shows the empty state on gamesplayed list view when no game is there
  */
-public class gamesplayed extends AppCompatActivity {
+public class GamesPlayed extends AppCompatActivity {
 
     GameConfig gameConfig = GameConfig.getInstance();
     Game game;
     Boolean edited = false;
-    List<String> list;
     ListView lvManager;
     ImageView nogameplayed;
     TextView nogametext;
@@ -58,7 +58,6 @@ public class gamesplayed extends AppCompatActivity {
         lvManager.setEmptyView(nogameplayed);
         lvManager.setEmptyView(nogametext);
     }
-
 
     private void refreshDisplay()
     {
@@ -87,18 +86,24 @@ public class gamesplayed extends AppCompatActivity {
 
     private void listClick()
     {
-        if(differenceOf10()) {
             ListView matchManager = findViewById(R.id.lvMatchView);
             matchManager.setOnItemClickListener(((parent, view, position, id) -> {
-                Intent intent = new Intent(this, AddScore.class);
-                intent.putExtra("match_index", position);
-                game.setCurrentMatch(position);
-                startActivity(intent);
+                if(differenceOf10()){
+                    Intent intent = new Intent(this, AddScore.class);
+                    intent.putExtra("match_index", position);
+                    EditText poor_score = findViewById(R.id.etn_poorScore);
+                    EditText great_score = findViewById(R.id.etn_greatScore);
+                    game.setCurrentMatch(position);
+                    game.setPoorScore(Integer.parseInt(poor_score.getText().toString()));
+                    game.setGreatScore(Integer.parseInt(great_score.getText().toString()));
+                    System.out.println("difficulty " + game.getDifficulty());
+                    startActivity(intent);
+                }
+                else{
+                    Toast.makeText(this, "One or more required items are missing or invalid!", Toast.LENGTH_SHORT).show();
+                }
             }));
-        }
-        else{
-            Toast.makeText(this, "One or more required items are missing or invalid!", Toast.LENGTH_SHORT).show();
-        }
+
     }
 
     private void populateList()
@@ -108,9 +113,7 @@ public class gamesplayed extends AppCompatActivity {
         if(gameIndex == -1 && gameConfig.isAccessedMatches()){
             gameIndex = gameConfig.getCurrentGameIndex();
         }
-        //gameIndex = gameConfig.getCurrentGameIndex();
 
-        System.out.println("went here");
         game = gameConfig.getGame(gameIndex);
         List<String> list = game.getMatchesNamesList();
 
@@ -131,7 +134,7 @@ public class gamesplayed extends AppCompatActivity {
 
     private void createNewMatch()
     {
-        if(differenceOf10()) {
+        if(validInputFields()) {
             EditText poor_score = findViewById(R.id.etn_poorScore);
             EditText great_score = findViewById(R.id.etn_greatScore);
 
@@ -143,9 +146,23 @@ public class gamesplayed extends AppCompatActivity {
             Intent intent = new Intent(this, AddScore.class);
             startActivity(intent);
         }
-        else{
-            Toast.makeText(this, "One or more required items are missing or invalid!", Toast.LENGTH_SHORT).show();
+
+    }
+
+    //Cannot use commas or semicolons in the name or description. Fields also cannot be empty
+    private boolean validInputFields(){
+        EditText name = findViewById(R.id.editTextGameName2);
+        EditText description = findViewById(R.id.editTextGameDescription2);
+        String gameName = name.getText().toString();
+        String gameDesc = description.getText().toString();
+        if(gameName.contains(",") || gameDesc.contains(",") || gameName.contains(";") || gameDesc.contains(";")){
+            Toast.makeText(this, "Items cannot contain commas or semicolons", Toast.LENGTH_SHORT).show();
+            return false;
+        }else if(gameName.isEmpty() || gameDesc.isEmpty() || !differenceOf10()){
+            Toast.makeText(this,"One or more fields missing or invalid!", Toast.LENGTH_SHORT).show();
+            return false;
         }
+        return true;
     }
 
     private int getGameIndex()
@@ -176,7 +193,7 @@ public class gamesplayed extends AppCompatActivity {
 
     public boolean onCreateOptionsMenu(Menu menu)
     {
-        getMenuInflater().inflate(R.menu.delete, menu);
+        getMenuInflater().inflate(R.menu.menu_edit_score, menu);
         return true;
     }
 
@@ -209,6 +226,8 @@ public class gamesplayed extends AppCompatActivity {
                 AlertDialog dialog = builder.create();
                 dialog.show();
                 return true;
+
+            case R.id.action_save:
             case android.R.id.home:
                 this.onBackPressed();
                 return true;
@@ -219,7 +238,7 @@ public class gamesplayed extends AppCompatActivity {
 
     @Override
     public void onBackPressed(){
-        if(differenceOf10()) {
+        if(validInputFields()) {
             EditText name = findViewById(R.id.editTextGameName2);
             EditText desc = findViewById(R.id.editTextGameDescription2);
             EditText poor_score = findViewById(R.id.etn_poorScore);
@@ -230,12 +249,10 @@ public class gamesplayed extends AppCompatActivity {
 
             game.setPoorScore(Integer.parseInt(poor_score.getText().toString()));
             game.setGreatScore(Integer.parseInt(great_score.getText().toString()));
-            Intent intent = new Intent(gamesplayed.this, MainActivity.class);
+            Intent intent = new Intent(GamesPlayed.this, MainActivity.class);
             startActivity(intent);
         }
-        else{
-            Toast.makeText(this, "One or more required items are missing or invalid!", Toast.LENGTH_SHORT).show();
-        }
+
     }
 
     private boolean differenceOf10(){
@@ -248,9 +265,9 @@ public class gamesplayed extends AppCompatActivity {
         if(!st_poor_score.equals("") && !st_great_score.equals("")) {
             int num_poor_score = Integer.parseInt(st_poor_score);
             int num_great_score = Integer.parseInt(st_great_score);
+            System.out.println(" this is " + (num_great_score - num_poor_score));
             return (num_great_score - num_poor_score) >= 9;
         }
-
         return false;
     }
 

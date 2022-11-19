@@ -2,7 +2,6 @@ package com.example.coopachievement;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.AnimationDrawable;
@@ -28,8 +27,7 @@ import java.util.List;
  * it also persists the previous and history of games in the listview
  */
 public class MainActivity extends AppCompatActivity {
-    static GameConfig gameConfig = GameConfig.getInstance();
-    boolean startup = true;
+    GameConfig gameConfig = GameConfig.getInstance();
     ListView lvManager;
     ImageView nogames;
     ImageView nolist;
@@ -102,22 +100,28 @@ public class MainActivity extends AppCompatActivity {
         System.out.println(extractedText);
 
         String[] gameInfo = extractedText.split(",");
-        for(int i = 0; i<gameInfo.length; i++){
+
+        for(int i = 0; i<gameInfo.length; i++){ //debugging
             System.out.println("this one " + gameInfo[i]);
         }
 
+        int gameFields = 5;
+        int matchFields = 4;
         if(!extractedText.equals("") && !gameConfig.getisDelete()){
-            for(int i = 0; i<gameInfo.length; i+=5){
+            for(int i = 0; i<gameInfo.length; i+=gameFields){
                 Game game = new Game(gameInfo[i], gameInfo[i+1], Integer.parseInt(gameInfo[i+2]), Integer.parseInt(gameInfo[i+3]));
-                if(gameInfo.length - i >= 5){
+                if(gameInfo.length - i >= gameFields){
                     String[] matches = gameInfo[i+4].split(";");
-                    for(int j = 0; j<matches.length; j+=3){
-                        ScoreCalculator scoreCalculator = new ScoreCalculator();
-                        scoreCalculator.setNumPlayers(Integer.parseInt(matches[j]));
-                        scoreCalculator.setScore(Integer.parseInt(matches[j+1]));
-                        scoreCalculator.setDate(matches[j+2]);
-                        scoreCalculator.setMatchName();
-                        game.addMatch(scoreCalculator);
+                    if(!matches[0].equals("|")){
+                        for(int j = 0; j<matches.length; j+=matchFields){
+                            ScoreCalculator scoreCalculator = new ScoreCalculator(Integer.parseInt(matches[j])
+                                    ,Integer.parseInt(matches[j+1]),Integer.parseInt(gameInfo[i+2]),Integer.parseInt(gameInfo[i+3]));
+                            scoreCalculator.setDate(matches[j+2]);
+                            game.setDifficulty(matches[j+3]);
+                            scoreCalculator.setDifficulty(matches[j+3]);
+                            scoreCalculator.setMatchName();
+                            game.addMatch(scoreCalculator);
+                        }
                     }
 
                 }
@@ -126,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         List<String> items = new ArrayList<>();
-        for(int i = 0; i<gameInfo.length; i+=5){
+        for(int i = 0; i<gameInfo.length; i+=gameFields){
             if(!gameInfo[i].equals("") && !gameConfig.getisDelete())
             {
                 items.add(gameInfo[i]);
@@ -163,25 +167,34 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private static void store(StringBuilder stringBuilder, List<ScoreCalculator> matchList) {
+        StringBuilder matchString = new StringBuilder();
         if(!matchList.isEmpty()){
-            StringBuilder matchString = new StringBuilder();
-            for(int j = 0; j< matchList.size(); j++){
+
+            for(int j = 0; j<matchList.size(); j++){
                 ScoreCalculator matches = matchList.get(j);
+
                 matchString.append(matches.getNumPlayers());
                 matchString.append(";");
                 matchString.append(matches.getScore());
                 matchString.append(";");
                 matchString.append(matches.getDate());
                 matchString.append(";");
+                matchString.append(matches.getDifficulty());
+                matchString.append(";");
             }
-            stringBuilder.append(matchString);
-            stringBuilder.append(",");
+
+        }else{
+            matchString.append("|");
         }
+        stringBuilder.append(matchString);
+        stringBuilder.append(",");
+
     }
+
 
     public void SwitchActivity(int position)
     {
-        Intent intent = new Intent(this, gamesplayed.class);
+        Intent intent = new Intent(this, GamesPlayed.class);
         gameConfig.setCurrentGameIndex(position);
         storeGameList();
         my_background_anime.stop();

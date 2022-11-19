@@ -11,23 +11,28 @@ public class Game {
 
     String name;
     String description;
+
+
+
+    String difficulty = "";
     int poor_score;
     int great_score;
     int numMatchesPlayed = 0;
     int currentMatch = 0;
     boolean isAccessed;
+    ArrayList<ScoreCalculator> matchesPlayed = new ArrayList<>();
+
 
     public boolean isAccessed()
     {
         return isAccessed;
     }
-
     public void setAccessed(boolean accessed)
     {
         isAccessed = accessed;
     }
 
-    ArrayList<ScoreCalculator> matchesPlayed = new ArrayList<>();
+
 
     public Game(String name, String description, int poorScore, int greatScore)
     {
@@ -35,6 +40,14 @@ public class Game {
         this.description = description;
         this.poor_score = poorScore;
         this.great_score = greatScore;
+    }
+
+    public String getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(String difficulty) {
+        this.difficulty = difficulty;
     }
 
     public void addMatch(ScoreCalculator match)

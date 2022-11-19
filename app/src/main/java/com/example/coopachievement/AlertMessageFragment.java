@@ -50,12 +50,13 @@ public class AlertMessageFragment extends AppCompatDialogFragment  {
         GameConfig gameConfig = GameConfig.getInstance();
         Game game = gameConfig.getCurrentGame();
         String level = game.getLatestMatch().setAchievementLevel();
+        String difficulty = game.getLatestMatch().getDifficulty();
         iv_changing_image = v.findViewById(R.id.iv_changing_image);
         change(level);
         back_anime();
         return new AlertDialog.Builder(getActivity())
                 .setTitle("Congratulations!")
-                .setMessage("You are the " + level)
+                .setMessage("You are the " + level + "\nDifficulty: " + difficulty)
                 .setView(v)
                 .create();
     }
