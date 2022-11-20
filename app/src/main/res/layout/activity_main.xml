@@ -33,14 +33,14 @@
 
     <ImageView
         android:id="@+id/nolist"
-        android:layout_width="257dp"
-        android:layout_height="247dp"
+        android:layout_width="410dp"
+        android:layout_height="499dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.464"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.387"
+        app:layout_constraintVertical_bias="0.262"
         app:srcCompat="@drawable/emptystate" />
 
     <ImageView
@@ -71,14 +71,13 @@
 
     <ListView
         android:id="@+id/ListofGames"
-        android:layout_width="380dp"
-        android:layout_height="547dp"
+        android:layout_width="401dp"
+        android:layout_height="564dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.459"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.039" />
+        app:layout_constraintVertical_bias="0.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

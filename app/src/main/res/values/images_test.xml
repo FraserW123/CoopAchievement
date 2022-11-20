@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources> <!-- incomplete test for possible refactoring -->
     <item name="goblin" type="drawable">R.drawable.goblin</item>
-    <item name="troll" type="drawable">R.drawable.troll</item>
+
 </resources>
