@@ -42,11 +42,11 @@ public class Game {
         this.great_score = greatScore;
     }
 
-    public String getDifficulty() {
+    public String getMatchDifficulty() {
         return difficulty;
     }
 
-    public void setDifficulty(String difficulty) {
+    public void setMatchDifficulty(String difficulty) {
         this.difficulty = difficulty;
     }
 

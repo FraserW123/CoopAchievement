@@ -68,11 +68,10 @@
 
     <ListView
         android:id="@+id/lv_display_levels"
-        android:layout_width="409dp"
-        android:layout_height="357dp"
+        android:layout_width="413dp"
+        android:layout_height="412dp"
         android:scrollbarSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_see_achiev_levels" />
 

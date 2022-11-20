@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
                             ScoreCalculator scoreCalculator = new ScoreCalculator(Integer.parseInt(matches[j])
                                     ,Integer.parseInt(matches[j+1]),Integer.parseInt(gameInfo[i+2]),Integer.parseInt(gameInfo[i+3]));
                             scoreCalculator.setDate(matches[j+2]);
-                            game.setDifficulty(matches[j+3]);
+                            game.setMatchDifficulty(matches[j+3]);
                             scoreCalculator.setDifficulty(matches[j+3]);
                             scoreCalculator.setMatchName();
                             game.addMatch(scoreCalculator);

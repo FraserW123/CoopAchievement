@@ -7,11 +7,8 @@ import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 
@@ -19,7 +16,6 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDialogFragment;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.coopachievement.model.Game;
 import com.example.coopachievement.model.GameConfig;
@@ -51,6 +47,10 @@ public class AlertMessageFragment extends AppCompatDialogFragment  {
         Game game = gameConfig.getCurrentGame();
         String level = game.getLatestMatch().setAchievementLevel();
         String difficulty = game.getLatestMatch().getDifficulty();
+        if(difficulty.equals("")){
+            difficulty = "Normal";
+        }
+        game.setMatchDifficulty(difficulty);
         iv_changing_image = v.findViewById(R.id.iv_changing_image);
         change(level);
         back_anime();

@@ -1,10 +1,5 @@
 package com.example.coopachievement.model;
 
-import android.content.Context;
-import android.os.Build;
-
-import androidx.annotation.RequiresApi;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -20,12 +15,21 @@ public class ScoreCalculator {
     int poorScore;
     int greatScore;
     int increment;
-    String[] achievementNames = {"Goofy Goblins!","Timid Trolls!","Zippy Zombies!","Spooky Spiders!","Vicious Vampires!","Lucky Lions!","Fantastic Fairies!","Supreme Serpents!","Dancing Dragons!","Ultimate Unicorns!"};
+    String[] achievementMythicNames = {"Goofy Goblins!","Timid Trolls!","Zippy Zombies!","Spooky Spiders!","Vicious Vampires!","Lucky Lions!","Fantastic Fairies!","Supreme Serpents!","Dancing Dragons!","Ultimate Unicorns!"};
+
 
     String difficulty = "";
     String name;
 
     List<String> levels = new ArrayList<>();
+
+    int matchesPlayed = 0;
+    private ArrayList<String> matchName = new ArrayList<>();
+
+    LocalDateTime time = LocalDateTime.now();
+    DateTimeFormatter format = DateTimeFormatter.ofPattern("HH:mm a");
+    String date = time.format(format);
+
 
     public ScoreCalculator(){
 
@@ -64,16 +68,15 @@ public class ScoreCalculator {
     public void setGreatScore(int great_score){greatScore = great_score;}
     public int getGreatScore(){return greatScore;}
 
-    int matchesPlayed = 0;
-    private ArrayList<String> matchName = new ArrayList<>();
 
-    LocalDateTime time = LocalDateTime.now();
-    DateTimeFormatter format = DateTimeFormatter.ofPattern("HH:mm a");
-    String date = time.format(format);
 
     public void setMatchName()
     {
-        name = "Date: " + date+" Players: "+numPlayers + " Total score: " +Score + " "+setAchievementLevel() + " Difficulty " + getDifficulty();
+        String threshold = difficulty;
+        if(threshold.equals("")){
+            threshold = "Normal";
+        }
+        name = "Date: " + date+" Players: "+numPlayers + " Total score: " +Score + " "+setAchievementLevel() + " Difficulty " + threshold;
         matchesPlayed++;
         matchName.add(name);
     }
@@ -122,17 +125,17 @@ public class ScoreCalculator {
 
         increment = (greatScore - poorScore) / 8;
 
-        int length = achievementNames.length;
+        int length = achievementMythicNames.length;
         for(int i = 0; i<length-2; i++){
             if(Score <= ((poorScore + ((i)*increment)) * numPlayers)*difficultyMultiplier()){
-                return achievementNames[i];
+                return achievementMythicNames[i];
             }
         }
         if(Score <= greatScore*numPlayers -1){
-            return achievementNames[length-2];
+            return achievementMythicNames[length-2];
         }
 
-        return achievementNames[length-1];
+        return achievementMythicNames[length-1];
 
     }
 
@@ -141,20 +144,22 @@ public class ScoreCalculator {
         increment = (greatScore-poorScore) / 8;
 
 
-        levels.add(achievementNames[0] + " Score: "+ 0 + " - " + (poorScore)*difficultyMultiplier()*numPlayers);
-        int length = achievementNames.length;
+        levels.add(achievementMythicNames[0] + " Score: "+ 0 + " - " + (poorScore)*difficultyMultiplier()*numPlayers);
+        int length = achievementMythicNames.length;
+        System.out.println("length " + achievementMythicNames.length);
         for(int i = 1; i<length-1; i++){
-            double minScore = ((poorScore + ((i-1)*increment)) * numPlayers)*difficultyMultiplier()+1;
+            double minScore = ((poorScore + ((i-1)*increment)) * numPlayers)*difficultyMultiplier();
             double maxScore = (((poorScore + (i*increment)) * numPlayers)*difficultyMultiplier());
             if(i == length-2){ // second last case
-                maxScore = (greatScore*numPlayers -1)*difficultyMultiplier();
+                maxScore = (greatScore*numPlayers)*difficultyMultiplier();
             }
-            levels.add(achievementNames[i] + " Score: " + minScore + " - " + maxScore);
+            levels.add(achievementMythicNames[i] + " Score: " + minScore + " - " + maxScore);
+            System.out.println("increment " + i + " size of levels " + levels.size());
 
         }
-        levels.add(achievementNames[length-1] + " Score: ≥ " + ((greatScore*numPlayers))*difficultyMultiplier());
+        levels.add(achievementMythicNames[length-1] + " Score: ≥ " + ((greatScore*numPlayers))*difficultyMultiplier());
 
-
+        System.out.println("length of this from calculator " + levels.size());
         return levels;
     }
 }

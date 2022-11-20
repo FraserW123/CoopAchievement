@@ -1,25 +1,19 @@
 package com.example.coopachievement;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Build;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -96,7 +90,7 @@ public class GamesPlayed extends AppCompatActivity {
                     game.setCurrentMatch(position);
                     game.setPoorScore(Integer.parseInt(poor_score.getText().toString()));
                     game.setGreatScore(Integer.parseInt(great_score.getText().toString()));
-                    System.out.println("difficulty " + game.getDifficulty());
+                    System.out.println("difficulty " + game.getMatchDifficulty());
                     startActivity(intent);
                 }
                 else{

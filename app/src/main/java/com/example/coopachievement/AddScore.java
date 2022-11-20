@@ -9,6 +9,8 @@ import androidx.fragment.app.FragmentManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
@@ -33,15 +35,21 @@ public class AddScore extends AppCompatActivity {
 
     GameConfig gameConfig = GameConfig.getInstance();
     Game game = gameConfig.getCurrentGame();
+    ScoreCalculator score_calc;
+    boolean difficultySelected = false;
     boolean unsaved = true;
+    boolean matchExists = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_score);
+
         refreshDisplay();
         createDifficultyButtons();
+        watchFields();
+        displayLevels();
         ActionBar toolbar = getSupportActionBar();
         if(getMatchIndex() == -1)
         {
@@ -55,6 +63,25 @@ public class AddScore extends AppCompatActivity {
         //findViewById(R.id.btn_display_levels).setOnClickListener(v->displayLevels());
     }
 
+    private void watchFields() {
+        EditText players = findViewById(R.id.etn_num_players);
+
+        players.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                displayLevels();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+    }
+
     private void createDifficultyButtons() {
         RadioGroup group = findViewById(R.id.rgDifficulty);
         String[] difficultyOptions = getResources().getStringArray(R.array.Difficulty_Options);
@@ -64,18 +91,22 @@ public class AddScore extends AppCompatActivity {
             String difficulty = difficultyOptions[i];
             RadioButton button = new RadioButton(this);
             button.setText(difficulty);
-
             button.setOnClickListener(v->{
-                game.setDifficulty(difficulty);
+                game.setMatchDifficulty(difficulty);
+                if(matchExists){
+                    score_calc.setDifficulty(difficulty);
+                }
+                difficultySelected = true;
                 displayLevels();
             });
 
             group.addView(button);
-            if(Objects.equals(difficulty, game.getDifficulty())){
+            System.out.println("Difficulty " + game.getMatchDifficulty());
+            if(matchExists && Objects.equals(difficulty, score_calc.getDifficulty())){
                 button.setChecked(true);
                 displayLevels();
             }else{
-                System.out.println("this didnt happen " + game.getDifficulty() + " vs " + difficulty);
+                System.out.println("this didnt happen " + game.getMatchDifficulty() + " vs " + difficulty);
             }
         }
     }
@@ -90,13 +121,17 @@ public class AddScore extends AppCompatActivity {
         }
 
         if (players > 0) {
-            ScoreCalculator scoreCalc = new ScoreCalculator();
-            scoreCalc.setPoorScore(game.getPoorScore());
-            scoreCalc.setGreatScore(game.getGreatScore());
-            scoreCalc.setDifficulty(game.getDifficulty());
-            scoreCalc.setNumPlayers(players);
 
-            List<String> list = scoreCalc.fillLevelsList();
+            ScoreCalculator score_calc = new ScoreCalculator();
+            score_calc.setPoorScore(game.getPoorScore());
+            score_calc.setGreatScore(game.getGreatScore());
+            score_calc.setDifficulty(game.getMatchDifficulty());
+            score_calc.setNumPlayers(players);
+
+
+
+            List<String> list = score_calc.fillLevelsList();
+            System.out.println("length of this is " + list.size());
             ArrayAdapter<String> adapter = new ArrayAdapter<>(
                     this, R.layout.list_matches, list);
             ListView lvLevelManager = findViewById(R.id.lv_display_levels);
@@ -113,12 +148,15 @@ public class AddScore extends AppCompatActivity {
     {
         int matchIndex = getMatchIndex();
         System.out.println("match index " + matchIndex);
+
         if(matchIndex >= 0 )
         {
+            score_calc = game.getMatch(matchIndex);
             EditText players = findViewById(R.id.etn_num_players);
             EditText score  = findViewById(R.id.etn_score);
-            players.setText(String.valueOf(game.getMatch(matchIndex).getNumPlayers()));
-            score.setText(String.valueOf(game.getMatch(matchIndex).getScore()));
+            players.setText(String.valueOf(score_calc.getNumPlayers()));
+            score.setText(String.valueOf(score_calc.getScore()));
+            matchExists = true;
         }
     }
 
@@ -192,21 +230,17 @@ public class AddScore extends AppCompatActivity {
             int players = Integer.parseInt(st_players);
             int score = Integer.parseInt(st_score);
             int matchIndex = getMatchIndex();
-            ScoreCalculator score_calc;
 
             if(matchIndex == -1 && unsaved)
             {
                 score_calc = new ScoreCalculator(players,score,game.getPoorScore(),game.getGreatScore());
-                score_calc.setDifficulty(game.getDifficulty());
                 score_calc.setAchievementLevel();
                 score_calc.setMatchName();
                 game.addMatch(score_calc);
             }
             else
             {
-                score_calc = game.getMatch(matchIndex);
                 score_calc.editMatch(players,score,game.getPoorScore(),game.getGreatScore());
-                score_calc.setDifficulty(game.getDifficulty());
                 score_calc.setAchievementLevel();
                 score_calc.setMatchName();
             }
