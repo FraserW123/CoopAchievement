@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_Theme"
-        android:icon="@drawable/ic_launcher_theme"
         app:showAsAction="ifRoom"
-        android:title="Coop Achievement"
+        android:title="Theme"
         />
 </menu>
