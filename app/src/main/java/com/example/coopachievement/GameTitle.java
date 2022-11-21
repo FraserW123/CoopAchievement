@@ -1,14 +1,18 @@
 package com.example.coopachievement;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.coopachievement.model.Game;
@@ -23,15 +27,40 @@ public class GameTitle extends AppCompatActivity {
 
     GameConfig gameConfig = GameConfig.getInstance();
     Game game;
-
+    ImageView gamesback3;
+    ActionBar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+        toolbar=getSupportActionBar();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_title);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Toast.makeText(this, "the theme is " + gameConfig.getTheme(), Toast.LENGTH_SHORT).show();
         findViewById(R.id.startGame).setOnClickListener(v-> createNewMatch());
+        gamesback3=findViewById(R.id.backimage3);
+        if (gameConfig.getThemeIndex() == 0) {
+            toolbar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#023020")));
+        }
+        if(gameConfig.getThemeIndex()==1){
+            toolbar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#A020F0")));
+        }
+        if(gameConfig.getThemeIndex()==2){
+            toolbar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FF1493")));
+        }
+        themeback();
+    }
+
+    private void themeback() {
+        if (gameConfig.getThemeIndex() == 0){
+            gamesback3.setBackgroundResource(R.drawable.mythback);
+        }
+        if(gameConfig.getThemeIndex()==1){
+            gamesback3.setBackgroundResource(R.drawable.planetback);
+        }
+        if(gameConfig.getThemeIndex()==2){
+            gamesback3.setBackgroundResource(R.drawable.greekback);
+        }
     }
 
     @Override
