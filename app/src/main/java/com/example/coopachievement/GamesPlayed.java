@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -36,11 +38,13 @@ public class GamesPlayed extends AppCompatActivity {
     ListView lvManager;
     ImageView nogameplayed;
     TextView nogametext;
+    ImageView gamesback;
+    ActionBar ab;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        ActionBar ab = getSupportActionBar();
+        ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.activity_gamesplayed);
         refreshDisplay();
@@ -51,6 +55,29 @@ public class GamesPlayed extends AppCompatActivity {
         nogametext = findViewById(R.id.textView4);
         lvManager.setEmptyView(nogameplayed);
         lvManager.setEmptyView(nogametext);
+        gamesback=findViewById(R.id.backimage);
+        if (gameConfig.getThemeIndex() == 0) {
+            ab.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#023020")));
+        }
+        if(gameConfig.getThemeIndex()==1){
+            ab.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#A020F0")));
+        }
+        if(gameConfig.getThemeIndex()==2){
+            ab.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FF1493")));
+        }
+        themeback();
+    }
+
+    private void themeback() {
+        if (gameConfig.getThemeIndex() == 0){
+            gamesback.setBackgroundResource(R.drawable.mythback);
+        }
+        if(gameConfig.getThemeIndex()==1){
+            gamesback.setBackgroundResource(R.drawable.planetback);
+        }
+        if(gameConfig.getThemeIndex()==2){
+            gamesback.setBackgroundResource(R.drawable.greekback);
+        }
     }
 
     private void refreshDisplay()

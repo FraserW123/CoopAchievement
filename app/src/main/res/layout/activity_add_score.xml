@@ -7,6 +7,16 @@
     tools:context=".AddScore">
 
 
+    <ImageView
+        android:id="@+id/backimage2"
+        android:layout_width="407dp"
+        android:layout_height="728dp"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+         />
     <TextView
         android:id="@+id/tv_num_players"
         android:layout_width="wrap_content"
@@ -16,6 +26,7 @@
         android:text="Number of Players:"
         android:textSize="24sp"
         android:textStyle="bold"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -27,6 +38,7 @@
         android:text="Difficulty"
         android:textSize="24sp"
         android:textStyle="bold"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.05"
         app:layout_constraintStart_toStartOf="parent"
@@ -63,6 +75,7 @@
         android:text="Score:"
         android:textSize="24sp"
         android:textStyle="bold"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etn_num_players" />
 
@@ -83,6 +96,8 @@
         android:gravity="center_horizontal"
         android:text="Enter the number of players  and set difficulty to view levels"
         android:textSize="14sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/DifficultySelection" />
@@ -96,6 +111,4 @@
         app:layout_constraintHorizontal_bias="0.518"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etn_score" />
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

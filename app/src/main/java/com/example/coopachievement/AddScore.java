@@ -8,6 +8,8 @@ import androidx.fragment.app.FragmentManager;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -15,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -39,7 +42,8 @@ public class AddScore extends AppCompatActivity {
     boolean difficultySelected = false;
     boolean unsaved = true;
     boolean matchExists = false;
-
+    ImageView gamesback2;
+    ActionBar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -50,7 +54,18 @@ public class AddScore extends AppCompatActivity {
         createDifficultyButtons();
         watchFields();
         displayLevels();
-        ActionBar toolbar = getSupportActionBar();
+        gamesback2=findViewById(R.id.backimage2);
+        themeback();
+        toolbar = getSupportActionBar();
+        if (gameConfig.getThemeIndex() == 0) {
+            toolbar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#023020")));
+        }
+        if(gameConfig.getThemeIndex()==1){
+            toolbar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#A020F0")));
+        }
+        if(gameConfig.getThemeIndex()==2){
+            toolbar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FF1493")));
+        }
         if(getMatchIndex() == -1)
         {
             toolbar.setTitle("Adding a new match!");
@@ -61,6 +76,18 @@ public class AddScore extends AppCompatActivity {
         toolbar.setDisplayHomeAsUpEnabled(true);
 
         //findViewById(R.id.btn_display_levels).setOnClickListener(v->displayLevels());
+    }
+
+    private void themeback() {
+        if (gameConfig.getThemeIndex() == 0) {
+            gamesback2.setBackgroundResource(R.drawable.mythback);
+        }
+        if(gameConfig.getThemeIndex()==1){
+            gamesback2.setBackgroundResource(R.drawable.planetback);
+        }
+        if(gameConfig.getThemeIndex()==2){
+            gamesback2.setBackgroundResource(R.drawable.greekback);
+        }
     }
 
     private void watchFields() {
