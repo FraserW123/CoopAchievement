@@ -194,7 +194,7 @@ public class AddScore extends AppCompatActivity {
             case R.id.action_save:
                 if(unsaved){
                     alertMessage();
-                    unsaved = false;
+
                 }else{
                     Toast.makeText(this,"match already saved",Toast.LENGTH_SHORT).show();
                 }
@@ -244,6 +244,7 @@ public class AddScore extends AppCompatActivity {
                 score_calc.setAchievementLevel();
                 score_calc.setMatchName();
             }
+            unsaved = false;
 
             FragmentManager manager = getSupportFragmentManager();
             AlertMessageFragment alert = new AlertMessageFragment();

@@ -7,7 +7,17 @@
     tools:context=".MainActivity">
 
 
-
+    <ImageView
+        android:id="@+id/animatedmainView"
+        android:layout_width="410dp"
+        android:layout_height="728dp"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addGameConfig"
         android:layout_width="wrap_content"
@@ -23,20 +33,20 @@
 
     <ImageView
         android:id="@+id/nolist"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="410dp"
+        android:layout_height="499dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_bias="0.262"
         app:srcCompat="@drawable/emptystate" />
 
     <ImageView
         android:id="@+id/nogames"
-        android:layout_width="185dp"
-        android:layout_height="216dp"
+        android:layout_width="152dp"
+        android:layout_height="171dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -61,14 +71,27 @@
 
     <ListView
         android:id="@+id/ListofGames"
-        android:layout_width="409dp"
-        android:layout_height="620dp"
+        android:layout_width="401dp"
+        android:layout_height="564dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/tvTheme"
+        android:layout_width="128dp"
+        android:layout_height="21dp"
+        android:text="Look here"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.77"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.836" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

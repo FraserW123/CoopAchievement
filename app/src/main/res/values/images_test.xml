@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources> <!-- incomplete test for possible refactoring -->
+    <item name="mythic_goblin" type="drawable">R.drawable.goblin</item>
+
+</resources>

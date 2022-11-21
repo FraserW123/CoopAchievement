@@ -30,7 +30,7 @@ public class GameTitle extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_title);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        //createDifficultyButtons();
+        Toast.makeText(this, "the theme is " + gameConfig.getTheme(), Toast.LENGTH_SHORT).show();
         findViewById(R.id.startGame).setOnClickListener(v-> createNewMatch());
     }
 

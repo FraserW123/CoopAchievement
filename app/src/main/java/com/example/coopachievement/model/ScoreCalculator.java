@@ -10,13 +10,13 @@ import java.util.List;
  * also set up the worst/poor/good/great/okay/low scores with respect to number of players.
  */
 public class ScoreCalculator {
+    GameConfig gameConfig = GameConfig.getInstance();
     int numPlayers;
     int Score;
     int poorScore;
     int greatScore;
     int increment;
-    String[] achievementMythicNames = {"Goofy Goblins!","Timid Trolls!","Zippy Zombies!","Spooky Spiders!","Vicious Vampires!","Lucky Lions!","Fantastic Fairies!","Supreme Serpents!","Dancing Dragons!","Ultimate Unicorns!"};
-
+    String[] achievementThemeNames = gameConfig.getThemeNames();
 
     String difficulty = "";
     String name;
@@ -29,7 +29,6 @@ public class ScoreCalculator {
     LocalDateTime time = LocalDateTime.now();
     DateTimeFormatter format = DateTimeFormatter.ofPattern("HH:mm a");
     String date = time.format(format);
-
 
     public ScoreCalculator(){
 
@@ -69,14 +68,11 @@ public class ScoreCalculator {
     public int getGreatScore(){return greatScore;}
 
 
-
     public void setMatchName()
     {
-        String threshold = difficulty;
-        if(threshold.equals("")){
-            threshold = "Normal";
-        }
-        name = "Date: " + date+" Players: "+numPlayers + " Total score: " +Score + " "+setAchievementLevel() + " Difficulty " + threshold;
+        achievementThemeNames = gameConfig.getThemeNames();
+        //System.out.println("Name uses index " + gameConfig.getThemeIndex());
+        name = "Date: " + date+" Players: "+numPlayers + " Total score: " +Score + " "+setAchievementLevel() + " Difficulty " + getDifficulty();
         matchesPlayed++;
         matchName.add(name);
     }
@@ -124,18 +120,20 @@ public class ScoreCalculator {
     {
 
         increment = (greatScore - poorScore) / 8;
+        int length = achievementThemeNames.length;
 
-        int length = achievementMythicNames.length;
+        achievementThemeNames = gameConfig.getThemeNames();
+        //System.out.println("Achievements uses index " + gameConfig.getThemeIndex());
         for(int i = 0; i<length-2; i++){
             if(Score <= ((poorScore + ((i)*increment)) * numPlayers)*difficultyMultiplier()){
-                return achievementMythicNames[i];
+                return achievementThemeNames[i];
             }
         }
         if(Score <= greatScore*numPlayers -1){
-            return achievementMythicNames[length-2];
+            return achievementThemeNames[length-2];
         }
 
-        return achievementMythicNames[length-1];
+        return achievementThemeNames[length-1];
 
     }
 
@@ -144,20 +142,18 @@ public class ScoreCalculator {
         increment = (greatScore-poorScore) / 8;
 
 
-        levels.add(achievementMythicNames[0] + " Score: "+ 0 + " - " + (poorScore)*difficultyMultiplier()*numPlayers);
-        int length = achievementMythicNames.length;
-        System.out.println("length " + achievementMythicNames.length);
+        levels.add(achievementThemeNames[0] + " Score: "+ 0 + " - " + (poorScore)*difficultyMultiplier()*numPlayers);
+        int length = achievementThemeNames.length;
         for(int i = 1; i<length-1; i++){
             double minScore = ((poorScore + ((i-1)*increment)) * numPlayers)*difficultyMultiplier();
             double maxScore = (((poorScore + (i*increment)) * numPlayers)*difficultyMultiplier());
             if(i == length-2){ // second last case
                 maxScore = (greatScore*numPlayers)*difficultyMultiplier();
             }
-            levels.add(achievementMythicNames[i] + " Score: " + minScore + " - " + maxScore);
-            System.out.println("increment " + i + " size of levels " + levels.size());
+            levels.add(achievementThemeNames[i] + " Score: " + minScore + " - " + maxScore);
 
         }
-        levels.add(achievementMythicNames[length-1] + " Score: ≥ " + ((greatScore*numPlayers))*difficultyMultiplier());
+        levels.add(achievementThemeNames[length-1] + " Score: ≥ " + ((greatScore*numPlayers))*difficultyMultiplier());
 
         System.out.println("length of this from calculator " + levels.size());
         return levels;

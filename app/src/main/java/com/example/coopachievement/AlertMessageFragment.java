@@ -25,6 +25,7 @@ import com.example.coopachievement.model.GameConfig;
  * it also changes the achievement level on increase of the scores
  */
 public class AlertMessageFragment extends AppCompatDialogFragment  {
+    GameConfig gameConfig = GameConfig.getInstance();
     AnimationDrawable my_congo_anime;
     ImageView iv_changing_image;
     MediaPlayer player;
@@ -43,20 +44,23 @@ public class AlertMessageFragment extends AppCompatDialogFragment  {
         playsong();
         //back_anime();
         okaybutton();
-        GameConfig gameConfig = GameConfig.getInstance();
+
         Game game = gameConfig.getCurrentGame();
         String level = game.getLatestMatch().setAchievementLevel();
         String difficulty = game.getLatestMatch().getDifficulty();
-        if(difficulty.equals("")){
-            difficulty = "Normal";
+        String message = "You are the " + level + "\nDifficulty: " + difficulty;
+        if(gameConfig.getThemeIndex() == 1){
+            gameConfig.setTheme(getResources().getStringArray(R.array.planets));
+            level = game.getLatestMatch().setAchievementLevel();
+            message = "You reached " + level + "\nDifficulty: " + difficulty;
         }
-        game.setMatchDifficulty(difficulty);
+
         iv_changing_image = v.findViewById(R.id.iv_changing_image);
         change(level);
         back_anime();
         return new AlertDialog.Builder(getActivity())
                 .setTitle("Congratulations!")
-                .setMessage("You are the " + level + "\nDifficulty: " + difficulty)
+                .setMessage(message)
                 .setView(v)
                 .create();
     }
@@ -73,7 +77,7 @@ public class AlertMessageFragment extends AppCompatDialogFragment  {
         Button button = v.findViewById(R.id.btn_confirmation);
         button.setOnClickListener(w->{
             GameConfig gameConfig = GameConfig.getInstance();
-            Intent intent = new Intent(getActivity(), GamesPlayed.class);
+            Intent intent = new Intent(getActivity(), gamesplayed.class);
             intent.putExtra("game_index", gameConfig.getCurrentGameIndex());
             player.stop();
             player.setLooping(false);
@@ -89,45 +93,11 @@ public class AlertMessageFragment extends AppCompatDialogFragment  {
 
     public void change(String achieve_level)
     {
-        if (achieve_level.equals("Goofy Goblins!"))
-        {
-            iv_changing_image.setImageResource(R.drawable.goblin);
+        for(int i = 0; i<gameConfig.getThemeIDs().length; i++){
+            if(achieve_level.equals(gameConfig.getThemeNames()[i])){
+                iv_changing_image.setImageResource(gameConfig.getThemeIDs()[i]);
+            }
         }
-        else if (achieve_level.equals("Timid Trolls!"))
-        {
-            iv_changing_image.setImageResource(R.drawable.troll);
-        }
-        else if (achieve_level.equals("Zippy Zombies!"))
-        {
-            iv_changing_image.setImageResource(R.drawable.zombies);
-        }
-        else if (achieve_level.equals("Spooky Spiders!"))
-        {
-            iv_changing_image.setImageResource(R.drawable.spiders);
-        }
-        else if (achieve_level.equals("Vicious Vampires!"))
-        {
-            iv_changing_image.setImageResource(R.drawable.vampires);
-        }
-        else if (achieve_level.equals("Lucky Lions!"))
-        {
-            iv_changing_image.setImageResource(R.drawable.lions);
-        }
-        else if (achieve_level.equals("Fantastic Fairies!"))
-        {
-            iv_changing_image.setImageResource(R.drawable.fairies);
-        }
-        else if (achieve_level.equals("Supreme Serpents!"))
-        {
-            iv_changing_image.setImageResource(R.drawable.serpent);
-        }
-        else if (achieve_level.equals("Dancing Dragons!"))
-        {
-            iv_changing_image.setImageResource(R.drawable.dragon);
-        }
-        else
-        {
-            iv_changing_image.setImageResource(R.drawable.unicorn);
-        }
+
     }
 }
