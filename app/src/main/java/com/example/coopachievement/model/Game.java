@@ -21,6 +21,7 @@ public class Game {
     int currentMatch = 0;
     boolean isAccessed;
     ArrayList<ScoreCalculator> matchesPlayed = new ArrayList<>();
+    ArrayList<Integer> players_score = new ArrayList<>();
 
 
     public boolean isAccessed()
@@ -49,6 +50,10 @@ public class Game {
     public void setDifficulty(String difficulty) {
         this.difficulty = difficulty;
     }
+
+    public ArrayList<Integer> getPlayersScore() {return players_score;}
+
+    public void setPlayersScore(ArrayList<Integer> PlayerScores) {this.players_score = PlayerScores;}
 
     public void addMatch(ScoreCalculator match)
     {

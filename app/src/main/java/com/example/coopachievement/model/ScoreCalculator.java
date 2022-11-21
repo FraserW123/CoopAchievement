@@ -21,7 +21,7 @@ public class ScoreCalculator {
     int greatScore;
     int increment;
     String[] achievementNames = {"Goofy Goblins!","Timid Trolls!","Zippy Zombies!","Spooky Spiders!","Vicious Vampires!","Lucky Lions!","Fantastic Fairies!","Supreme Serpents!","Dancing Dragons!","Ultimate Unicorns!"};
-
+    ArrayList<Integer> players_score = new ArrayList<>();
     String difficulty = "";
     String name;
 
@@ -30,6 +30,10 @@ public class ScoreCalculator {
     public ScoreCalculator(){
 
     }
+
+    public ArrayList<Integer> getPlayerScoresList(){return players_score;}
+
+    public void setPlayersScore(ArrayList<Integer> PlayerScores) {this.players_score = PlayerScores;}
 
     public ScoreCalculator(int numPlayers, int Score, int poorScore, int greatScore){
         this.numPlayers = numPlayers;
@@ -144,10 +148,10 @@ public class ScoreCalculator {
         levels.add(achievementNames[0] + " Score: "+ 0 + " - " + (poorScore)*difficultyMultiplier()*numPlayers);
         int length = achievementNames.length;
         for(int i = 1; i<length-1; i++){
-            double minScore = ((poorScore + ((i-1)*increment)) * numPlayers)*difficultyMultiplier()+1;
+            double minScore = ((poorScore + ((i-1)*increment)) * numPlayers)*difficultyMultiplier();
             double maxScore = (((poorScore + (i*increment)) * numPlayers)*difficultyMultiplier());
             if(i == length-2){ // second last case
-                maxScore = (greatScore*numPlayers -1)*difficultyMultiplier();
+                maxScore = (greatScore*numPlayers )*difficultyMultiplier();
             }
             levels.add(achievementNames[i] + " Score: " + minScore + " - " + maxScore);
 

@@ -9,6 +9,8 @@ import androidx.fragment.app.FragmentManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
@@ -18,10 +20,12 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.example.coopachievement.CalculateAdapter;
 import com.example.coopachievement.model.Game;
 import com.example.coopachievement.model.GameConfig;
 import com.example.coopachievement.model.ScoreCalculator;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -34,6 +38,7 @@ public class AddScore extends AppCompatActivity {
     GameConfig gameConfig = GameConfig.getInstance();
     Game game = gameConfig.getCurrentGame();
     boolean unsaved = true;
+    ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -53,6 +58,66 @@ public class AddScore extends AppCompatActivity {
         toolbar.setDisplayHomeAsUpEnabled(true);
 
         //findViewById(R.id.btn_display_levels).setOnClickListener(v->displayLevels());
+        EditText num_players_input = findViewById(R.id.etn_num_players);
+
+        num_players_input.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(!s.equals('0') && !s.equals(null)){
+                    int matchIndex = getMatchIndex();
+
+                    int players = Integer.parseInt(s.toString());
+/*
+                    EditText et_score = findViewById(R.id.etn_score);
+                    String st_score = et_score.getText().toString();
+
+                   EditText et_players = findViewById(R.id.etn_num_players);
+                    String st_players = et_players.getText().toString();
+
+
+                    int score = Integer.parseInt(st_score);*/
+                    ScoreCalculator score_calc;
+
+                    if (matchIndex == -1 && unsaved) {
+
+                        ArrayList<Integer> players_score = new ArrayList<>();
+                        for (int i = 0; i < players; i++) {
+                            players_score.add(null);
+                        }
+
+                        score_calc = new ScoreCalculator();
+
+                        CalculateAdapter calculatorAdapter = new CalculateAdapter(AddScore.this,
+                                R.layout.list_row, players_score, score_calc);
+                        ListView list = (ListView) findViewById(R.id.lv_player_scores);
+                        list.setAdapter(calculatorAdapter);
+
+                    }
+                    else{
+                        score_calc = game.getMatch(matchIndex);
+                        //score_calc.editMatch(players,score,game.getPoorScore(),game.getGreatScore());
+
+                        CalculateAdapter calculatorAdapter = new CalculateAdapter(AddScore.this,
+                                R.layout.list_row, score_calc.getPlayerScoresList(), score_calc);
+                        ListView list = (ListView) findViewById(R.id.lv_player_scores);
+                        list.setAdapter(calculatorAdapter);
+                    }
+                    refreshDisplay();
+                }
+
+                Toast.makeText(AddScore.this, "nonsense "+s, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     private void createDifficultyButtons() {
@@ -64,6 +129,7 @@ public class AddScore extends AppCompatActivity {
             String difficulty = difficultyOptions[i];
             RadioButton button = new RadioButton(this);
             button.setText(difficulty);
+            button.setPadding(0,0,30,0);
 
             button.setOnClickListener(v->{
                 game.setDifficulty(difficulty);
