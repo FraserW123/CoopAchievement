@@ -1,10 +1,5 @@
 package com.example.coopachievement.model;
 
-import android.content.Context;
-import android.os.Build;
-
-import androidx.annotation.RequiresApi;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -15,17 +10,25 @@ import java.util.List;
  * also set up the worst/poor/good/great/okay/low scores with respect to number of players.
  */
 public class ScoreCalculator {
+    GameConfig gameConfig = GameConfig.getInstance();
     int numPlayers;
     int Score;
     int poorScore;
     int greatScore;
     int increment;
-    String[] achievementNames = {"Goofy Goblins!","Timid Trolls!","Zippy Zombies!","Spooky Spiders!","Vicious Vampires!","Lucky Lions!","Fantastic Fairies!","Supreme Serpents!","Dancing Dragons!","Ultimate Unicorns!"};
+    String[] achievementThemeNames = gameConfig.getThemeNames();
 
     String difficulty = "";
     String name;
 
     List<String> levels = new ArrayList<>();
+
+    int matchesPlayed = 0;
+    private ArrayList<String> matchName = new ArrayList<>();
+
+    LocalDateTime time = LocalDateTime.now();
+    DateTimeFormatter format = DateTimeFormatter.ofPattern("HH:mm a");
+    String date = time.format(format);
 
     public ScoreCalculator(){
 
@@ -64,15 +67,11 @@ public class ScoreCalculator {
     public void setGreatScore(int great_score){greatScore = great_score;}
     public int getGreatScore(){return greatScore;}
 
-    int matchesPlayed = 0;
-    private ArrayList<String> matchName = new ArrayList<>();
-
-    LocalDateTime time = LocalDateTime.now();
-    DateTimeFormatter format = DateTimeFormatter.ofPattern("HH:mm a");
-    String date = time.format(format);
 
     public void setMatchName()
     {
+        achievementThemeNames = gameConfig.getThemeNames();
+        //System.out.println("Name uses index " + gameConfig.getThemeIndex());
         name = "Date: " + date+" Players: "+numPlayers + " Total score: " +Score + " "+setAchievementLevel() + " Difficulty " + getDifficulty();
         matchesPlayed++;
         matchName.add(name);
@@ -121,18 +120,20 @@ public class ScoreCalculator {
     {
 
         increment = (greatScore - poorScore) / 8;
+        int length = achievementThemeNames.length;
 
-        int length = achievementNames.length;
+        achievementThemeNames = gameConfig.getThemeNames();
+        //System.out.println("Achievements uses index " + gameConfig.getThemeIndex());
         for(int i = 0; i<length-2; i++){
             if(Score <= ((poorScore + ((i)*increment)) * numPlayers)*difficultyMultiplier()){
-                return achievementNames[i];
+                return achievementThemeNames[i];
             }
         }
         if(Score <= greatScore*numPlayers -1){
-            return achievementNames[length-2];
+            return achievementThemeNames[length-2];
         }
 
-        return achievementNames[length-1];
+        return achievementThemeNames[length-1];
 
     }
 
@@ -141,18 +142,18 @@ public class ScoreCalculator {
         increment = (greatScore-poorScore) / 8;
 
 
-        levels.add(achievementNames[0] + " Score: "+ 0 + " - " + (poorScore)*difficultyMultiplier()*numPlayers);
-        int length = achievementNames.length;
+        levels.add(achievementThemeNames[0] + " Score: "+ 0 + " - " + (poorScore)*difficultyMultiplier()*numPlayers);
+        int length = achievementThemeNames.length;
         for(int i = 1; i<length-1; i++){
             double minScore = ((poorScore + ((i-1)*increment)) * numPlayers)*difficultyMultiplier()+1;
             double maxScore = (((poorScore + (i*increment)) * numPlayers)*difficultyMultiplier());
             if(i == length-2){ // second last case
                 maxScore = (greatScore*numPlayers -1)*difficultyMultiplier();
             }
-            levels.add(achievementNames[i] + " Score: " + minScore + " - " + maxScore);
+            levels.add(achievementThemeNames[i] + " Score: " + minScore + " - " + maxScore);
 
         }
-        levels.add(achievementNames[length-1] + " Score: ≥ " + ((greatScore*numPlayers))*difficultyMultiplier());
+        levels.add(achievementThemeNames[length-1] + " Score: ≥ " + ((greatScore*numPlayers))*difficultyMultiplier());
 
 
         return levels;

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources><string-array name="planets">
+    <item>The Moon</item>
+    <item>Venus</item>
+    <item>Mars</item>
+    <item>Mercury</item>
+    <item>Jupiter</item>
+    <item>Saturn</item>
+    <item>Uranus</item>
+    <item>Neptune</item>
+    <item>Pluto</item>
+    <item>The end of the Galaxy</item>
+</string-array>
+</resources>

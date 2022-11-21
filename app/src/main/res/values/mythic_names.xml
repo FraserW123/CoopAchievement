@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="achievements">
+        <item>Goofy Goblins!</item>
+        <item>Timid Trolls!</item>
+        <item>Zippy Zombies!</item>
+        <item>Prideful Phoenixes!</item>
+        <item>Vicious Vampires!</item>
+        <item>Glorious Griffins!</item>
+        <item>Fantastic Fairies!</item>
+        <item>Supreme Serpents!</item>
+        <item>Dancing Dragons!</item>
+        <item>Ultimate Unicorns!</item>
+    </string-array>
+
+</resources>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="greek_gods">
+        <item>Dionysus - The God of Wine</item>
+        <item>Hermes - The Messenger God</item>
+        <item>Hephaestus - The God of Fire</item>
+        <item>Artemis - Goddess of the Hunt</item>
+        <item>Athena - Goddess of Wisdom</item>
+        <item>Apollo - Goddess of Harvest</item>
+        <item>Ares - the God of War</item>
+        <item>Poseidon - God of the Sea</item>
+        <item>Hera - Goddess of Women</item>
+        <item>Zeus - God of the Sky</item>
+    </string-array>
+</resources>

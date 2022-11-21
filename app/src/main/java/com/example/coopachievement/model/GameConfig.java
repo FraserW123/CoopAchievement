@@ -2,6 +2,8 @@ package com.example.coopachievement.model;
 
 import android.util.Log;
 
+import com.example.coopachievement.R;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +14,24 @@ import java.util.List;
 public class GameConfig {
     private List<Game> gameName = new ArrayList<>();
     private int numGames = 0;
+    private String[] themes = {"Mythic", "Planet", "Greek Gods"};
+    int [] mythicIDs = {R.drawable.mythic_goblin,R.drawable.mythic_troll, R.drawable.mythic_zombies,
+            R.drawable.mythic_phoenix, R.drawable.mythic_vampires,R.drawable.mythic_griffin, R.drawable.mythic_fairies,
+            R.drawable.mythic_serpent,R.drawable.mythic_dragon,R.drawable.mythic_unicorn};
+
+
+    int [] planetIDS ={R.drawable.planet_moon,R.drawable.planet_venus,R.drawable.planet_mars,R.drawable.planet_mercury,
+            R.drawable.planet_jupiter, R.drawable.planet_saturn,R.drawable.planet_uranus,R.drawable.planet_neptune,
+            R.drawable.planet_pluto,R.drawable.planet_galaxy};
+
+
+    int[] godIDs = {R.drawable.god_dionysus, R.drawable.god_hermes, R.drawable.god_hephaestus, R.drawable.god_artemis,
+            R.drawable.god_athena, R.drawable.god_apollo, R.drawable.god_ares, R.drawable.god_poseidon,
+            R.drawable.god_zeus};
+
+    private String[] themeNames;
+    private String gameTheme;
+    private int themeIndex = 0;
     int currentGameIndex;
     private boolean isDelete;
     private boolean accessedMatches;
@@ -30,6 +50,45 @@ public class GameConfig {
         }
         return instance;
     }
+
+    public void setTheme(String[] theme) {
+        this.themeNames = theme;
+    }
+
+    public String[] getThemeNames() {
+        System.out.println("theme index from config is " + getThemeIndex());
+        return themeNames;
+    }
+
+    public int[] getThemeIDs(){
+        if(getThemeIndex() == 1){
+            return planetIDS;
+        }
+        else if(getThemeIndex() == 2){
+            return godIDs;
+        }
+        return mythicIDs;
+    }
+
+    public void setThemeIndex(int themeIndex){
+        this.themeIndex = themeIndex;
+    }
+
+    public void incrementThemeIndex(){
+        themeIndex++;
+    }
+    public int getThemeIndex(){// 0 = mythic, 1 = planets, 2 = gods
+        return themeIndex%3;
+    }
+
+
+
+    public String getTheme(){
+        System.out.println("theme index " + themeIndex);
+        gameTheme = themes[getThemeIndex()];
+        return gameTheme;
+    }
+
 
     public boolean isAccessedMatches() {
         return accessedMatches;
