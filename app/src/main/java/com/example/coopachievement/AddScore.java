@@ -70,18 +70,9 @@ public class AddScore extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if(!s.equals('0') && !(s==null) && !(s.toString().isEmpty())){
+                    System.out.println("You are in the wrong spot!");
                     int matchIndex = getMatchIndex();
-
                     int players = Integer.parseInt(s.toString());
-/*
-                    EditText et_score = findViewById(R.id.etn_score);
-                    String st_score = et_score.getText().toString();
-
-                   EditText et_players = findViewById(R.id.etn_num_players);
-                    String st_players = et_players.getText().toString();
-
-
-                    int score = Integer.parseInt(st_score);*/
                     ScoreCalculator score_calc;
 
                     if (matchIndex == -1 && unsaved) {
@@ -91,36 +82,24 @@ public class AddScore extends AppCompatActivity {
                             players_score.add(null);
                         }
 
-                        score_calc = new ScoreCalculator();
-
                         CalculateAdapter calculatorAdapter = new CalculateAdapter(AddScore.this,
-                                R.layout.list_row, players_score, score_calc);
+                                R.layout.list_row, players_score);
                         ListView list = (ListView) findViewById(R.id.lv_player_scores);
                         list.setAdapter(calculatorAdapter);
 
                     }
-                    else{
+                    else{ //edit
+                        System.out.println("hi");
                         score_calc = game.getMatch(matchIndex);
-                        int theScore = 0;
-                        int checked = 0;
-                        boolean playersEntered = false;
-                        for(int i = 0; i<game.getPlayersScore().size(); i++){
-                            if(game.getPlayersScore().get(i) != null){
-                                checked++;
-                            }
-                        }
-                        System.out.println("checked " + checked);
-                        if(checked == game.getPlayersScore().size()){
-                            for(int i = 0; i<game.getPlayersScore().size(); i++){
-                                theScore += game.getPlayersScore().get(i);
-                            }
-                            playersEntered = true;
-                        }
+                        int theScore = getTheScore();
                         System.out.println("The score " + theScore);
+                        for(int i = 0; i<score_calc.getPlayerScoresList().size(); i++){
+                            System.out.println("Look " + score_calc.getPlayerScoresList().get(i));
+                        }
                         score_calc.editMatch(players,theScore,game.getPoorScore(),game.getGreatScore());
 
                         CalculateAdapter calculatorAdapter = new CalculateAdapter(AddScore.this,
-                                R.layout.list_row, score_calc.getPlayerScoresList(), score_calc);
+                                R.layout.list_row, score_calc.getPlayerScoresList());
                         ListView list = (ListView) findViewById(R.id.lv_player_scores);
                         list.setAdapter(calculatorAdapter);
                     }
@@ -135,6 +114,25 @@ public class AddScore extends AppCompatActivity {
 
             }
         });
+    }
+
+    private int getTheScore() {
+        int theScore = 0;
+        int checked = 0;
+
+        for(int i = 0; i<game.getPlayersScore().size(); i++){
+            if(game.getPlayersScore().get(i) != null){
+                checked++;
+            }
+        }
+        System.out.println("checked " + checked);
+        if(checked == game.getPlayersScore().size()){
+            for(int i = 0; i<game.getPlayersScore().size(); i++){
+                theScore += game.getPlayersScore().get(i);
+            }
+
+        }
+        return theScore;
     }
 
     private void createDifficultyButtons() {
@@ -206,11 +204,11 @@ public class AddScore extends AppCompatActivity {
 
             ScoreCalculator score_calc = game.getMatch(matchIndex);
             for(int i = 0; i<score_calc.getPlayerScoresList().size(); i++){
-                System.out.println("this "+ score_calc.getPlayerScoresList().get(i));
+                System.out.println("this is"+ score_calc.getPlayerScoresList().get(i));
             }
-            System.out.println("Its empty");
+
             CalculateAdapter calculatorAdapter = new CalculateAdapter(AddScore.this,
-                    R.layout.list_row, score_calc.getPlayerScoresList(), score_calc);
+                    R.layout.list_row, score_calc.getPlayerScoresList());
             ListView list = (ListView) findViewById(R.id.lv_player_scores);
             list.setAdapter(calculatorAdapter);
         }
@@ -281,25 +279,14 @@ public class AddScore extends AppCompatActivity {
         EditText et_score = findViewById(R.id.etn_score);
         String st_score = et_score.getText().toString();
         boolean playersEntered = false;
-        int theScore = 0;
-        int checked = 0;
-        for(int i = 0; i<game.getPlayersScore().size(); i++){
-            if(game.getPlayersScore().get(i) != null){
-                checked++;
-            }
-        }
-        System.out.println("checked " + checked);
-        if(checked == game.getPlayersScore().size()){
-            for(int i = 0; i<game.getPlayersScore().size(); i++){
-                theScore += game.getPlayersScore().get(i);
-            }
+        int theScore = getTheScore();
+        if(theScore > 0){
             playersEntered = true;
         }
         System.out.println("The score " + theScore);
 
         if(!st_players.equals("") && playersEntered && !st_players.equals("0"))
 
-//            if(!st_players.equals("") && !st_score.equals("") && !st_players.equals("0"))
         {
             int players = Integer.parseInt(st_players);
             //int score = Integer.parseInt(st_score);

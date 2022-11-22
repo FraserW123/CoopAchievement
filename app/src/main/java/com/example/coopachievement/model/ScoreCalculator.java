@@ -42,6 +42,7 @@ public class ScoreCalculator {
         this.greatScore = greatScore;
     }
 
+
     public void editMatch(int numPlayers, int Score, int poorScore, int greatScore){
         this.numPlayers = numPlayers;
         this.Score = Score;

@@ -16,6 +16,7 @@ import com.example.coopachievement.model.GameConfig;
 import com.example.coopachievement.model.ScoreCalculator;
 
 import java.util.ArrayList;
+import java.util.SortedMap;
 
 public class CalculateAdapter extends ArrayAdapter<Integer> {
     private Context contextmain;
@@ -24,12 +25,12 @@ public class CalculateAdapter extends ArrayAdapter<Integer> {
 
     private ScoreCalculator calcScores;
 
-    public CalculateAdapter(Context context, int resourceLayout, ArrayList<Integer> scores, ScoreCalculator calculatingScores) {
+    public CalculateAdapter(Context context, int resourceLayout, ArrayList<Integer> scores) {
         super(context, resourceLayout, scores);
         this.contextmain = context;
         this.ResourceLayout = resourceLayout;
         this.Scores = scores;
-        this.calcScores = calculatingScores;
+
     }
 
 
@@ -45,15 +46,16 @@ public class CalculateAdapter extends ArrayAdapter<Integer> {
 
         }
         TextView player_text = itemView.findViewById(R.id.tv_player_num);
-        System.out.println("Looky Here!");
+
         player_text.setText("Player " + (position+1));
 
-        String testingplayer = player_text.getText().toString();
         EditText playersScore = itemView.findViewById(R.id.etn_player_score);
 
-//        if(!(game.getPlayersScore().isEmpty())){
-//            playersScore.setText(game.getPlayersScore().get(position));
-//        }
+
+        if(!(Scores.get(position) == null)){
+            playersScore.setText(Scores.get(position).toString());
+        }
+
 
         playersScore.addTextChangedListener(new TextWatcher() {
             @Override
@@ -64,7 +66,6 @@ public class CalculateAdapter extends ArrayAdapter<Integer> {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if(!s.equals('0') && !(s==null) && !(s.toString().isEmpty())) {
 
-
                     String st_score = playersScore.getText().toString();
                     int score = Integer.parseInt(st_score);
 
@@ -73,17 +74,8 @@ public class CalculateAdapter extends ArrayAdapter<Integer> {
                     for(int i = 0; i< Scores.size(); i++){
                         System.out.println("Score list " + Scores.get(i));
                     }
-
                     game.setPlayersScore(Scores);
-//                for(int i = 0; i<game.getPlayersScore().size(); i++){
-//                    System.out.println("Score "+ (i+1) +": "+ game.getPlayersScore().get(i));
-//                }
 
-
-                    //calcScores.setPlayersScore(Scores);
-//                    for (int i = 0; i < 3; i++) {
-//                        Toast.makeText(contextmain, "testing calc " + calcScores.getPlayerScoresList().get(i), Toast.LENGTH_SHORT).show();
-//                    }
                 }
             }
 

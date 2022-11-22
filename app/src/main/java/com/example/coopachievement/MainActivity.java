@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         int gameFields = 5;
-        int matchFields = 4;
+        int matchFields = 5;
         if(!extractedText.equals("") && !gameConfig.getisDelete()){
             for(int i = 0; i<gameInfo.length; i+=gameFields){
                 Game game = new Game(gameInfo[i], gameInfo[i+1], Integer.parseInt(gameInfo[i+2]), Integer.parseInt(gameInfo[i+3]));
@@ -104,6 +104,12 @@ public class MainActivity extends AppCompatActivity {
                             scoreCalculator.setDate(matches[j+2]);
                             game.setDifficulty(matches[j+3]);
                             scoreCalculator.setDifficulty(matches[j+3]);
+                            String[] playerScores = matches[j+4].split("#");
+                            ArrayList<Integer> scores = new ArrayList<>();
+                            for(int k = 0; k<playerScores.length; k++){
+                                scores.add(Integer.parseInt(playerScores[k]));
+                            }
+                            scoreCalculator.setPlayersScore(scores);
                             scoreCalculator.setMatchName();
                             game.addMatch(scoreCalculator);
                         }
@@ -141,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
             stringBuilder.append(",");
 
             List<ScoreCalculator> matchList = game.getMatchList();
-            store(stringBuilder, matchList);
+            storeMatchData(stringBuilder, matchList);
 
         }
 
@@ -151,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
         editor.apply();
     }
 
-    private static void store(StringBuilder stringBuilder, List<ScoreCalculator> matchList) {
+    private static void storeMatchData(StringBuilder stringBuilder, List<ScoreCalculator> matchList) {
         StringBuilder matchString = new StringBuilder();
         if(!matchList.isEmpty()){
 
@@ -166,6 +172,17 @@ public class MainActivity extends AppCompatActivity {
                 matchString.append(";");
                 matchString.append(matches.getDifficulty());
                 matchString.append(";");
+                ArrayList<Integer> playerScore = matches.getPlayerScoresList();
+                StringBuilder scoreString = new StringBuilder();
+                if(!playerScore.isEmpty()){
+                    for(int k = 0; k<playerScore.size(); k++){
+                        scoreString.append(playerScore.get(k));
+                        scoreString.append("#");
+                    }
+                }
+                matchString.append(scoreString);
+                matchString.append(";");
+
             }
 
         }else{
