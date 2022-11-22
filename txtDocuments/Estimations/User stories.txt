@@ -27,5 +27,5 @@ Allow the player to enter each player's score individually, so that the player d
 We estimated that it would take us 4 hours.
 
 Development Process:
-Implement JUnit unit tests for one class in the model.
+Implement JUnit unit tests for one class i.e., Score Calculator in the model.
 We estimated that it would take us 1 hour.
