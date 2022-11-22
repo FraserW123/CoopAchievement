@@ -81,13 +81,15 @@
 
     <ListView
         android:id="@+id/lv_display_levels"
-        android:layout_width="326dp"
-        android:layout_height="256dp"
+        android:layout_width="390dp"
+        android:layout_height="200dp"
         android:scrollbarSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintHorizontal_bias="0.761"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_see_achiev_levels" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.985" />
 
     <TextView
         android:id="@+id/tv_see_achiev_levels"
@@ -115,14 +117,15 @@
 
     <ListView
         android:id="@+id/lv_player_scores"
-        android:layout_width="382dp"
-        android:layout_height="390dp"
-        android:layout_marginTop="100dp"
+        android:layout_width="391dp"
+        android:layout_height="175dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.517"
+        app:layout_constraintHorizontal_bias="0.75"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_score" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_score"
+        app:layout_constraintVertical_bias="0.324" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

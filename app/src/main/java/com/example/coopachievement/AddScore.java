@@ -381,7 +381,7 @@ public class AddScore extends AppCompatActivity {
             {
                 score_calc = new ScoreCalculator(players,score,game.getPoorScore(),game.getGreatScore());
                 score_calc.setPlayersScore(game.getPlayersScore(currentMatchIndex));
-                score_calc.setDifficulty(game.getDifficulty());
+                score_calc.setDifficulty(game.getMatchDifficulty());
                 score_calc.setAchievementLevel();
                 score_calc.setMatchName();
                 game.addMatch(score_calc);
@@ -391,7 +391,7 @@ public class AddScore extends AppCompatActivity {
                 score_calc = game.getMatch(matchIndex);
                 score_calc.setPlayersScore(game.getPlayersScore(game.getCurrentMatch()));
                 score_calc.editMatch(players,score,game.getPoorScore(),game.getGreatScore());
-                score_calc.setDifficulty(game.getDifficulty());
+                score_calc.setDifficulty(game.getMatchDifficulty());
                 score_calc.setAchievementLevel();
                 score_calc.setMatchName();
             }
