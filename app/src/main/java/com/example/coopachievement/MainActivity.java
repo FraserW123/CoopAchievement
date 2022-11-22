@@ -98,7 +98,9 @@ public class MainActivity extends AppCompatActivity {
                 if(gameInfo.length - i >= gameFields){
                     String[] matches = gameInfo[i+4].split(";");
                     if(!matches[0].equals("|")){
+                        int count = 0;
                         for(int j = 0; j<matches.length; j+=matchFields){
+
                             ScoreCalculator scoreCalculator = new ScoreCalculator(Integer.parseInt(matches[j])
                                     ,Integer.parseInt(matches[j+1]),Integer.parseInt(gameInfo[i+2]),Integer.parseInt(gameInfo[i+3]));
                             scoreCalculator.setDate(matches[j+2]);
@@ -106,13 +108,18 @@ public class MainActivity extends AppCompatActivity {
                             scoreCalculator.setDifficulty(matches[j+3]);
                             String[] playerScores = matches[j+4].split("#");
                             ArrayList<Integer> scores = new ArrayList<>();
+                            game.addPlayerScore(scores);
                             for(int k = 0; k<playerScores.length; k++){
                                 scores.add(Integer.parseInt(playerScores[k]));
                             }
+                            System.out.println("going once " + count);
+                            game.setPlayersScore(scores, count);
                             scoreCalculator.setPlayersScore(scores);
                             scoreCalculator.setMatchName();
                             game.addMatch(scoreCalculator);
+                            count++;
                         }
+
                     }
 
                 }

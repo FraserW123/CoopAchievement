@@ -22,14 +22,16 @@ public class CalculateAdapter extends ArrayAdapter<Integer> {
     private Context contextmain;
     private int ResourceLayout;
     private ArrayList<Integer> Scores;
+    private String[] numPlayers;
 
     private ScoreCalculator calcScores;
 
-    public CalculateAdapter(Context context, int resourceLayout, ArrayList<Integer> scores) {
+    public CalculateAdapter(Context context, int resourceLayout, ArrayList<Integer> scores, String[] numPlayers) {
         super(context, resourceLayout, scores);
         this.contextmain = context;
         this.ResourceLayout = resourceLayout;
         this.Scores = scores;
+        this.numPlayers = numPlayers;
 
     }
 
@@ -39,6 +41,7 @@ public class CalculateAdapter extends ArrayAdapter<Integer> {
         //Toast.makeText(contextmain, "infinite 1" , Toast.LENGTH_SHORT).show();
         GameConfig gameConfig = GameConfig.getInstance();
         Game game = gameConfig.getCurrentGame();
+        int currentMatchIndex = game.getCurrentMatch();
         View itemView = convertView;
         if(itemView == null) {
             //LayoutInflater inflater = LayoutInflater.from(contextmain);
@@ -47,14 +50,17 @@ public class CalculateAdapter extends ArrayAdapter<Integer> {
         }
         TextView player_text = itemView.findViewById(R.id.tv_player_num);
 
-        player_text.setText("Player " + (position+1));
+        player_text.setText(numPlayers[position]);
 
         EditText playersScore = itemView.findViewById(R.id.etn_player_score);
-
 
         if(!(Scores.get(position) == null)){
             playersScore.setText(Scores.get(position).toString());
         }
+        else{
+            playersScore.setText("");
+        }
+
 
 
         playersScore.addTextChangedListener(new TextWatcher() {
@@ -64,17 +70,18 @@ public class CalculateAdapter extends ArrayAdapter<Integer> {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String[] words = player_text.getText().toString().split(" ");
                 if(!s.equals('0') && !(s==null) && !(s.toString().isEmpty())) {
 
                     String st_score = playersScore.getText().toString();
                     int score = Integer.parseInt(st_score);
-
-                    System.out.println("position " + position);
-                    Scores.set(position, score);
+                    ArrayList<Integer> temp = new ArrayList<>();
+                    game.addPlayerScore(temp);
+                    Scores.set((Integer.parseInt(words[1])-1), score);
                     for(int i = 0; i< Scores.size(); i++){
                         System.out.println("Score list " + Scores.get(i));
                     }
-                    game.setPlayersScore(Scores);
+                    game.setPlayersScore(Scores, currentMatchIndex);
 
                 }
             }
