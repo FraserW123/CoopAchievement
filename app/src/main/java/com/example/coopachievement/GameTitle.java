@@ -145,9 +145,20 @@ public class GameTitle extends AppCompatActivity {
             gameConfig.setCurrentGameIndex(gamesPlayed);
             gameConfig.addGame(game);
             gameConfig.setAccessedMatches(true);
+            setApplicationTheme(gameConfig);
             game.setCurrentMatch(game.getNumMatchesPlayed());
             Intent switching = new Intent(this, AddScore.class);
             startActivity(switching);
+        }
+    }
+
+    private void setApplicationTheme(GameConfig gameConfig) {
+        if (gameConfig.getThemeIndex() == 0) {
+            gameConfig.setTheme(getResources().getStringArray(R.array.achievements));
+        } else if(gameConfig.getThemeIndex() == 1) {
+            gameConfig.setTheme(getResources().getStringArray(R.array.planets));
+        }else{
+            gameConfig.setTheme(getResources().getStringArray(R.array.greek_gods));
         }
     }
 

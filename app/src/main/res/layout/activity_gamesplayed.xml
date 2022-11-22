@@ -186,15 +186,15 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:text="Add new game score"
-        android:textSize="15dp"
         android:textColor="@color/black"
+        android:textSize="15dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.694"
+        app:layout_constraintHorizontal_bias="0.67"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.942" />
+        app:layout_constraintVertical_bias="0.92" />
 
     <TextView
         android:id="@+id/textView4"

@@ -266,6 +266,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_Theme:
                 gameConfig.incrementThemeIndex();
                 themeName.setText("Theme: "+gameConfig.getTheme());
+
                 Toast.makeText(this, "Changing theme", Toast.LENGTH_SHORT).show();
                 return true;
 

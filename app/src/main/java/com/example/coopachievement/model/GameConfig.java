@@ -14,7 +14,7 @@ import java.util.List;
 public class GameConfig {
     private List<Game> gameName = new ArrayList<>();
     private int numGames = 0;
-    private String[] themes = {"Mythic", "Planet", "Greek Gods"};
+    private String[] themes = {"Mythical", "Planet", "Greek Gods"};
     int [] mythicIDs = {R.drawable.mythic_goblin,R.drawable.mythic_troll, R.drawable.mythic_zombies,
             R.drawable.mythic_phoenix, R.drawable.mythic_vampires,R.drawable.mythic_griffin, R.drawable.mythic_fairies,
             R.drawable.mythic_serpent,R.drawable.mythic_dragon,R.drawable.mythic_unicorn};
@@ -56,7 +56,6 @@ public class GameConfig {
     }
 
     public String[] getThemeNames() {
-        System.out.println("theme index from config is " + getThemeIndex());
         return themeNames;
     }
 
