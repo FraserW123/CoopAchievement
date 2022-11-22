@@ -38,6 +38,7 @@ public class AddScore extends AppCompatActivity {
     GameConfig gameConfig = GameConfig.getInstance();
     Game game = gameConfig.getCurrentGame();
     boolean unsaved = true;
+    int why = 0;
     ListView listView;
 
     @Override
@@ -68,7 +69,7 @@ public class AddScore extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(!s.equals('0') && !s.equals(null)){
+                if(!s.equals('0') && !(s==null) && !(s.toString().isEmpty())){
                     int matchIndex = getMatchIndex();
 
                     int players = Integer.parseInt(s.toString());
@@ -100,14 +101,30 @@ public class AddScore extends AppCompatActivity {
                     }
                     else{
                         score_calc = game.getMatch(matchIndex);
-                        //score_calc.editMatch(players,score,game.getPoorScore(),game.getGreatScore());
+                        int theScore = 0;
+                        int checked = 0;
+                        boolean playersEntered = false;
+                        for(int i = 0; i<game.getPlayersScore().size(); i++){
+                            if(game.getPlayersScore().get(i) != null){
+                                checked++;
+                            }
+                        }
+                        System.out.println("checked " + checked);
+                        if(checked == game.getPlayersScore().size()){
+                            for(int i = 0; i<game.getPlayersScore().size(); i++){
+                                theScore += game.getPlayersScore().get(i);
+                            }
+                            playersEntered = true;
+                        }
+                        System.out.println("The score " + theScore);
+                        score_calc.editMatch(players,theScore,game.getPoorScore(),game.getGreatScore());
 
                         CalculateAdapter calculatorAdapter = new CalculateAdapter(AddScore.this,
                                 R.layout.list_row, score_calc.getPlayerScoresList(), score_calc);
                         ListView list = (ListView) findViewById(R.id.lv_player_scores);
                         list.setAdapter(calculatorAdapter);
                     }
-                    refreshDisplay();
+                    //refreshDisplay();
                 }
 
                 Toast.makeText(AddScore.this, "nonsense "+s, Toast.LENGTH_SHORT).show();
@@ -185,6 +202,17 @@ public class AddScore extends AppCompatActivity {
             EditText score  = findViewById(R.id.etn_score);
             players.setText(String.valueOf(game.getMatch(matchIndex).getNumPlayers()));
             score.setText(String.valueOf(game.getMatch(matchIndex).getScore()));
+
+
+            ScoreCalculator score_calc = game.getMatch(matchIndex);
+            for(int i = 0; i<score_calc.getPlayerScoresList().size(); i++){
+                System.out.println("this "+ score_calc.getPlayerScoresList().get(i));
+            }
+            System.out.println("Its empty");
+            CalculateAdapter calculatorAdapter = new CalculateAdapter(AddScore.this,
+                    R.layout.list_row, score_calc.getPlayerScoresList(), score_calc);
+            ListView list = (ListView) findViewById(R.id.lv_player_scores);
+            list.setAdapter(calculatorAdapter);
         }
     }
 
@@ -252,17 +280,37 @@ public class AddScore extends AppCompatActivity {
         String st_players = et_players.getText().toString();
         EditText et_score = findViewById(R.id.etn_score);
         String st_score = et_score.getText().toString();
+        boolean playersEntered = false;
+        int theScore = 0;
+        int checked = 0;
+        for(int i = 0; i<game.getPlayersScore().size(); i++){
+            if(game.getPlayersScore().get(i) != null){
+                checked++;
+            }
+        }
+        System.out.println("checked " + checked);
+        if(checked == game.getPlayersScore().size()){
+            for(int i = 0; i<game.getPlayersScore().size(); i++){
+                theScore += game.getPlayersScore().get(i);
+            }
+            playersEntered = true;
+        }
+        System.out.println("The score " + theScore);
 
-        if(!st_players.equals("") && !st_score.equals("") && !st_players.equals("0"))
+        if(!st_players.equals("") && playersEntered && !st_players.equals("0"))
+
+//            if(!st_players.equals("") && !st_score.equals("") && !st_players.equals("0"))
         {
             int players = Integer.parseInt(st_players);
-            int score = Integer.parseInt(st_score);
+            //int score = Integer.parseInt(st_score);
+            int score = theScore;
             int matchIndex = getMatchIndex();
             ScoreCalculator score_calc;
 
             if(matchIndex == -1 && unsaved)
             {
                 score_calc = new ScoreCalculator(players,score,game.getPoorScore(),game.getGreatScore());
+                score_calc.setPlayersScore(game.getPlayersScore());
                 score_calc.setDifficulty(game.getDifficulty());
                 score_calc.setAchievementLevel();
                 score_calc.setMatchName();

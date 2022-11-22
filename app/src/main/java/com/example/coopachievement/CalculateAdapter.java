@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.coopachievement.model.Game;
 import com.example.coopachievement.model.GameConfig;
 import com.example.coopachievement.model.ScoreCalculator;
 
@@ -20,6 +21,7 @@ public class CalculateAdapter extends ArrayAdapter<Integer> {
     private Context contextmain;
     private int ResourceLayout;
     private ArrayList<Integer> Scores;
+
     private ScoreCalculator calcScores;
 
     public CalculateAdapter(Context context, int resourceLayout, ArrayList<Integer> scores, ScoreCalculator calculatingScores) {
@@ -34,7 +36,8 @@ public class CalculateAdapter extends ArrayAdapter<Integer> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent){
         //Toast.makeText(contextmain, "infinite 1" , Toast.LENGTH_SHORT).show();
-
+        GameConfig gameConfig = GameConfig.getInstance();
+        Game game = gameConfig.getCurrentGame();
         View itemView = convertView;
         if(itemView == null) {
             //LayoutInflater inflater = LayoutInflater.from(contextmain);
@@ -42,41 +45,54 @@ public class CalculateAdapter extends ArrayAdapter<Integer> {
 
         }
         TextView player_text = itemView.findViewById(R.id.tv_player_num);
-
+        System.out.println("Looky Here!");
         player_text.setText("Player " + (position+1));
 
         String testingplayer = player_text.getText().toString();
-
-
         EditText playersScore = itemView.findViewById(R.id.etn_player_score);
 
+//        if(!(game.getPlayersScore().isEmpty())){
+//            playersScore.setText(game.getPlayersScore().get(position));
+//        }
+
         playersScore.addTextChangedListener(new TextWatcher() {
-                                                @Override
-                                                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
-                                                }
-
-                                                @Override
-                                                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                                                    String st_score = playersScore.getText().toString();
-                                                    int score = Integer.parseInt(st_score);
-                                                    Scores.set(position, score);
-                                                    GameConfig.getInstance().getCurrentGame().setPlayersScore(Scores);
-
-                                                    calcScores.setPlayersScore(Scores);
-                                                    for(int i = 0; i < 3; i++) {
-                                                        Toast.makeText(contextmain, "testing calc " + calcScores.getPlayerScoresList().get(i), Toast.LENGTH_SHORT).show();
-                                                    }
-                                                }
-
-                                                @Override
-                                                public void afterTextChanged(Editable s) {
-
-                                                }
-                                            });
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(!s.equals('0') && !(s==null) && !(s.toString().isEmpty())) {
 
 
-                //Integer currentScore =
+                    String st_score = playersScore.getText().toString();
+                    int score = Integer.parseInt(st_score);
+
+                    System.out.println("position " + position);
+                    Scores.set(position, score);
+                    for(int i = 0; i< Scores.size(); i++){
+                        System.out.println("Score list " + Scores.get(i));
+                    }
+
+                    game.setPlayersScore(Scores);
+//                for(int i = 0; i<game.getPlayersScore().size(); i++){
+//                    System.out.println("Score "+ (i+1) +": "+ game.getPlayersScore().get(i));
+//                }
+
+
+                    //calcScores.setPlayersScore(Scores);
+//                    for (int i = 0; i < 3; i++) {
+//                        Toast.makeText(contextmain, "testing calc " + calcScores.getPlayerScoresList().get(i), Toast.LENGTH_SHORT).show();
+//                    }
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
         return itemView;
     }
 
