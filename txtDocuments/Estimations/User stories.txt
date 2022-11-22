@@ -1,7 +1,31 @@
 Unit of 1 work = 1 hour of working on the user stories
 
-Game Played Difficulty:- Provided different difficulty options for the players. According to the difficulty level selected by the player,the required scores to earn the different acheievement levels are displayed.
+Game Played Difficulty: 
+Provided different difficulty options for the players. According to the difficulty level selected by the player,the required scores to earn the different acheievement levels are displayed.
 We estimated that it would take us 3 units of work.
 
-Acheievement improvements:- a. To congratulate the player:- 1. displays the achievement level earned 2.image related to the achievement level 3. animation effect 4. play a sound 
-b. 
+Acheievement improvements: 
+a. To congratulate the player: 
+    1. displays the achievement level earned
+    2. image related to the achievement level 
+    3. animation effect 
+    4. sound to be played to make it feel like a celebration
+We estimated that it would take us 1 unit of work.
+b. Themes for achievements: Have 3 themes that the player can cycle through to change the view of the achievements
+We estimated that it would take us 2 units of work.
+
+Edit Game Played:
+Allow the player to edit a previous game play to correct any errors.
+We estimated that it would take us 2 units of work.
+
+Friendly UI:
+Adding background images with respect to the themes, customizing fonts and buttons, along with changing the toolbar colour based on the theme selected.
+We estimated that it would take us 1.5 hours.
+
+Score Calculator:
+Allow the player to enter each player's score individually, so that the player doesn't need to add it up in their head.
+We estimated that it would take us 4 hours.
+
+Development Process:
+Implement JUnit unit tests for one class in the model.
+We estimated that it would take us 1 hour.
