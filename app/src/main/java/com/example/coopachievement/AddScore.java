@@ -21,9 +21,9 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.coopachievement.CalculateAdapter;
 import com.example.coopachievement.model.Game;
 import com.example.coopachievement.model.GameConfig;
 import com.example.coopachievement.model.ScoreCalculator;
@@ -272,7 +272,7 @@ public class AddScore extends AppCompatActivity {
         {
             score_calc = game.getMatch(matchIndex);
             EditText players = findViewById(R.id.etn_num_players);
-            EditText score  = findViewById(R.id.etn_score);
+            TextView score  = findViewById(R.id.tv_scoreTotal);
             players.setText(String.valueOf(game.getMatch(matchIndex).getNumPlayers()));
             score.setText(String.valueOf(getTheScore()));
 
@@ -307,7 +307,7 @@ public class AddScore extends AppCompatActivity {
         refreshDisplay();
         EditText et_players = findViewById(R.id.etn_num_players);
         String st_players = et_players.getText().toString();
-        EditText et_score = findViewById(R.id.etn_score);
+        TextView et_score = findViewById(R.id.tv_scoreTotal);
         String st_score = et_score.getText().toString();
 
         if(!st_players.equals("") && !st_score.equals(""))
@@ -357,7 +357,7 @@ public class AddScore extends AppCompatActivity {
     {
         EditText et_players = findViewById(R.id.etn_num_players);
         String st_players = et_players.getText().toString();
-        EditText et_score = findViewById(R.id.etn_score);
+        TextView et_score = findViewById(R.id.tv_scoreTotal);
         String st_score = et_score.getText().toString();
         boolean playersEntered = false;
         int theScore = getTheScore();

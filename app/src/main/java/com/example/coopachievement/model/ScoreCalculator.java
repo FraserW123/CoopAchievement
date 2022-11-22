@@ -16,11 +16,11 @@ import java.util.List;
  */
 public class ScoreCalculator {
     GameConfig gameConfig = GameConfig.getInstance();
-    int numPlayers;
-    int Score;
-    int poorScore;
-    int greatScore;
-    int increment;
+    private int numPlayers;
+    private int Score;
+    private int poorScore;
+    private int greatScore;
+    private int increment;
     String[] achievementThemeNames = gameConfig.getThemeNames();
     ArrayList<Integer> players_score = new ArrayList<>();
     String difficulty = "";
@@ -28,7 +28,7 @@ public class ScoreCalculator {
 
     List<String> levels = new ArrayList<>();
 
-    int matchesPlayed = 0;
+    private int matchesPlayed = 0;
     private ArrayList<String> matchName = new ArrayList<>();
 
     LocalDateTime time = LocalDateTime.now();
@@ -92,11 +92,6 @@ public class ScoreCalculator {
         return name;
     }
 
-    public int getMatchesPlayed() 
-    {
-        return matchesPlayed;
-    }
-
     public void setDate(String time){date = time;}
     public String getDate(){return date;}
 
@@ -130,10 +125,10 @@ public class ScoreCalculator {
     {
 
         increment = (greatScore - poorScore) / 8;
+        achievementThemeNames = gameConfig.getThemeNames();
         int length = achievementThemeNames.length;
 
-        achievementThemeNames = gameConfig.getThemeNames();
-        //System.out.println("Achievements uses index " + gameConfig.getThemeIndex());
+
         for(int i = 0; i<length-2; i++){
             if(Score <= ((poorScore + ((i)*increment)) * numPlayers)*difficultyMultiplier()){
                 return achievementThemeNames[i];
@@ -165,7 +160,6 @@ public class ScoreCalculator {
         }
         levels.add(achievementThemeNames[length-1] + " Score: ≥ " + ((greatScore*numPlayers))*difficultyMultiplier());
 
-        System.out.println("length of this from calculator " + levels.size());
         return levels;
     }
 }
