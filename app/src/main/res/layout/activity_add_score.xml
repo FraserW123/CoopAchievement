@@ -34,8 +34,8 @@
         android:id="@+id/DifficultySelection"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:text="Difficulty"
+        android:layout_marginTop="15dp"
+        android:text="Difficulty:"
         android:textSize="24sp"
         android:textStyle="bold"
         android:textColor="@color/black"
@@ -81,10 +81,11 @@
 
     <ListView
         android:id="@+id/lv_display_levels"
-        android:layout_width="413dp"
-        android:layout_height="412dp"
+        android:layout_width="326dp"
+        android:layout_height="256dp"
         android:scrollbarSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_see_achiev_levels" />
 
@@ -92,9 +93,9 @@
         android:id="@+id/tv_see_achiev_levels"
         android:layout_width="289dp"
         android:layout_height="45dp"
-        android:layout_marginTop="85dp"
+        android:layout_marginTop="12dp"
         android:gravity="center_horizontal"
-        android:text="Enter the number of players  and set difficulty to view levels"
+        android:text="Enter the number of players and set difficulty to view levels"
         android:textSize="14sp"
         android:textStyle="bold"
         android:textColor="@color/black"
@@ -106,9 +107,22 @@
         android:id="@+id/rgDifficulty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.518"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/DifficultySelection"
         app:layout_constraintTop_toBottomOf="@+id/etn_score" />
+
+    <ListView
+        android:id="@+id/lv_player_scores"
+        android:layout_width="382dp"
+        android:layout_height="390dp"
+        android:layout_marginTop="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.517"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_score" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

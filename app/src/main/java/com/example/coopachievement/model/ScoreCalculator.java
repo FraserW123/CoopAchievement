@@ -1,5 +1,10 @@
 package com.example.coopachievement.model;
 
+import android.content.Context;
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -17,7 +22,7 @@ public class ScoreCalculator {
     int greatScore;
     int increment;
     String[] achievementThemeNames = gameConfig.getThemeNames();
-
+    ArrayList<Integer> players_score = new ArrayList<>();
     String difficulty = "";
     String name;
 
@@ -34,12 +39,17 @@ public class ScoreCalculator {
 
     }
 
+    public ArrayList<Integer> getPlayerScoresList(){return players_score;}
+
+    public void setPlayersScore(ArrayList<Integer> PlayerScores) {this.players_score = PlayerScores;}
+
     public ScoreCalculator(int numPlayers, int Score, int poorScore, int greatScore){
         this.numPlayers = numPlayers;
         this.Score = Score;
         this.poorScore = poorScore;
         this.greatScore = greatScore;
     }
+
 
     public void editMatch(int numPlayers, int Score, int poorScore, int greatScore){
         this.numPlayers = numPlayers;

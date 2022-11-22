@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         int gameFields = 5;
-        int matchFields = 4;
+        int matchFields = 5;
         if(!extractedText.equals("") && !gameConfig.getisDelete()){
             gameConfig.setThemeIndex(Integer.parseInt(gameInfo[0]));
 
@@ -124,15 +124,26 @@ public class MainActivity extends AppCompatActivity {
                 if(gameInfo.length - i >= gameFields){
                     String[] matches = gameInfo[i+4].split(";");
                     if(!matches[0].equals("|")){
+                        int count = 0;
                         for(int j = 0; j<matches.length; j+=matchFields){
+
                             ScoreCalculator scoreCalculator = new ScoreCalculator(Integer.parseInt(matches[j])
                                     ,Integer.parseInt(matches[j+1]),Integer.parseInt(gameInfo[i+2]),Integer.parseInt(gameInfo[i+3]));
                             scoreCalculator.setDate(matches[j+2]);
                             game.setMatchDifficulty(matches[j+3]);
                             scoreCalculator.setDifficulty(matches[j+3]);
-
+                            String[] playerScores = matches[j+4].split("#");
+                            ArrayList<Integer> scores = new ArrayList<>();
+                            game.addPlayerScore(scores);
+                            for(int k = 0; k<playerScores.length; k++){
+                                scores.add(Integer.parseInt(playerScores[k]));
+                            }
+                            System.out.println("going once " + count);
+                            game.setPlayersScore(scores, count);
+                            scoreCalculator.setPlayersScore(scores);
                             scoreCalculator.setMatchName();
                             game.addMatch(scoreCalculator);
+                            count++;
                         }
                     }
 
@@ -140,7 +151,6 @@ public class MainActivity extends AppCompatActivity {
 
                 gameConfig.addGame(game);
             }
-
         }
         List<String> items = new ArrayList<>();
         for(int i = 1; i<gameInfo.length; i+=gameFields){
@@ -172,10 +182,9 @@ public class MainActivity extends AppCompatActivity {
             stringBuilder.append(",");
 
             List<ScoreCalculator> matchList = game.getMatchList();
-            store(stringBuilder, matchList);
+            storeMatchData(stringBuilder, matchList);
 
         }
-
 
         SharedPreferences prefs = getSharedPreferences("games_list", MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
@@ -183,7 +192,7 @@ public class MainActivity extends AppCompatActivity {
         editor.apply();
     }
 
-    private static void store(StringBuilder stringBuilder, List<ScoreCalculator> matchList) {
+    private static void storeMatchData(StringBuilder stringBuilder, List<ScoreCalculator> matchList) {
         StringBuilder matchString = new StringBuilder();
         if(!matchList.isEmpty()){
 
@@ -198,6 +207,17 @@ public class MainActivity extends AppCompatActivity {
                 matchString.append(";");
                 matchString.append(matches.getDifficulty());
                 matchString.append(";");
+                ArrayList<Integer> playerScore = matches.getPlayerScoresList();
+                StringBuilder scoreString = new StringBuilder();
+                if(!playerScore.isEmpty()){
+                    for(int k = 0; k<playerScore.size(); k++){
+                        scoreString.append(playerScore.get(k));
+                        scoreString.append("#");
+                    }
+                }
+                matchString.append(scoreString);
+                matchString.append(";");
+
             }
 
         }else{
