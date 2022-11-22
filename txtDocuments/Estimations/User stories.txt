@@ -1,0 +1,7 @@
+Unit of 1 work = 1 hour of working on the user stories
+
+Game Played Difficulty:- Provided different difficulty options for the players. According to the difficulty level selected by the player,the required scores to earn the different acheievement levels are displayed.
+We estimated that it would take us 3 units of work.
+
+Acheievement improvements:- a. To congratulate the player:- 1. displays the achievement level earned 2.image related to the achievement level 3. animation effect 4. play a sound 
+b. 
