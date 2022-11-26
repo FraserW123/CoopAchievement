@@ -86,13 +86,11 @@
         android:id="@+id/lv_display_levels"
         android:layout_width="391dp"
         android:layout_height="210dp"
+        android:layout_marginTop="400dp"
         android:scrollbarSize="12sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.8"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.959" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tv_see_achiev_levels"

@@ -1,15 +1,26 @@
 package com.example.coopachievement;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContract;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityOptionsCompat;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -27,13 +38,18 @@ import java.util.List;
  * it also persists the previous and history of games in the listview
  */
 public class MainActivity extends AppCompatActivity {
+
     GameConfig gameConfig = GameConfig.getInstance();
     ListView lvManager;
     ImageView nogames;
     ImageView nolist;
     TextView themeName;
     AnimationDrawable my_background_anime;
+    ImageView testImage;
     ImageView animationbackground;
+    ActivityResultLauncher<Intent> activityResultLauncher;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -43,13 +59,18 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this, GameTitle.class);
             startActivity(intent);
         });
-
+        testImage = findViewById(R.id.test_image);
         animationbackground = findViewById(R.id.animatedmainView);
         nogames = findViewById(R.id.nogames);
         nolist = findViewById(R.id.nolist);
         gameConfig.setTheme(getResources().getStringArray(R.array.achievements));
         themeName = findViewById(R.id.tvTheme);
         themeName.setText("Theme: "+gameConfig.getTheme());
+
+        displayImageTaken();
+        useCamera();
+
+
         back_anime();
         populateListView();
         listClick();
@@ -57,6 +78,28 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+    private void useCamera() {
+        Button camera = findViewById(R.id.btn_camera);
+        camera.setOnClickListener(v->{
+            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            activityResultLauncher.launch(intent);
+
+        });
+    }
+
+    private void displayImageTaken() {
+        activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if(result.getResultCode() == RESULT_OK && result.getData() != null){
+                        Bundle bundle = result.getData().getExtras();
+                        Bitmap bitmap =(Bitmap) bundle.get("data");
+                        testImage.setImageBitmap(bitmap);
+
+                    }
+                });
+    }
+
 
     private void back_anime() {
         animationbackground.setBackgroundResource(R.drawable.gradient);
