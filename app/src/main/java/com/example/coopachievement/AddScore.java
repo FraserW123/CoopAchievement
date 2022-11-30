@@ -208,7 +208,7 @@ public class AddScore extends AppCompatActivity {
             String difficulty = difficultyOptions[i];
             RadioButton button = new RadioButton(this);
             button.setText(difficulty);
-            button.setPadding(0,0,30,0);
+            button.setPadding(0,0,8,0);
 
             button.setOnClickListener(v->{
                 game.setMatchDifficulty(difficulty);
