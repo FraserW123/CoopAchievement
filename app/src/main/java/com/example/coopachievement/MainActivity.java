@@ -25,6 +25,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -33,7 +34,10 @@ import android.widget.Toast;
 import com.example.coopachievement.model.Game;
 import com.example.coopachievement.model.GameConfig;
 import com.example.coopachievement.model.ScoreCalculator;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -81,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
         back_anime();
         populateListView();
         listClick();
+        //storeData();
         storeGameList();
 
 
@@ -140,9 +145,14 @@ public class MainActivity extends AppCompatActivity {
         System.out.println("doing this");
         GameConfig gameConfig = GameConfig.getInstance();
         List<String> list = gameConfig.getGamesNameList();
+        System.out.println("got here");
         if((gameConfig.getGamesNameList().isEmpty() && !gameConfig.getisDelete()))
         {
+//            loadData();
+//            list = gameConfig.getGamesNameList();
+//            System.out.println("got here too " + list.size());
             list = getGameList();
+
             gameConfig.setisDelete();
             themeName.setText("Theme: " + gameConfig.getTheme());
         }
@@ -219,6 +229,27 @@ public class MainActivity extends AppCompatActivity {
         }
         System.out.println("get game list length " + items.size());
         return items;
+    }
+
+    private void storeData(){
+        GameConfig gameConfig = GameConfig.getInstance();
+        SharedPreferences sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(gameConfig.getGameList());
+        editor.putString("game list", json);
+        editor.apply();
+    }
+
+    private void loadData(){
+        GameConfig gameConfig = GameConfig.getInstance();
+        SharedPreferences sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = sharedPreferences.getString("game list", null);
+        Type type = new TypeToken<ArrayList<Game>>() {}.getType();
+        gameConfig.setGameList(gson.fromJson(json, type));
+
+
     }
 
     public void storeGameList()

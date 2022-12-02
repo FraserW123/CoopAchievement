@@ -138,6 +138,8 @@ public class GameConfig {
 
     public Game getGame(int pos){return gameName.get(pos);}
 
+    public void setGameList(ArrayList<Game> list) { gameName = list;}
+
     public List<Game> getGameList(){
         return gameName;
     }
