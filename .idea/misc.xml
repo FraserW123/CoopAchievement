@@ -3,17 +3,35 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/Fraser/AndroidStudioProjects/CoopAchievement/app/src/main/res/layout/activity_add_score.xml" value="0.5" />
+        <entry key="..\:/Users/Fraser/AndroidStudioProjects/CoopAchievement/app/src/debug/res/drawable/ic_launcher_theme.xml" value="0.2105" />
+        <entry key="..\:/Users/Fraser/AndroidStudioProjects/CoopAchievement/app/src/debug/res/drawable/ic_theme_background.xml" value="0.2105" />
+        <entry key="..\:/Users/Fraser/AndroidStudioProjects/CoopAchievement/app/src/main/res/drawable/background_1.xml" value="0.1" />
+        <entry key="..\:/Users/Fraser/AndroidStudioProjects/CoopAchievement/app/src/main/res/drawable/background_2.xml" value="0.1" />
+        <entry key="..\:/Users/Fraser/AndroidStudioProjects/CoopAchievement/app/src/main/res/drawable/background_3.xml" value="0.1" />
+        <entry key="..\:/Users/Fraser/AndroidStudioProjects/CoopAchievement/app/src/main/res/drawable/gradient.xml" value="0.2105" />
+        <entry key="..\:/Users/Fraser/AndroidStudioProjects/CoopAchievement/app/src/main/res/drawable/ic_delete_icon.xml" value="0.2105" />
+        <entry key="..\:/Users/Fraser/AndroidStudioProjects/CoopAchievement/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2105" />
+        <entry key="..\:/Users/Fraser/AndroidStudioProjects/CoopAchievement/app/src/main/res/drawable/ic_launcher_delete.xml" value="0.2105" />
+        <entry key="..\:/Users/Fraser/AndroidStudioProjects/CoopAchievement/app/src/main/res/drawable/ic_launcher_delete_background.xml" value="0.2105" />
+        <entry key="..\:/Users/Fraser/AndroidStudioProjects/CoopAchievement/app/src/main/res/drawable/ic_launcher_save.xml" value="0.2105" />
+        <entry key="..\:/Users/Fraser/AndroidStudioProjects/CoopAchievement/app/src/main/res/drawable/ic_launcher_save_background.xml" value="0.2105" />
+        <entry key="..\:/Users/Fraser/AndroidStudioProjects/CoopAchievement/app/src/main/res/drawable/my_congo.xml" value="0.2105" />
+        <entry key="..\:/Users/Fraser/AndroidStudioProjects/CoopAchievement/app/src/main/res/layout/activity_add_score.xml" value="0.33" />
         <entry key="..\:/Users/Fraser/AndroidStudioProjects/CoopAchievement/app/src/main/res/layout/activity_game_title.xml" value="0.33" />
-        <entry key="..\:/Users/Fraser/AndroidStudioProjects/CoopAchievement/app/src/main/res/layout/activity_gamesplayed.xml" value="0.3641304347826087" />
-        <entry key="..\:/Users/Fraser/AndroidStudioProjects/CoopAchievement/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Fraser/AndroidStudioProjects/CoopAchievement/app/src/main/res/layout/activity_gamesplayed.xml" value="0.33" />
+        <entry key="..\:/Users/Fraser/AndroidStudioProjects/CoopAchievement/app/src/main/res/layout/activity_main.xml" value="0.67" />
+        <entry key="..\:/Users/Fraser/AndroidStudioProjects/CoopAchievement/app/src/main/res/layout/alert_message_layout.xml" value="0.33" />
         <entry key="..\:/Users/Fraser/AndroidStudioProjects/CoopAchievement/app/src/main/res/layout/game_title.xml" value="0.3151041666666667" />
         <entry key="..\:/Users/Fraser/AndroidStudioProjects/CoopAchievement/app/src/main/res/layout/list_game_config.xml" value="0.33" />
         <entry key="..\:/Users/Fraser/AndroidStudioProjects/CoopAchievement/app/src/main/res/layout/list_games_config.xml" value="0.1" />
+        <entry key="..\:/Users/Fraser/AndroidStudioProjects/CoopAchievement/app/src/main/res/layout/list_matches.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Fraser/AndroidStudioProjects/CoopAchievement/app/src/main/res/layout/list_row.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Fraser/AndroidStudioProjects/CoopAchievement/app/src/main/res/menu/delete.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Fraser/AndroidStudioProjects/CoopAchievement/app/src/main/res/menu/menu_add_score.xml" value="0.3472222222222222" />
         <entry key="..\:/Users/Fraser/AndroidStudioProjects/CoopAchievement/app/src/main/res/menu/menu_edit_score.xml" value="0.2972222222222222" />
         <entry key="..\:/Users/Fraser/AndroidStudioProjects/CoopAchievement/app/src/main/res/menu/menu_main_activity.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/Fraser/AndroidStudioProjects/CoopAchievement/app/src/main/res/mipmap-anydpi-v26/ic_app_icon.xml" value="0.2105" />
+        <entry key="..\:/Users/Fraser/AndroidStudioProjects/CoopAchievement/app/src/main/res/mipmap-anydpi-v26/ic_launcher_save.xml" value="0.2105" />
         <entry key="..\:/Users/frase/AndroidStudioProjects/CoopAchievement/app/src/main/res/layout/activity_add_score.xml" value="0.4" />
         <entry key="..\:/Users/frase/AndroidStudioProjects/CoopAchievement/app/src/main/res/layout/list_row.xml" value="0.1" />
         <entry key="..\:/Users/lazar/AndroidStudioProjects/Iteration1/CoopAchievement/app/src/main/res/drawable/ic_launcher_delete.xml" value="0.2775" />
@@ -39,5 +57,12 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.67" />
+      </ProjectState>
+    </option>
   </component>
 </project>

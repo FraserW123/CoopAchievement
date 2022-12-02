@@ -27,7 +27,7 @@ public class GameConfig {
 
     int[] godIDs = {R.drawable.god_dionysus, R.drawable.god_hermes, R.drawable.god_hephaestus, R.drawable.god_artemis,
             R.drawable.god_athena, R.drawable.god_apollo, R.drawable.god_ares, R.drawable.god_poseidon,
-            R.drawable.god_zeus};
+            R.drawable.god_hera,R.drawable.god_zeus};
 
     private String[] themeNames;
     private String gameTheme;
@@ -79,7 +79,7 @@ public class GameConfig {
     public int getThemeIndex(){// 0 = mythic, 1 = planets, 2 = gods
         return themeIndex%3;
     }
-
+    public int getThemeOG(){return themeIndex;}
 
 
     public String getTheme(){

@@ -46,6 +46,7 @@ public class GamesPlayed extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
+
         setContentView(R.layout.activity_gamesplayed);
         refreshDisplay();
         populateList();
@@ -57,6 +58,7 @@ public class GamesPlayed extends AppCompatActivity {
         lvManager.setEmptyView(nogametext);
         gamesback=findViewById(R.id.backimage);
         if (gameConfig.getThemeIndex() == 0) {
+            
             ab.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#023020")));
         }
         if(gameConfig.getThemeIndex()==1){
@@ -68,15 +70,19 @@ public class GamesPlayed extends AppCompatActivity {
         themeback();
     }
 
+
     private void themeback() {
         if (gameConfig.getThemeIndex() == 0){
-            gamesback.setBackgroundResource(R.drawable.mythback);
+            gamesback.setBackgroundResource(R.drawable.background_mythic);
+
         }
         if(gameConfig.getThemeIndex()==1){
-            gamesback.setBackgroundResource(R.drawable.planetback);
+            gamesback.setBackgroundResource(R.drawable.background_planet);
+
         }
         if(gameConfig.getThemeIndex()==2){
-            gamesback.setBackgroundResource(R.drawable.greekback);
+            gamesback.setBackgroundResource(R.drawable.background_greek);
+
         }
     }
 
@@ -166,6 +172,7 @@ public class GamesPlayed extends AppCompatActivity {
 
             Intent intent = new Intent(this, AddScore.class);
             startActivity(intent);
+
         }
 
     }

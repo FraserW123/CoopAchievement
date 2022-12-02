@@ -24,8 +24,6 @@ public class CalculateAdapter extends ArrayAdapter<Integer> {
     private ArrayList<Integer> Scores;
     private String[] numPlayers;
 
-    private ScoreCalculator calcScores;
-
     public CalculateAdapter(Context context, int resourceLayout, ArrayList<Integer> scores, String[] numPlayers) {
         super(context, resourceLayout, scores);
         this.contextmain = context;
@@ -35,23 +33,19 @@ public class CalculateAdapter extends ArrayAdapter<Integer> {
 
     }
 
-
     @Override
     public View getView(int position, View convertView, ViewGroup parent){
-        //Toast.makeText(contextmain, "infinite 1" , Toast.LENGTH_SHORT).show();
         GameConfig gameConfig = GameConfig.getInstance();
         Game game = gameConfig.getCurrentGame();
         int currentMatchIndex = game.getCurrentMatch();
         View itemView = convertView;
         if(itemView == null) {
-            //LayoutInflater inflater = LayoutInflater.from(contextmain);
             itemView = LayoutInflater.from(contextmain).inflate(ResourceLayout, parent, false);
 
         }
+
         TextView player_text = itemView.findViewById(R.id.tv_player_num);
-
         player_text.setText(numPlayers[position]);
-
         EditText playersScore = itemView.findViewById(R.id.etn_player_score);
 
         if(!(Scores.get(position) == null)){
@@ -95,7 +89,4 @@ public class CalculateAdapter extends ArrayAdapter<Integer> {
         return itemView;
     }
 
-    public ArrayList<Integer> getCurrentScores(){
-        return Scores;
-    }
 }

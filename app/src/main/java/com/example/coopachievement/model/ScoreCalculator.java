@@ -81,7 +81,6 @@ public class ScoreCalculator {
     public void setMatchName()
     {
         achievementThemeNames = gameConfig.getThemeNames();
-        //System.out.println("Name uses index " + gameConfig.getThemeIndex());
         name = "Date: " + date+" Players: "+numPlayers + " Total score: " +Score + " "+setAchievementLevel() + " Difficulty " + getDifficulty();
         matchesPlayed++;
         matchName.add(name);

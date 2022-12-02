@@ -1,15 +1,30 @@
 package com.example.coopachievement;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContract;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.app.ActivityOptionsCompat;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -33,23 +48,36 @@ public class MainActivity extends AppCompatActivity {
     ImageView nolist;
     TextView themeName;
     AnimationDrawable my_background_anime;
+    ImageView testImage;
+    int themeNum = 0;
     ImageView animationbackground;
+    ActivityResultLauncher<Intent> activityResultLauncher;
+    ActionBar bar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        bar = getSupportActionBar();
+        bar.setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.activity_main);
+        resumeGame();
         findViewById(R.id.addGameConfig).setOnClickListener(v->{
             Intent intent = new Intent(this, GameTitle.class);
             startActivity(intent);
         });
-
+        testImage = findViewById(R.id.test_image);
         animationbackground = findViewById(R.id.animatedmainView);
         nogames = findViewById(R.id.nogames);
         nolist = findViewById(R.id.nolist);
         gameConfig.setTheme(getResources().getStringArray(R.array.achievements));
         themeName = findViewById(R.id.tvTheme);
         themeName.setText("Theme: "+gameConfig.getTheme());
+
+        displayImageTaken();
+        useCamera();
+
+
         back_anime();
         populateListView();
         listClick();
@@ -57,6 +85,36 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+    private void resumeGame() {
+//        Intent intent = getIntent();
+//        int gameIndex = intent.getIntExtra("game_index", -1);
+//        if(gameIndex != -1){
+//
+//        }
+    }
+
+    private void useCamera() {
+        Button camera = findViewById(R.id.btn_camera);
+        camera.setOnClickListener(v->{
+            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            activityResultLauncher.launch(intent);
+
+        });
+    }
+
+    private void displayImageTaken() {
+        activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if(result.getResultCode() == RESULT_OK && result.getData() != null){
+                        Bundle bundle = result.getData().getExtras();
+                        Bitmap bitmap =(Bitmap) bundle.get("data");
+                        testImage.setImageBitmap(bitmap);
+
+                    }
+                });
+    }
+
 
     private void back_anime() {
         animationbackground.setBackgroundResource(R.drawable.gradient);
@@ -266,12 +324,25 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_Theme:
                 gameConfig.incrementThemeIndex();
                 themeName.setText("Theme: "+gameConfig.getTheme());
+//                if(gameConfig.getThemeOG() % 3 == 0){
+//                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+//
+//
+//                }else if(gameConfig.getThemeOG() % 3 == 1){
+//                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+//                }else{
+//                    bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#023020")));
+//                }
+                System.out.println("theme before increment " + themeNum);
+
+
 
                 Toast.makeText(this, "Changing theme", Toast.LENGTH_SHORT).show();
                 return true;
 
             case android.R.id.home:
                 this.onBackPressed();
+
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

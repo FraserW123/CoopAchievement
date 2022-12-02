@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CoopAchievement</string>
+    <string name="app_name">Game Bank</string>
     <string name="delete" />
     <string name="confirm_dialog_message">Do you want to delete?</string>
     <string name="confirm_dialog_title">Confirm Delete</string>

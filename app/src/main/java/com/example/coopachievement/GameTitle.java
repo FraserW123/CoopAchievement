@@ -53,13 +53,13 @@ public class GameTitle extends AppCompatActivity {
 
     private void themeback() {
         if (gameConfig.getThemeIndex() == 0){
-            gamesback3.setBackgroundResource(R.drawable.mythback);
+            gamesback3.setBackgroundResource(R.drawable.background_mythic);
         }
         if(gameConfig.getThemeIndex()==1){
-            gamesback3.setBackgroundResource(R.drawable.planetback);
+            gamesback3.setBackgroundResource(R.drawable.background_planet);
         }
         if(gameConfig.getThemeIndex()==2){
-            gamesback3.setBackgroundResource(R.drawable.greekback);
+            gamesback3.setBackgroundResource(R.drawable.background_greek);
         }
     }
 
