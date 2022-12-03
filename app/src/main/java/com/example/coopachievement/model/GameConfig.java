@@ -116,6 +116,7 @@ public class GameConfig {
 
 
     public Game getCurrentGame() {
+        System.out.println("current game index " + currentGameIndex);
         return gameName.get(currentGameIndex);
     }
 
@@ -147,6 +148,7 @@ public class GameConfig {
     public List<String> getGamesNameList()
     {
         List<String> gameNameString = new ArrayList<>();
+        numGames = gameName.size();
         for(int i = 0; i<numGames; i++)
         {
             gameNameString.add(gameName.get(i).getName());

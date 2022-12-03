@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
         back_anime();
         populateListView();
         listClick();
-        //storeData();
+//        storeData();
         storeGameList();
 
 
@@ -148,11 +148,13 @@ public class MainActivity extends AppCompatActivity {
         System.out.println("got here");
         if((gameConfig.getGamesNameList().isEmpty() && !gameConfig.getisDelete()))
         {
+
 //            loadData();
+//            System.out.println("\n\nthis is not empty " + gameConfig.getGameList().size());
 //            list = gameConfig.getGamesNameList();
 //            System.out.println("got here too " + list.size());
             list = getGameList();
-
+            //hello
             gameConfig.setisDelete();
             themeName.setText("Theme: " + gameConfig.getTheme());
         }
@@ -248,6 +250,13 @@ public class MainActivity extends AppCompatActivity {
         String json = sharedPreferences.getString("game list", null);
         Type type = new TypeToken<ArrayList<Game>>() {}.getType();
         gameConfig.setGameList(gson.fromJson(json, type));
+        if(gameConfig.getGameList() == null){
+            gameConfig.setGameList(new ArrayList<>());
+        }
+        System.out.println("\n\nlist thing "  + gameConfig.getGameList().size());
+        if(gameConfig.getGameList().size() > 0){
+            System.out.println("this is here "+gameConfig.getGameList().get(0).getName());
+        }
 
 
     }

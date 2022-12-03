@@ -30,10 +30,7 @@ public class ScoreCalculator {
 
     private int matchesPlayed = 0;
     private ArrayList<String> matchName = new ArrayList<>();
-
-    LocalDateTime time = LocalDateTime.now();
-    DateTimeFormatter format = DateTimeFormatter.ofPattern("HH:mm a");
-    String date = time.format(format);
+    private String date = "";
 
     public ScoreCalculator(){
 
@@ -48,6 +45,10 @@ public class ScoreCalculator {
         this.Score = Score;
         this.poorScore = poorScore;
         this.greatScore = greatScore;
+
+        LocalDateTime time = LocalDateTime.now();
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("HH:mm a");
+        date = time.format(format);
     }
 
 
