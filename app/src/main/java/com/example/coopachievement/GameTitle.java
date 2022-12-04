@@ -83,23 +83,19 @@ public class GameTitle extends AppCompatActivity {
             int num_great_score = Integer.parseInt(greatScore.getText().toString());
 
             Game game = new Game(name.getText().toString(), description.getText().toString(), num_poor_score, num_great_score);
-            //game.setThemeIndex(gameConfig.getThemeIndex());
             gameConfig.addGame(game);
             backToMain();
         }
 
     }
 
-    //Cannot use commas or semicolons in the name or description. Fields also cannot be empty
+    // Fields cannot be empty
     private boolean validInputFields(){
         EditText name = findViewById(R.id.editTextGameName);
         EditText description = findViewById(R.id.editTextGameDescription);
         String gameName = name.getText().toString();
         String gameDesc = description.getText().toString();
-        if(gameName.contains(",") || gameDesc.contains(",") || gameName.contains(";") || gameDesc.contains(";")){
-            Toast.makeText(this, "Items cannot contain commas or semicolons", Toast.LENGTH_SHORT).show();
-            return false;
-        }else if(gameName.isEmpty() || gameDesc.isEmpty() || !differenceOf10()){
+        if(gameName.isEmpty() || gameDesc.isEmpty() || !differenceOf10()){
             Toast.makeText(this,"One or more fields missing or invalid!", Toast.LENGTH_SHORT).show();
             return false;
         }

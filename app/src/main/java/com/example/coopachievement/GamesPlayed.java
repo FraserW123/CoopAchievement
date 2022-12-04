@@ -183,10 +183,7 @@ public class GamesPlayed extends AppCompatActivity {
         EditText description = findViewById(R.id.editTextGameDescription2);
         String gameName = name.getText().toString();
         String gameDesc = description.getText().toString();
-        if(gameName.contains(",") || gameDesc.contains(",") || gameName.contains(";") || gameDesc.contains(";")){
-            Toast.makeText(this, "Items cannot contain commas or semicolons", Toast.LENGTH_SHORT).show();
-            return false;
-        }else if(gameName.isEmpty() || gameDesc.isEmpty() || !differenceOf10()){
+        if(gameName.isEmpty() || gameDesc.isEmpty() || !differenceOf10()){
             Toast.makeText(this,"One or more fields missing or invalid!", Toast.LENGTH_SHORT).show();
             return false;
         }
