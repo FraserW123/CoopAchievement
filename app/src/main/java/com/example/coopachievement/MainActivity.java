@@ -185,8 +185,11 @@ public class MainActivity extends AppCompatActivity {
             ArrayList<Game> thing = new ArrayList<>();
             json = gson.toJson(thing);
         }else{
-            gameConfig.getGame(0).setThemeIndexSave(gameConfig.getThemeIndex());
+            if(gameConfig.getGameList().size() > 0){
+                gameConfig.getGame(0).setThemeIndexSave(gameConfig.getThemeIndex());
+            }
             json = gson.toJson(gameConfig.getGameList());
+
         }
 
         System.out.println("what about here??");
@@ -203,14 +206,15 @@ public class MainActivity extends AppCompatActivity {
         String json = sharedPreferences.getString("game list", null);
         Type type = new TypeToken<ArrayList<Game>>() {}.getType();
         gameConfig.setGameList(gson.fromJson(json, type));
-        System.out.println("theme index from loading " +gameConfig.getGame(0).getThemeIndexSave());
-        gameConfig.setThemeIndex(gameConfig.getGame(0).getThemeIndexSave());
+        //System.out.println("theme index from loading " +gameConfig.getGame(0).getThemeIndexSave());
+
         setApplicationTheme(gameConfig);
         if(gameConfig.getGameList() == null){
             gameConfig.setGameList(new ArrayList<>());
         }
         System.out.println("\n\nlist thing "  + gameConfig.getGameList().size());
         if(gameConfig.getGameList().size() > 0){
+            gameConfig.setThemeIndex(gameConfig.getGame(0).getThemeIndexSave());
             System.out.println("this is here "+gameConfig.getGameList().get(0).getName());
         }
 

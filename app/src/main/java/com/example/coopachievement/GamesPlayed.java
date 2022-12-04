@@ -123,7 +123,7 @@ public class GamesPlayed extends AppCompatActivity {
                     game.setCurrentMatch(position);
                     game.setPoorScore(Integer.parseInt(poor_score.getText().toString()));
                     game.setGreatScore(Integer.parseInt(great_score.getText().toString()));
-                    System.out.println("difficulty " + game.getMatchDifficulty());
+                    //System.out.println("difficulty " + game.getMatchDifficulty());
                     startActivity(intent);
                 }
                 else{

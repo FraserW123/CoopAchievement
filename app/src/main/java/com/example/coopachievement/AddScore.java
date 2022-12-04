@@ -47,6 +47,7 @@ public class AddScore extends AppCompatActivity {
     boolean difficultySelected = false;
     boolean unsaved = true;
     boolean matchExists = false;
+    String difficultyLevel = "Normal";
     ImageView gamesback2;
     ActionBar toolbar;
     ActivityResultLauncher<Intent> activityResultLauncher;
@@ -91,17 +92,38 @@ public class AddScore extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (!s.equals('0') && !s.toString().isEmpty()) {
+
                     int matchIndex = getMatchIndex();
                     int players = Integer.parseInt(s.toString());
                     ScoreCalculator score_calc;
 
                     if (matchIndex == -1 && unsaved) {
+                        System.out.println("new scores");
                         String[] numPlayers = new String[players];
                         ArrayList<Integer> players_score = new ArrayList<>();
                         for (int i = 0; i < players; i++) {
                             players_score.add(null);
                             numPlayers[i] = "Player " + (i + 1);
                         }
+                        int currentMatchIndex = game.getCurrentMatch();
+                        if(game.getPlayers_score().size() > 0){
+                            if(game.getPlayersScore(currentMatchIndex).size() >0){
+                                ArrayList<Integer> scoreList = game.getPlayersScore(currentMatchIndex);
+                                System.out.println("not empty");
+                                int size = players;
+                                if(players > scoreList.size()){
+                                    size = scoreList.size();
+                                }
+                                for(int i = 0; i<size; i++){
+                                    System.out.println(i);
+                                    players_score.set(i,scoreList.get(i));
+                                }
+                            }else{
+                                System.out.println("empty");
+                            }
+
+                        }
+
 
 
                         CalculateAdapter calculatorAdapter = new CalculateAdapter(AddScore.this,
@@ -109,7 +131,7 @@ public class AddScore extends AppCompatActivity {
                         ListView list = findViewById(R.id.lv_player_scores);
                         list.setAdapter(calculatorAdapter);
                     } else { //edit
-
+                        System.out.println("editing the scores");
                         score_calc = game.getMatch(matchIndex);
                         int theScore = getTheScore();
                         System.out.println("The score " + theScore);
@@ -150,18 +172,22 @@ public class AddScore extends AppCompatActivity {
         int theScore = 0;
         int checked = 0;
         int currentMatchIndex = game.getCurrentMatch();
-        int size = 0;
+        EditText numPlayers = findViewById(R.id.etn_num_players);
+        int players = Integer.parseInt(numPlayers.getText().toString());
         System.out.println("match index " + currentMatchIndex);
         if (currentMatchIndex > -1) {
-            size = game.getPlayersScore(currentMatchIndex).size();
-            for (int i = 0; i < size; i++) {
+            if(game.getPlayersScore(currentMatchIndex).size() < players){
+                players = game.getPlayersScore(currentMatchIndex).size();
+            }
+            System.out.println("Number of players is " + players);
+            for (int i = 0; i < players; i++) {
                 if (game.getPlayersScore(currentMatchIndex).get(i) != null) {
                     checked++;
                 }
             }
             System.out.println("checked " + checked);
-            if (checked == size) {
-                for (int i = 0; i < size; i++) {
+            if (checked == players) {
+                for (int i = 0; i < players; i++) {
                     theScore += game.getPlayersScore(currentMatchIndex).get(i);
                 }
 
@@ -213,7 +239,7 @@ public class AddScore extends AppCompatActivity {
                 button.setPadding(0, 0, 8, 0);
 
                 button.setOnClickListener(v -> {
-                    game.setMatchDifficulty(difficulty);
+                    difficultyLevel = difficulty;
                     if (matchExists) {
                         score_calc.setDifficulty(difficulty);
                     }
@@ -222,12 +248,12 @@ public class AddScore extends AppCompatActivity {
                 });
 
                 group.addView(button);
-                System.out.println("Difficulty " + game.getMatchDifficulty());
+                System.out.println("Difficulty " + difficultyLevel);
                 if (matchExists && Objects.equals(difficulty, score_calc.getDifficulty())) {
                     button.setChecked(true);
                     displayLevels();
                 } else {
-                    System.out.println("this didnt happen " + game.getMatchDifficulty() + " vs " + difficulty);
+                    System.out.println("this didnt happen " + difficultyLevel + " vs " + difficulty);
                 }
             }
         }
@@ -246,7 +272,7 @@ public class AddScore extends AppCompatActivity {
                 ScoreCalculator score_calc = new ScoreCalculator();
                 score_calc.setPoorScore(game.getPoorScore());
                 score_calc.setGreatScore(game.getGreatScore());
-                score_calc.setDifficulty(game.getMatchDifficulty());
+                score_calc.setDifficulty(difficultyLevel);
                 score_calc.setNumPlayers(players);
 
 
@@ -282,12 +308,18 @@ public class AddScore extends AppCompatActivity {
                 }
 
                 ScoreCalculator score_calc = game.getMatch(matchIndex);
-                for (int i = 0; i < score_calc.getPlayerScoresList().size(); i++) {
+                ArrayList<Integer> displayPreviousScores = new ArrayList<>();
+                int size = numberPlayers;
+                if(size > score_calc.getPlayerScoresList().size()){
+                    size = score_calc.getPlayerScoresList().size();
+                }
+                for (int i = 0; i < size; i++) {
                     System.out.println("this is" + score_calc.getPlayerScoresList().get(i));
+                    displayPreviousScores.add(score_calc.getPlayerScoresList().get(i));
                 }
 
                 CalculateAdapter calculatorAdapter = new CalculateAdapter(AddScore.this,
-                        R.layout.list_row, score_calc.getPlayerScoresList(), numPlayers);
+                        R.layout.list_row, displayPreviousScores, numPlayers);
                 ListView list = findViewById(R.id.lv_player_scores);
                 list.setAdapter(calculatorAdapter);
                 matchExists = true;
@@ -355,6 +387,10 @@ public class AddScore extends AppCompatActivity {
 
                 case android.R.id.home:
                     GameConfig gameConfig = GameConfig.getInstance();
+                    int currentGameIndex = game.getCurrentMatch();
+                    if(game.getPlayersScore(currentGameIndex) != null){
+                        game.getPlayersScore(currentGameIndex).clear();
+                    }
                     Intent intent = new Intent(this, GamesPlayed.class);
                     intent.putExtra("game_index", gameConfig.getCurrentGameIndex());
                     startActivity(intent);
@@ -408,7 +444,7 @@ public class AddScore extends AppCompatActivity {
                 if (matchIndex == -1 && unsaved) {
                     score_calc = new ScoreCalculator(players, score, game.getPoorScore(), game.getGreatScore());
                     score_calc.setPlayersScore(game.getPlayersScore(currentMatchIndex));
-                    score_calc.setDifficulty(game.getMatchDifficulty());
+                    score_calc.setDifficulty(difficultyLevel);
                     score_calc.setAchievementLevel();
                     score_calc.setMatchName(gameConfig.getThemeNames());
                     game.addMatch(score_calc);
@@ -416,7 +452,7 @@ public class AddScore extends AppCompatActivity {
                     score_calc = game.getMatch(matchIndex);
                     score_calc.setPlayersScore(game.getPlayersScore(game.getCurrentMatch()));
                     score_calc.editMatch(players, score, game.getPoorScore(), game.getGreatScore());
-                    score_calc.setDifficulty(game.getMatchDifficulty());
+                    score_calc.setDifficulty(difficultyLevel);
                     score_calc.setAchievementLevel();
                     score_calc.setMatchName(gameConfig.getThemeNames());
                 }
