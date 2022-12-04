@@ -1,6 +1,12 @@
 package com.example.coopachievement.model;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
+import java.io.ByteArrayOutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 /**
@@ -17,6 +23,8 @@ public class Game {
     private int numMatchesPlayed = 0;
     private int currentMatch = 0;
 
+    //private Bitmap boxImage;
+    private String  boxImage;
     private int themeIndexSave = 0;
     private ArrayList<ScoreCalculator> matchesPlayed = new ArrayList<>();
 
@@ -34,6 +42,27 @@ public class Game {
         this.poor_score = poorScore;
         this.great_score = greatScore;
     }
+
+
+    public Bitmap getBoxImage() {
+        if(boxImage != null){
+            byte[] imageAsBytes = Base64.getDecoder().decode(boxImage.getBytes(StandardCharsets.UTF_8));
+            return BitmapFactory.decodeByteArray(imageAsBytes,0,imageAsBytes.length);
+        }
+        return null;
+    }
+
+    public void setBoxImage(Bitmap boxImage) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        boxImage.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        byte[] b  = baos.toByteArray();
+        this.boxImage = Base64.getEncoder().encodeToString(b);
+
+    }
+
+//    public void recycleImage(){
+//        boxImage.recycle();
+//    }
 
 
     public ArrayList<Integer> getPlayersScore(int index) {return players_score.get(index);}
