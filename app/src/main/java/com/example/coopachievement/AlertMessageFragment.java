@@ -33,6 +33,8 @@ public class AlertMessageFragment extends AppCompatDialogFragment  {
     View v;
     ImageView animationcard;
     TextView themeName;
+    Game game;
+    String message;
     @NonNull
     //@Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
@@ -45,8 +47,6 @@ public class AlertMessageFragment extends AppCompatDialogFragment  {
         playsong();
         okaybutton();
         changethemeButton();
-        Game game;
-        String message;
         gameConfig.setTheme(getResources().getStringArray(R.array.achievements));
         themeName.setText("Theme: "+gameConfig.getTheme());
         game = gameConfig.getCurrentGame();
@@ -55,17 +55,17 @@ public class AlertMessageFragment extends AppCompatDialogFragment  {
         String difficulty = game.getLatestMatch().getDifficulty();
         int score = game.getLatestMatch().getScore();
         message = "You are the " + level + "!\nScore: " + score + "\nDifficulty: " + difficulty;
-        acheivementlevelmessage(level,game);
-//        if (gameConfig.getThemeIndex() == 1) {
-//            gameConfig.setTheme(getResources().getStringArray(R.array.planets));
-//            level = game.getLatestMatch().setAchievementLevel();
-//            message = "You reached " + level + "!\nScore: " + score + "\nDifficulty: " + difficulty;
-//        }
-//        if (gameConfig.getThemeIndex() == 2) {
-//            gameConfig.setTheme(getResources().getStringArray(R.array.greek_gods));
-//            level = game.getLatestMatch().setAchievementLevel();
-//            message = "You became " + level + "!\nScore: " + score + "\nDifficulty: " + difficulty;
-//        }
+
+        if (gameConfig.getThemeIndex() == 1) {
+            gameConfig.setTheme(getResources().getStringArray(R.array.planets));
+            level = game.getLatestMatch().setAchievementLevel();
+            message = "You reached " + level + "!\nScore: " + score + "\nDifficulty: " + difficulty;
+        }
+        if (gameConfig.getThemeIndex() == 2) {
+            gameConfig.setTheme(getResources().getStringArray(R.array.greek_gods));
+            level = game.getLatestMatch().setAchievementLevel();
+            message = "You became " + level + "!\nScore: " + score + "\nDifficulty: " + difficulty;
+        }
 
         iv_changing_image = v.findViewById(R.id.iv_changing_image);
         change(level);
@@ -77,27 +77,17 @@ public class AlertMessageFragment extends AppCompatDialogFragment  {
                 .create();
     }
 
-    private void acheivementlevelmessage(String level,Game game) {
-        String difficulty = game.getLatestMatch().getDifficulty();
-        int score = game.getLatestMatch().getScore();
-        String message = "You are the " + level + "!\nScore: " + score + "\nDifficulty: " + difficulty;
-        if (gameConfig.getThemeIndex() == 1) {
-            gameConfig.setTheme(getResources().getStringArray(R.array.planets));
-            level = game.getLatestMatch().setAchievementLevel();
-            message = "You reached " + level + "!\nScore: " + score + "\nDifficulty: " + difficulty;
-        }
-        if (gameConfig.getThemeIndex() == 2) {
-            gameConfig.setTheme(getResources().getStringArray(R.array.greek_gods));
-            level = game.getLatestMatch().setAchievementLevel();
-            message = "You became " + level + "!\nScore: " + score + "\nDifficulty: " + difficulty;
-        }
-    }
+
 
     private void changethemeButton() {
         Button button = v.findViewById(R.id.changetheme);
         button.setOnClickListener(w->{
             gameConfig.incrementThemeIndex();
             themeName.setText("Theme: "+gameConfig.getTheme());
+            game = gameConfig.getCurrentGame();
+            game.getLatestMatch().setAchievementThemeNames(gameConfig.getThemeNames());
+            String level = game.getLatestMatch().setAchievementLevel();
+            change(level);
         });
     }
 
