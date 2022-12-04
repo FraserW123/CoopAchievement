@@ -47,4 +47,33 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.050000012"
         app:srcCompat="@drawable/mythic_goblin" />
+    <Button
+        android:id="@+id/changetheme"
+        android:layout_width="121dp"
+        android:layout_height="32dp"
+        android:background="#30000000"
+        android:text="Change Theme"
+        android:textColor="#ffd700"
+        android:textSize="10dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.904"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/animatedView"
+        app:layout_constraintVertical_bias="0.028" />
+
+    <TextView
+        android:id="@+id/changethemetext"
+        android:layout_width="14dp"
+        android:layout_height="13dp"
+        android:layout_marginStart="20dp"
+        android:textColor="#ffd700"
+        android:textSize="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.742"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.082" />
 </androidx.constraintlayout.widget.ConstraintLayout>
