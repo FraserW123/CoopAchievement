@@ -46,6 +46,7 @@ public class GamesPlayed extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
+
         setContentView(R.layout.activity_gamesplayed);
         refreshDisplay();
         populateList();
@@ -57,6 +58,7 @@ public class GamesPlayed extends AppCompatActivity {
         lvManager.setEmptyView(nogametext);
         gamesback=findViewById(R.id.backimage);
         if (gameConfig.getThemeIndex() == 0) {
+            
             ab.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#023020")));
         }
         if(gameConfig.getThemeIndex()==1){
@@ -68,15 +70,19 @@ public class GamesPlayed extends AppCompatActivity {
         themeback();
     }
 
+
     private void themeback() {
         if (gameConfig.getThemeIndex() == 0){
-            gamesback.setBackgroundResource(R.drawable.mythback);
+            gamesback.setBackgroundResource(R.drawable.background_mythic);
+
         }
         if(gameConfig.getThemeIndex()==1){
-            gamesback.setBackgroundResource(R.drawable.planetback);
+            gamesback.setBackgroundResource(R.drawable.background_planet);
+
         }
         if(gameConfig.getThemeIndex()==2){
-            gamesback.setBackgroundResource(R.drawable.greekback);
+            gamesback.setBackgroundResource(R.drawable.background_greek);
+
         }
     }
 
@@ -117,7 +123,7 @@ public class GamesPlayed extends AppCompatActivity {
                     game.setCurrentMatch(position);
                     game.setPoorScore(Integer.parseInt(poor_score.getText().toString()));
                     game.setGreatScore(Integer.parseInt(great_score.getText().toString()));
-                    System.out.println("difficulty " + game.getMatchDifficulty());
+                    //System.out.println("difficulty " + game.getMatchDifficulty());
                     startActivity(intent);
                 }
                 else{
@@ -166,6 +172,7 @@ public class GamesPlayed extends AppCompatActivity {
 
             Intent intent = new Intent(this, AddScore.class);
             startActivity(intent);
+
         }
 
     }
@@ -176,10 +183,7 @@ public class GamesPlayed extends AppCompatActivity {
         EditText description = findViewById(R.id.editTextGameDescription2);
         String gameName = name.getText().toString();
         String gameDesc = description.getText().toString();
-        if(gameName.contains(",") || gameDesc.contains(",") || gameName.contains(";") || gameDesc.contains(";")){
-            Toast.makeText(this, "Items cannot contain commas or semicolons", Toast.LENGTH_SHORT).show();
-            return false;
-        }else if(gameName.isEmpty() || gameDesc.isEmpty() || !differenceOf10()){
+        if(gameName.isEmpty() || gameDesc.isEmpty() || !differenceOf10()){
             Toast.makeText(this,"One or more fields missing or invalid!", Toast.LENGTH_SHORT).show();
             return false;
         }
@@ -272,6 +276,7 @@ public class GamesPlayed extends AppCompatActivity {
             game.setGreatScore(Integer.parseInt(great_score.getText().toString()));
             Intent intent = new Intent(GamesPlayed.this, MainActivity.class);
             startActivity(intent);
+            System.out.println("got here");
         }
 
     }

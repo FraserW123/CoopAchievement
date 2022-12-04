@@ -7,20 +7,25 @@ import androidx.activity.result.contract.ActivityResultContract;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityOptionsCompat;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -29,7 +34,10 @@ import android.widget.Toast;
 import com.example.coopachievement.model.Game;
 import com.example.coopachievement.model.GameConfig;
 import com.example.coopachievement.model.ScoreCalculator;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +46,6 @@ import java.util.List;
  * it also persists the previous and history of games in the listview
  */
 public class MainActivity extends AppCompatActivity {
-
     GameConfig gameConfig = GameConfig.getInstance();
     ListView lvManager;
     ImageView nogames;
@@ -46,15 +53,19 @@ public class MainActivity extends AppCompatActivity {
     TextView themeName;
     AnimationDrawable my_background_anime;
     ImageView testImage;
+    int themeNum = 0;
     ImageView animationbackground;
     ActivityResultLauncher<Intent> activityResultLauncher;
-
+    ActionBar bar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        bar = getSupportActionBar();
+        bar.setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.activity_main);
+        resumeGame();
         findViewById(R.id.addGameConfig).setOnClickListener(v->{
             Intent intent = new Intent(this, GameTitle.class);
             startActivity(intent);
@@ -63,20 +74,32 @@ public class MainActivity extends AppCompatActivity {
         animationbackground = findViewById(R.id.animatedmainView);
         nogames = findViewById(R.id.nogames);
         nolist = findViewById(R.id.nolist);
-        gameConfig.setTheme(getResources().getStringArray(R.array.achievements));
+
         themeName = findViewById(R.id.tvTheme);
-        themeName.setText("Theme: "+gameConfig.getTheme());
+
 
         displayImageTaken();
         useCamera();
 
 
         back_anime();
+
+        gameConfig.setTheme(getResources().getStringArray(R.array.achievements));
+        themeName.setText("Theme: "+gameConfig.getTheme());
         populateListView();
         listClick();
-        storeGameList();
+        storeData();
+//        storeGameList();
 
 
+    }
+
+    private void resumeGame() {
+//        Intent intent = getIntent();
+//        int gameIndex = intent.getIntExtra("game_index", -1);
+//        if(gameIndex != -1){
+//
+//        }
     }
 
     private void useCamera() {
@@ -125,13 +148,23 @@ public class MainActivity extends AppCompatActivity {
         System.out.println("doing this");
         GameConfig gameConfig = GameConfig.getInstance();
         List<String> list = gameConfig.getGamesNameList();
-        if((gameConfig.getGamesNameList().isEmpty() && !gameConfig.getisDelete()))
+        System.out.println("got here");
+
+        if(gameConfig.getGamesNameList().isEmpty() && !gameConfig.getisDelete())
         {
-            list = getGameList();
+
+            loadData();
+            System.out.println("\n\nthis is not empty " + gameConfig.getGameList().size());
+            list = gameConfig.getGamesNameList();
+            System.out.println("NEW got here too " + list.size());
+//            list = getGameList();
+
             gameConfig.setisDelete();
+            System.out.println("Theme index and num games " + gameConfig.getThemeOG() + " g " + gameConfig.getNumGame());
             themeName.setText("Theme: " + gameConfig.getTheme());
         }
 
+        System.out.println("Still going");
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 this, R.layout.list_game_config, list);
         lvManager = findViewById(R.id.ListofGames);
@@ -140,137 +173,53 @@ public class MainActivity extends AppCompatActivity {
         lvManager.setEmptyView(nogames);
     }
 
-
-    private List<String> getGameList()
-    {
+    private void storeData(){
+        System.out.println("finally got here");
         GameConfig gameConfig = GameConfig.getInstance();
-        SharedPreferences prefs = getSharedPreferences("games_list", MODE_PRIVATE);
-        String extractedText = prefs.getString("StartGameList","");
-        System.out.println(extractedText);
+        SharedPreferences sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        Gson gson = new Gson();
+        String json;
 
-        String[] gameInfo = extractedText.split(",");
-
-        for(int i = 0; i<gameInfo.length; i++){ //debugging
-            System.out.println("this one " + gameInfo[i]);
-        }
-
-        int gameFields = 5;
-        int matchFields = 5;
-        if(!extractedText.equals("") && !gameConfig.getisDelete()){
-            gameConfig.setThemeIndex(Integer.parseInt(gameInfo[0]));
-
-            setApplicationTheme(gameConfig);
-
-            for(int i = 1; i<gameInfo.length; i+=gameFields){
-                Game game = new Game(gameInfo[i], gameInfo[i+1], Integer.parseInt(gameInfo[i+2]), Integer.parseInt(gameInfo[i+3]));
-                System.out.println("LOOK HERE "+gameInfo[i] + " "+gameInfo[i+1] + " "+Integer.parseInt(gameInfo[i+2]) + " " +Integer.parseInt(gameInfo[i+3]));
-                if(gameInfo.length - i >= gameFields){
-                    String[] matches = gameInfo[i+4].split(";");
-                    if(!matches[0].equals("|")){
-                        int count = 0;
-                        for(int j = 0; j<matches.length; j+=matchFields){
-
-                            ScoreCalculator scoreCalculator = new ScoreCalculator(Integer.parseInt(matches[j])
-                                    ,Integer.parseInt(matches[j+1]),Integer.parseInt(gameInfo[i+2]),Integer.parseInt(gameInfo[i+3]));
-                            scoreCalculator.setDate(matches[j+2]);
-                            game.setMatchDifficulty(matches[j+3]);
-                            scoreCalculator.setDifficulty(matches[j+3]);
-                            String[] playerScores = matches[j+4].split("#");
-                            ArrayList<Integer> scores = new ArrayList<>();
-                            game.addPlayerScore(scores);
-                            for(int k = 0; k<playerScores.length; k++){
-                                scores.add(Integer.parseInt(playerScores[k]));
-                            }
-                            System.out.println("going once " + count);
-                            game.setPlayersScore(scores, count);
-                            scoreCalculator.setPlayersScore(scores);
-                            scoreCalculator.setMatchName();
-                            game.addMatch(scoreCalculator);
-                            count++;
-                        }
-                    }
-
-                }
-
-                gameConfig.addGame(game);
-            }
-        }
-        List<String> items = new ArrayList<>();
-        for(int i = 1; i<gameInfo.length; i+=gameFields){
-            if(!gameInfo[i].equals("") && !gameConfig.getisDelete())
-            {
-                items.add(gameInfo[i]);
-            }
-        }
-        System.out.println("get game list length " + items.size());
-        return items;
-    }
-
-    public void storeGameList()
-    {
-        List<Game> gameList = gameConfig.getGameList();
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(gameConfig.getThemeIndex());
-        stringBuilder.append(",");
-
-        for(int i = 0; i<gameList.size(); i++){
-            Game game = gameList.get(i);
-            stringBuilder.append(game.getName());
-            stringBuilder.append(",");
-            stringBuilder.append(game.getDescription());
-            stringBuilder.append(",");
-            stringBuilder.append(game.getPoorScore());
-            stringBuilder.append(",");
-            stringBuilder.append(game.getGreatScore());
-            stringBuilder.append(",");
-
-            List<ScoreCalculator> matchList = game.getMatchList();
-            storeMatchData(stringBuilder, matchList);
-
-        }
-
-        SharedPreferences prefs = getSharedPreferences("games_list", MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putString("StartGameList", stringBuilder.toString());
-        editor.apply();
-    }
-
-    private static void storeMatchData(StringBuilder stringBuilder, List<ScoreCalculator> matchList) {
-        StringBuilder matchString = new StringBuilder();
-        if(!matchList.isEmpty()){
-
-            for(int j = 0; j<matchList.size(); j++){
-                ScoreCalculator matches = matchList.get(j);
-
-                matchString.append(matches.getNumPlayers());
-                matchString.append(";");
-                matchString.append(matches.getScore());
-                matchString.append(";");
-                matchString.append(matches.getDate());
-                matchString.append(";");
-                matchString.append(matches.getDifficulty());
-                matchString.append(";");
-                ArrayList<Integer> playerScore = matches.getPlayerScoresList();
-                StringBuilder scoreString = new StringBuilder();
-                if(!playerScore.isEmpty()){
-                    for(int k = 0; k<playerScore.size(); k++){
-                        scoreString.append(playerScore.get(k));
-                        scoreString.append("#");
-                    }
-                }
-                matchString.append(scoreString);
-                matchString.append(";");
-
-            }
-
+        if(gameConfig.getGameList() == null){
+            ArrayList<Game> thing = new ArrayList<>();
+            json = gson.toJson(thing);
         }else{
-            matchString.append("|");
+            if(gameConfig.getGameList().size() > 0){
+                gameConfig.getGame(0).setThemeIndexSave(gameConfig.getThemeIndex());
+            }
+            json = gson.toJson(gameConfig.getGameList());
+
         }
-        stringBuilder.append(matchString);
-        stringBuilder.append(",");
+
+        System.out.println("what about here??");
+
+        editor.putString("game list", json);
+        editor.apply();
 
     }
 
+    private void loadData(){
+        GameConfig gameConfig = GameConfig.getInstance();
+        SharedPreferences sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = sharedPreferences.getString("game list", null);
+        Type type = new TypeToken<ArrayList<Game>>() {}.getType();
+        gameConfig.setGameList(gson.fromJson(json, type));
+        //System.out.println("theme index from loading " +gameConfig.getGame(0).getThemeIndexSave());
+
+        setApplicationTheme(gameConfig);
+        if(gameConfig.getGameList() == null){
+            gameConfig.setGameList(new ArrayList<>());
+        }
+        System.out.println("\n\nlist thing "  + gameConfig.getGameList().size());
+        if(gameConfig.getGameList().size() > 0){
+            gameConfig.setThemeIndex(gameConfig.getGame(0).getThemeIndexSave());
+            System.out.println("this is here "+gameConfig.getGameList().get(0).getName());
+        }
+
+
+    }
 
     public void SwitchActivity(int position)
     {
@@ -279,7 +228,7 @@ public class MainActivity extends AppCompatActivity {
         System.out.println("index " + gameConfig.getThemeIndex());
         setApplicationTheme(gameConfig);
 
-        storeGameList();
+        storeData();
         my_background_anime.stop();
         intent.putExtra("game_index", position);
         startActivity(intent);
@@ -309,12 +258,25 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_Theme:
                 gameConfig.incrementThemeIndex();
                 themeName.setText("Theme: "+gameConfig.getTheme());
+//                if(gameConfig.getThemeOG() % 3 == 0){
+//                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+//
+//
+//                }else if(gameConfig.getThemeOG() % 3 == 1){
+//                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+//                }else{
+//                    bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#023020")));
+//                }
+                System.out.println("theme before increment " + themeNum);
+
+
 
                 Toast.makeText(this, "Changing theme", Toast.LENGTH_SHORT).show();
                 return true;
 
             case android.R.id.home:
                 this.onBackPressed();
+
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
