@@ -15,18 +15,24 @@ import java.util.List;
  * also set up the worst/poor/good/great/okay/low scores with respect to number of players.
  */
 public class ScoreCalculator {
-    GameConfig gameConfig = GameConfig.getInstance();
+    //GameConfig gameConfig = GameConfig.getInstance();
     private int numPlayers;
     private int Score;
     private int poorScore;
     private int greatScore;
     private int increment;
-    String[] achievementThemeNames = gameConfig.getThemeNames();
-    ArrayList<Integer> players_score = new ArrayList<>();
-    String difficulty = "";
-    String name;
+    //private String[] achievementThemeNames = gameConfig.getThemeNames();
+    private String[] achievementThemeNames = {"Goofy Goblins!","Timid Trolls!","Zippy Zombies!","Prideful Phoenixes!",
+            "Vicious Vampires!","Glorious Griffins!","Fantastic Fairies!","Supreme Serpents!","Dancing Dragons!","Ultimate Unicorns!"};
+    private ArrayList<Integer> players_score = new ArrayList<>();
+    private String difficulty = "";
+    private String name;
 
-    List<String> levels = new ArrayList<>();
+
+
+
+    public void setAchievementThemeNames(String[] achievementThemeNames){this.achievementThemeNames = achievementThemeNames;}
+    private List<String> levels = new ArrayList<>();
 
     private int matchesPlayed = 0;
     private ArrayList<String> matchName = new ArrayList<>();
@@ -79,9 +85,10 @@ public class ScoreCalculator {
     public int getGreatScore(){return greatScore;}
 
 
-    public void setMatchName()
+    public void setMatchName(String[] achievementThemeNames)
     {
-        achievementThemeNames = gameConfig.getThemeNames();
+
+        this.achievementThemeNames = achievementThemeNames;
         name = "Date: " + date+" Players: "+numPlayers + " Total score: " +Score + " "+setAchievementLevel() + " Difficulty " + getDifficulty();
         matchesPlayed++;
         matchName.add(name);
@@ -125,7 +132,7 @@ public class ScoreCalculator {
     {
 
         increment = (greatScore - poorScore) / 8;
-        achievementThemeNames = gameConfig.getThemeNames();
+
         int length = achievementThemeNames.length;
 
 
@@ -143,9 +150,9 @@ public class ScoreCalculator {
     }
 
 
-    public List<String> fillLevelsList(){
+    public List<String> fillLevelsList(String[] achievementNames){
         increment = (greatScore-poorScore) / 8;
-
+        this.achievementThemeNames = achievementNames;
 
         levels.add(achievementThemeNames[0] + " Score: "+ 0 + " - " + (poorScore)*difficultyMultiplier()*numPlayers);
         int length = achievementThemeNames.length;

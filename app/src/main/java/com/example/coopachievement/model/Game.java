@@ -9,19 +9,19 @@ import java.util.List;
  */
 public class Game {
 
-    String name;
-    String description;
+    private String name;
+    private String description;
 
+    private String difficulty = "";
+    private int poor_score;
+    private int great_score;
+    private int numMatchesPlayed = 0;
+    private int currentMatch = 0;
 
-
-    String difficulty = "";
-    int poor_score;
-    int great_score;
-    int numMatchesPlayed = 0;
-    int currentMatch = 0;
-    boolean isAccessed;
-    ArrayList<ScoreCalculator> matchesPlayed = new ArrayList<>();
-    ArrayList<ArrayList<Integer>> players_score = new ArrayList<>();
+    private int themeIndexSave = 0;
+    private boolean isAccessed;
+    private ArrayList<ScoreCalculator> matchesPlayed = new ArrayList<>();
+    private ArrayList<ArrayList<Integer>> players_score = new ArrayList<>();
 
 
     public boolean isAccessed()
@@ -55,6 +55,14 @@ public class Game {
 
     public void addPlayerScore(ArrayList<Integer> PlayerScores){this.players_score.add(PlayerScores);}
     public void setPlayersScore(ArrayList<Integer> PlayerScores, int index) {this.players_score.set(index,PlayerScores);}
+
+    public int getThemeIndexSave() {
+        return themeIndexSave;
+    }
+
+    public void setThemeIndexSave(int themeIndexSave) {
+        this.themeIndexSave = themeIndexSave;
+    }
 
     public void addMatch(ScoreCalculator match)
     {

@@ -1,5 +1,7 @@
 package com.example.coopachievement;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
@@ -7,9 +9,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
@@ -45,12 +49,14 @@ public class AddScore extends AppCompatActivity {
     boolean matchExists = false;
     ImageView gamesback2;
     ActionBar toolbar;
+    ActivityResultLauncher<Intent> activityResultLauncher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_score);
         refreshDisplay();
+        //displayImageTaken();
         createDifficultyButtons();
         watchFields();
         displayLevels();
@@ -244,7 +250,7 @@ public class AddScore extends AppCompatActivity {
                 score_calc.setNumPlayers(players);
 
 
-                List<String> list = score_calc.fillLevelsList();
+                List<String> list = score_calc.fillLevelsList(gameConfig.getThemeNames());
                 System.out.println("length of this is " + list.size());
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(
                         this, R.layout.list_matches, list);
@@ -333,6 +339,8 @@ public class AddScore extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.action_save:
                     if (unsaved) {
+
+                        //openCamera();
                         alertMessage();
 
                     } else {
@@ -358,7 +366,24 @@ public class AddScore extends AppCompatActivity {
             }
         }
 
-        private void alertMessage ()
+    private void openCamera() { //DO NOT MERGE WITH OTHER PHOTO STUFF FROM PHOTO BRANCH
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        activityResultLauncher.launch(intent);
+    }
+
+    private void displayImageTaken() { //DO NOT MERGE WITH OTHER PHOTO STUFF FROM PHOTO BRANCH
+        activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if(result.getResultCode() == RESULT_OK && result.getData() != null){
+                        Bundle bundle = result.getData().getExtras();
+                        Bitmap bitmap =(Bitmap) bundle.get("data");
+                        //testImage.setImageBitmap(bitmap);
+
+                    }
+                });
+    }
+
+    private void alertMessage ()
         {
             EditText et_players = findViewById(R.id.etn_num_players);
             String st_players = et_players.getText().toString();
@@ -385,7 +410,7 @@ public class AddScore extends AppCompatActivity {
                     score_calc.setPlayersScore(game.getPlayersScore(currentMatchIndex));
                     score_calc.setDifficulty(game.getMatchDifficulty());
                     score_calc.setAchievementLevel();
-                    score_calc.setMatchName();
+                    score_calc.setMatchName(gameConfig.getThemeNames());
                     game.addMatch(score_calc);
                 } else {
                     score_calc = game.getMatch(matchIndex);
@@ -393,7 +418,7 @@ public class AddScore extends AppCompatActivity {
                     score_calc.editMatch(players, score, game.getPoorScore(), game.getGreatScore());
                     score_calc.setDifficulty(game.getMatchDifficulty());
                     score_calc.setAchievementLevel();
-                    score_calc.setMatchName();
+                    score_calc.setMatchName(gameConfig.getThemeNames());
                 }
                 unsaved = false;
 

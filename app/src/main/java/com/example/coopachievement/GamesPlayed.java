@@ -279,6 +279,7 @@ public class GamesPlayed extends AppCompatActivity {
             game.setGreatScore(Integer.parseInt(great_score.getText().toString()));
             Intent intent = new Intent(GamesPlayed.this, MainActivity.class);
             startActivity(intent);
+            System.out.println("got here");
         }
 
     }

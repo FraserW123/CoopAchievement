@@ -74,19 +74,22 @@ public class MainActivity extends AppCompatActivity {
         animationbackground = findViewById(R.id.animatedmainView);
         nogames = findViewById(R.id.nogames);
         nolist = findViewById(R.id.nolist);
-        gameConfig.setTheme(getResources().getStringArray(R.array.achievements));
+
         themeName = findViewById(R.id.tvTheme);
-        themeName.setText("Theme: "+gameConfig.getTheme());
+
 
         displayImageTaken();
         useCamera();
 
 
         back_anime();
+
+        gameConfig.setTheme(getResources().getStringArray(R.array.achievements));
+        themeName.setText("Theme: "+gameConfig.getTheme());
         populateListView();
         listClick();
-//        storeData();
-        storeGameList();
+        storeData();
+//        storeGameList();
 
 
     }
@@ -146,19 +149,22 @@ public class MainActivity extends AppCompatActivity {
         GameConfig gameConfig = GameConfig.getInstance();
         List<String> list = gameConfig.getGamesNameList();
         System.out.println("got here");
-        if((gameConfig.getGamesNameList().isEmpty() && !gameConfig.getisDelete()))
+
+        if(gameConfig.getGamesNameList().isEmpty() && !gameConfig.getisDelete())
         {
 
-//            loadData();
-//            System.out.println("\n\nthis is not empty " + gameConfig.getGameList().size());
-//            list = gameConfig.getGamesNameList();
-//            System.out.println("got here too " + list.size());
-            list = getGameList();
-            //hello
+            loadData();
+            System.out.println("\n\nthis is not empty " + gameConfig.getGameList().size());
+            list = gameConfig.getGamesNameList();
+            System.out.println("NEW got here too " + list.size());
+//            list = getGameList();
+
             gameConfig.setisDelete();
+            System.out.println("Theme index and num games " + gameConfig.getThemeOG() + " g " + gameConfig.getNumGame());
             themeName.setText("Theme: " + gameConfig.getTheme());
         }
 
+        System.out.println("Still going");
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 this, R.layout.list_game_config, list);
         lvManager = findViewById(R.id.ListofGames);
@@ -167,80 +173,27 @@ public class MainActivity extends AppCompatActivity {
         lvManager.setEmptyView(nogames);
     }
 
-
-    private List<String> getGameList()
-    {
-        GameConfig gameConfig = GameConfig.getInstance();
-        SharedPreferences prefs = getSharedPreferences("games_list", MODE_PRIVATE);
-        String extractedText = prefs.getString("StartGameList","");
-        System.out.println(extractedText);
-
-        String[] gameInfo = extractedText.split(",");
-
-        for(int i = 0; i<gameInfo.length; i++){ //debugging
-            System.out.println("this one " + gameInfo[i]);
-        }
-
-        int gameFields = 5;
-        int matchFields = 5;
-        if(!extractedText.equals("") && !gameConfig.getisDelete()){
-            gameConfig.setThemeIndex(Integer.parseInt(gameInfo[0]));
-
-            setApplicationTheme(gameConfig);
-
-            for(int i = 1; i<gameInfo.length; i+=gameFields){
-                Game game = new Game(gameInfo[i], gameInfo[i+1], Integer.parseInt(gameInfo[i+2]), Integer.parseInt(gameInfo[i+3]));
-                System.out.println("LOOK HERE "+gameInfo[i] + " "+gameInfo[i+1] + " "+Integer.parseInt(gameInfo[i+2]) + " " +Integer.parseInt(gameInfo[i+3]));
-                if(gameInfo.length - i >= gameFields){
-                    String[] matches = gameInfo[i+4].split(";");
-                    if(!matches[0].equals("|")){
-                        int count = 0;
-                        for(int j = 0; j<matches.length; j+=matchFields){
-
-                            ScoreCalculator scoreCalculator = new ScoreCalculator(Integer.parseInt(matches[j])
-                                    ,Integer.parseInt(matches[j+1]),Integer.parseInt(gameInfo[i+2]),Integer.parseInt(gameInfo[i+3]));
-                            scoreCalculator.setDate(matches[j+2]);
-                            game.setMatchDifficulty(matches[j+3]);
-                            scoreCalculator.setDifficulty(matches[j+3]);
-                            String[] playerScores = matches[j+4].split("#");
-                            ArrayList<Integer> scores = new ArrayList<>();
-                            game.addPlayerScore(scores);
-                            for(int k = 0; k<playerScores.length; k++){
-                                scores.add(Integer.parseInt(playerScores[k]));
-                            }
-                            System.out.println("going once " + count);
-                            game.setPlayersScore(scores, count);
-                            scoreCalculator.setPlayersScore(scores);
-                            scoreCalculator.setMatchName();
-                            game.addMatch(scoreCalculator);
-                            count++;
-                        }
-                    }
-
-                }
-
-                gameConfig.addGame(game);
-            }
-        }
-        List<String> items = new ArrayList<>();
-        for(int i = 1; i<gameInfo.length; i+=gameFields){
-            if(!gameInfo[i].equals("") && !gameConfig.getisDelete())
-            {
-                items.add(gameInfo[i]);
-            }
-        }
-        System.out.println("get game list length " + items.size());
-        return items;
-    }
-
     private void storeData(){
+        System.out.println("finally got here");
         GameConfig gameConfig = GameConfig.getInstance();
         SharedPreferences sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         Gson gson = new Gson();
-        String json = gson.toJson(gameConfig.getGameList());
+        String json;
+
+        if(gameConfig.getGameList() == null){
+            ArrayList<Game> thing = new ArrayList<>();
+            json = gson.toJson(thing);
+        }else{
+            gameConfig.getGame(0).setThemeIndexSave(gameConfig.getThemeIndex());
+            json = gson.toJson(gameConfig.getGameList());
+        }
+
+        System.out.println("what about here??");
+
         editor.putString("game list", json);
         editor.apply();
+
     }
 
     private void loadData(){
@@ -250,6 +203,9 @@ public class MainActivity extends AppCompatActivity {
         String json = sharedPreferences.getString("game list", null);
         Type type = new TypeToken<ArrayList<Game>>() {}.getType();
         gameConfig.setGameList(gson.fromJson(json, type));
+        System.out.println("theme index from loading " +gameConfig.getGame(0).getThemeIndexSave());
+        gameConfig.setThemeIndex(gameConfig.getGame(0).getThemeIndexSave());
+        setApplicationTheme(gameConfig);
         if(gameConfig.getGameList() == null){
             gameConfig.setGameList(new ArrayList<>());
         }
@@ -261,72 +217,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void storeGameList()
-    {
-        List<Game> gameList = gameConfig.getGameList();
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(gameConfig.getThemeIndex());
-        stringBuilder.append(",");
-
-        for(int i = 0; i<gameList.size(); i++){
-            Game game = gameList.get(i);
-            stringBuilder.append(game.getName());
-            stringBuilder.append(",");
-            stringBuilder.append(game.getDescription());
-            stringBuilder.append(",");
-            stringBuilder.append(game.getPoorScore());
-            stringBuilder.append(",");
-            stringBuilder.append(game.getGreatScore());
-            stringBuilder.append(",");
-
-            List<ScoreCalculator> matchList = game.getMatchList();
-            storeMatchData(stringBuilder, matchList);
-
-        }
-
-        SharedPreferences prefs = getSharedPreferences("games_list", MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putString("StartGameList", stringBuilder.toString());
-        editor.apply();
-    }
-
-    private static void storeMatchData(StringBuilder stringBuilder, List<ScoreCalculator> matchList) {
-        StringBuilder matchString = new StringBuilder();
-        if(!matchList.isEmpty()){
-
-            for(int j = 0; j<matchList.size(); j++){
-                ScoreCalculator matches = matchList.get(j);
-
-                matchString.append(matches.getNumPlayers());
-                matchString.append(";");
-                matchString.append(matches.getScore());
-                matchString.append(";");
-                matchString.append(matches.getDate());
-                matchString.append(";");
-                matchString.append(matches.getDifficulty());
-                matchString.append(";");
-                ArrayList<Integer> playerScore = matches.getPlayerScoresList();
-                StringBuilder scoreString = new StringBuilder();
-                if(!playerScore.isEmpty()){
-                    for(int k = 0; k<playerScore.size(); k++){
-                        scoreString.append(playerScore.get(k));
-                        scoreString.append("#");
-                    }
-                }
-                matchString.append(scoreString);
-                matchString.append(";");
-
-            }
-
-        }else{
-            matchString.append("|");
-        }
-        stringBuilder.append(matchString);
-        stringBuilder.append(",");
-
-    }
-
-
     public void SwitchActivity(int position)
     {
         Intent intent = new Intent(this, GamesPlayed.class);
@@ -334,7 +224,7 @@ public class MainActivity extends AppCompatActivity {
         System.out.println("index " + gameConfig.getThemeIndex());
         setApplicationTheme(gameConfig);
 
-        storeGameList();
+        storeData();
         my_background_anime.stop();
         intent.putExtra("game_index", position);
         startActivity(intent);

@@ -83,7 +83,7 @@ public class GameTitle extends AppCompatActivity {
             int num_great_score = Integer.parseInt(greatScore.getText().toString());
 
             Game game = new Game(name.getText().toString(), description.getText().toString(), num_poor_score, num_great_score);
-
+            //game.setThemeIndex(gameConfig.getThemeIndex());
             gameConfig.addGame(game);
             backToMain();
         }
