@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="8dp"
         android:text="Player"
         android:textColor="@color/black"
         android:textStyle="bold"
@@ -22,11 +22,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="108dp"
-        android:layout_marginTop="16dp"
         android:ems="10"
+        android:textSize="12sp"
+        android:inputType="number"
         android:textColor="@color/black"
         android:textStyle="bold"
-        android:inputType="number"
         app:layout_constraintStart_toEndOf="@+id/tv_player_num"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

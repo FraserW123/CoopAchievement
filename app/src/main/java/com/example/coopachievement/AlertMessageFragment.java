@@ -46,13 +46,20 @@ public class AlertMessageFragment extends AppCompatDialogFragment  {
         okaybutton();
 
         Game game = gameConfig.getCurrentGame();
+        game.getLatestMatch().setAchievementThemeNames(gameConfig.getThemeNames());
         String level = game.getLatestMatch().setAchievementLevel();
         String difficulty = game.getLatestMatch().getDifficulty();
-        String message = "You are the " + level + "\nDifficulty: " + difficulty;
+        int score = game.getLatestMatch().getScore();
+        String message = "You are the " + level + "!\nScore: " + score +"\nDifficulty: " + difficulty;
         if(gameConfig.getThemeIndex() == 1){
             gameConfig.setTheme(getResources().getStringArray(R.array.planets));
             level = game.getLatestMatch().setAchievementLevel();
-            message = "You reached " + level + "\nDifficulty: " + difficulty;
+            message = "You reached " + level + "!\nScore: " + score + "\nDifficulty: " + difficulty ;
+        }
+        if(gameConfig.getThemeIndex() == 2){
+            gameConfig.setTheme(getResources().getStringArray(R.array.greek_gods));
+            level = game.getLatestMatch().setAchievementLevel();
+            message = "You became " + level + "!\nScore: " + score +"\nDifficulty: " + difficulty;
         }
 
         iv_changing_image = v.findViewById(R.id.iv_changing_image);
@@ -78,6 +85,7 @@ public class AlertMessageFragment extends AppCompatDialogFragment  {
         button.setOnClickListener(w->{
             GameConfig gameConfig = GameConfig.getInstance();
             Intent intent = new Intent(getActivity(), GamesPlayed.class);
+            //Intent intent = new Intent(getActivity(), MainActivity.class);
             intent.putExtra("game_index", gameConfig.getCurrentGameIndex());
             player.stop();
             player.setLooping(false);

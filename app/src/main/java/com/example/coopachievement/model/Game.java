@@ -9,30 +9,22 @@ import java.util.List;
  */
 public class Game {
 
-    String name;
-    String description;
+    private String name;
+    private String description;
 
+    private int poor_score;
+    private int great_score;
+    private int numMatchesPlayed = 0;
+    private int currentMatch = 0;
 
+    private int themeIndexSave = 0;
+    private ArrayList<ScoreCalculator> matchesPlayed = new ArrayList<>();
 
-    String difficulty = "";
-    int poor_score;
-    int great_score;
-    int numMatchesPlayed = 0;
-    int currentMatch = 0;
-    boolean isAccessed;
-    ArrayList<ScoreCalculator> matchesPlayed = new ArrayList<>();
-    ArrayList<ArrayList<Integer>> players_score = new ArrayList<>();
-
-
-    public boolean isAccessed()
-    {
-        return isAccessed;
-    }
-    public void setAccessed(boolean accessed)
-    {
-        isAccessed = accessed;
+    public ArrayList<ArrayList<Integer>> getPlayers_score() {
+        return players_score;
     }
 
+    private ArrayList<ArrayList<Integer>> players_score = new ArrayList<>();
 
 
     public Game(String name, String description, int poorScore, int greatScore)
@@ -43,18 +35,19 @@ public class Game {
         this.great_score = greatScore;
     }
 
-    public String getMatchDifficulty() {
-        return difficulty;
-    }
-
-    public void setMatchDifficulty(String difficulty) {
-        this.difficulty = difficulty;
-    }
 
     public ArrayList<Integer> getPlayersScore(int index) {return players_score.get(index);}
 
     public void addPlayerScore(ArrayList<Integer> PlayerScores){this.players_score.add(PlayerScores);}
     public void setPlayersScore(ArrayList<Integer> PlayerScores, int index) {this.players_score.set(index,PlayerScores);}
+
+    public int getThemeIndexSave() {
+        return themeIndexSave;
+    }
+
+    public void setThemeIndexSave(int themeIndexSave) {
+        this.themeIndexSave = themeIndexSave;
+    }
 
     public void addMatch(ScoreCalculator match)
     {
