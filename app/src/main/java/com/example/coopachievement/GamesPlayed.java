@@ -76,8 +76,8 @@ public class GamesPlayed extends AppCompatActivity {
     private void seebarchartbutton() {
         Button button = findViewById(R.id.bargraphbutton);
         button.setOnClickListener(w->{
-            Intent intent = new Intent(this, gamesplayed_bargraph.class);
-            startActivity(intent);
+            //Intent intent = new Intent(this, gamesplayed_bargraph.class);
+            //startActivity(intent);
         });
 
     }

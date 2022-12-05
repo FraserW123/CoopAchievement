@@ -57,6 +57,8 @@ public class AlertMessageFragment extends AppCompatDialogFragment  {
         level = game.getLatestMatch().setAchievementLevel(gameConfig.getThemeNames());
         difficulty = game.getLatestMatch().getDifficulty();
         score = game.getLatestMatch().getScore();
+
+
         if(gameConfig.getThemeIndex() == 0){
             gameConfig.setTheme(getResources().getStringArray(R.array.achievements));
             level = game.getLatestMatch().setAchievementLevel(gameConfig.getThemeNames());
@@ -72,6 +74,8 @@ public class AlertMessageFragment extends AppCompatDialogFragment  {
             level = game.getLatestMatch().setAchievementLevel(gameConfig.getThemeNames());
             message = "You became " + level + "!\nScore: " + score + "\nDifficulty: " + difficulty;
         }
+        game.getLatestMatch().setMatchName(gameConfig.getThemeNames());
+
 
         iv_changing_image = v.findViewById(R.id.iv_changing_image);
         change(level);

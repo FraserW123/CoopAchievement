@@ -15,19 +15,14 @@ import java.util.List;
  * also set up the worst/poor/good/great/okay/low scores with respect to number of players.
  */
 public class ScoreCalculator {
-    GameConfig gameConfig = GameConfig.getInstance();
     private int numPlayers;
     private int Score;
     private int poorScore;
     private int greatScore;
     private int increment;
     private String icons ;
-    private int nextachievementscore;
-    //private String[] achievementThemeNames = gameConfig.getThemeNames();
     private String[] achievementThemeNames = {"Goofy Goblins!","Timid Trolls!","Zippy Zombies!","Prideful Phoenixes!",
             "Vicious Vampires!","Glorious Griffins!","Fantastic Fairies!","Supreme Serpents!","Dancing Dragons!","Ultimate Unicorns!"};
-    private String[] achievementThemesplanet={"Moon!","Venus!","Mars!","Mercury!","Jupiter!","Saturn!","Uranus!","Neptune!","Pluto!","Galaxy!"};
-    private String[] getAchievementThemeGreekgods={"god_dionysus","god_hermes","god_hephaestus","god_artemis","god_athena","god_apollo","god_ares","god_poseidon","god_hera","god_zeus"};
     private ArrayList<Integer> players_score = new ArrayList<>();
     private String difficulty = "";
     private String name;
