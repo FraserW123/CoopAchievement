@@ -17,6 +17,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDialogFragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.example.coopachievement.model.Game;
 import com.example.coopachievement.model.GameConfig;
@@ -35,6 +36,9 @@ public class AlertMessageFragment extends AppCompatDialogFragment  {
     TextView themeName;
     Game game;
     String message;
+    String level;
+    String difficulty;
+    int score;
     @NonNull
     //@Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
@@ -47,15 +51,17 @@ public class AlertMessageFragment extends AppCompatDialogFragment  {
         playsong();
         okaybutton();
         changethemeButton();
-        gameConfig.setTheme(getResources().getStringArray(R.array.achievements));
         themeName.setText("Theme: "+gameConfig.getTheme());
         game = gameConfig.getCurrentGame();
         game.getLatestMatch().setAchievementThemeNames(gameConfig.getThemeNames());
-        String level = game.getLatestMatch().setAchievementLevel();
-        String difficulty = game.getLatestMatch().getDifficulty();
-        int score = game.getLatestMatch().getScore();
-        message = "You are the " + level + "!\nScore: " + score + "\nDifficulty: " + difficulty;
-
+        level = game.getLatestMatch().setAchievementLevel();
+        difficulty = game.getLatestMatch().getDifficulty();
+        score = game.getLatestMatch().getScore();
+        if(gameConfig.getThemeIndex() == 0){
+            gameConfig.setTheme(getResources().getStringArray(R.array.achievements));
+            level = game.getLatestMatch().setAchievementLevel();
+            message = "You are the " + level + "!\nScore: " + score + "\nDifficulty: " + difficulty;
+        }
         if (gameConfig.getThemeIndex() == 1) {
             gameConfig.setTheme(getResources().getStringArray(R.array.planets));
             level = game.getLatestMatch().setAchievementLevel();
@@ -86,8 +92,14 @@ public class AlertMessageFragment extends AppCompatDialogFragment  {
             themeName.setText("Theme: "+gameConfig.getTheme());
             game = gameConfig.getCurrentGame();
             game.getLatestMatch().setAchievementThemeNames(gameConfig.getThemeNames());
-            String level = game.getLatestMatch().setAchievementLevel();
+            level = game.getLatestMatch().setAchievementLevel();
             change(level);
+            setApplicationTheme(gameConfig);
+            player.stop();
+            player.setLooping(false);
+            FragmentManager manager = getActivity().getSupportFragmentManager();
+            AlertMessageFragment alert = new AlertMessageFragment();
+            alert.show(manager, "AlertMessage");
         });
     }
 

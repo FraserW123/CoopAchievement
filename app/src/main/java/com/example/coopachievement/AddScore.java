@@ -176,7 +176,9 @@ public class AddScore extends AppCompatActivity {
         int players = Integer.parseInt(numPlayers.getText().toString());
         System.out.println("match index " + currentMatchIndex);
         if (currentMatchIndex > -1) {
+            System.out.println("Number of players is " + players);
             if(game.getPlayersScore(currentMatchIndex).size() < players){
+                System.out.println(game.getPlayersScore(currentMatchIndex).size());
                 players = game.getPlayersScore(currentMatchIndex).size();
             }
             System.out.println("Number of players is " + players);

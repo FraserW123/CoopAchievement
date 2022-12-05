@@ -67,6 +67,7 @@ public class Game {
     public List<ScoreCalculator> getMatchList(){
         return matchesPlayed;
     }
+
     public ScoreCalculator getLatestMatch(){
         return matchesPlayed.get(currentMatch);
     }
