@@ -193,7 +193,6 @@ public class ScoreCalculator {
         int length = achievementThemeNames.length;
         for(int i = 1; i<length-1; i++){
             double minScore = ((poorScore + ((i-1)*increment)) * numPlayers)*difficultyMultiplier();
-            nextchievementscore = minScore;
             double maxScore = (((poorScore + (i*increment)) * numPlayers)*difficultyMultiplier());
             if(i == length-2){ // second last case
                 maxScore = (greatScore*numPlayers)*difficultyMultiplier();

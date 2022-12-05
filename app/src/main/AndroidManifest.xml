@@ -21,6 +21,10 @@
             android:name=".activity_photo_gallery"
             android:exported="false" />
         <activity
+            android:name=".AboutScreen"
+            android:exported="false"
+            android:parentActivityName=".MainActivity" />
+        <activity
             android:name=".AddScore"
             android:exported="false"
             android:parentActivityName=".GamesPlayed" />
