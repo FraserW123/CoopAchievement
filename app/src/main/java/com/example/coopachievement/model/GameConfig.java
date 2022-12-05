@@ -12,27 +12,28 @@ import java.util.List;
  *  delete,getcurrent games and matches. also provides the gamelist, it is a singleton class.
  */
 public class GameConfig {
-    private List<Game> gameName = new ArrayList<>();
+    private ArrayList<Game> gameName = new ArrayList<>();
     private int numGames = 0;
+    private int themeIndex = 0;
     private String[] themes = {"Mythical", "Planet", "Greek Gods"};
-    int [] mythicIDs = {R.drawable.mythic_goblin,R.drawable.mythic_troll, R.drawable.mythic_zombies,
+    private int [] mythicIDs = {R.drawable.mythic_goblin,R.drawable.mythic_troll, R.drawable.mythic_zombies,
             R.drawable.mythic_phoenix, R.drawable.mythic_vampires,R.drawable.mythic_griffin, R.drawable.mythic_fairies,
             R.drawable.mythic_serpent,R.drawable.mythic_dragon,R.drawable.mythic_unicorn};
 
 
-    int [] planetIDS ={R.drawable.planet_moon,R.drawable.planet_venus,R.drawable.planet_mars,R.drawable.planet_mercury,
+    private int [] planetIDS ={R.drawable.planet_moon,R.drawable.planet_venus,R.drawable.planet_mars,R.drawable.planet_mercury,
             R.drawable.planet_jupiter, R.drawable.planet_saturn,R.drawable.planet_uranus,R.drawable.planet_neptune,
             R.drawable.planet_pluto,R.drawable.planet_galaxy};
 
 
-    int[] godIDs = {R.drawable.god_dionysus, R.drawable.god_hermes, R.drawable.god_hephaestus, R.drawable.god_artemis,
+    private int[] godIDs = {R.drawable.god_dionysus, R.drawable.god_hermes, R.drawable.god_hephaestus, R.drawable.god_artemis,
             R.drawable.god_athena, R.drawable.god_apollo, R.drawable.god_ares, R.drawable.god_poseidon,
-            R.drawable.god_zeus};
+            R.drawable.god_hera,R.drawable.god_zeus};
 
     private String[] themeNames;
     private String gameTheme;
-    private int themeIndex = 0;
-    int currentGameIndex;
+
+    private int currentGameIndex = 0;
     private boolean isDelete;
     private boolean accessedMatches;
 
@@ -82,6 +83,10 @@ public class GameConfig {
 
 
 
+
+    public int getThemeOG(){return themeIndex;}
+
+
     public String getTheme(){
         System.out.println("theme index " + themeIndex);
         gameTheme = themes[getThemeIndex()];
@@ -116,6 +121,7 @@ public class GameConfig {
 
 
     public Game getCurrentGame() {
+        System.out.println("current game index " + currentGameIndex);
         return gameName.get(currentGameIndex);
     }
 
@@ -138,13 +144,16 @@ public class GameConfig {
 
     public Game getGame(int pos){return gameName.get(pos);}
 
-    public List<Game> getGameList(){
+    public void setGameList(ArrayList<Game> list) { gameName = list;}
+
+    public ArrayList<Game> getGameList(){
         return gameName;
     }
 
     public List<String> getGamesNameList()
     {
         List<String> gameNameString = new ArrayList<>();
+        numGames = gameName.size();
         for(int i = 0; i<numGames; i++)
         {
             gameNameString.add(gameName.get(i).getName());
