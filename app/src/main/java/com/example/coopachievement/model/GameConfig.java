@@ -15,7 +15,7 @@ public class GameConfig {
     private ArrayList<Game> gameName = new ArrayList<>();
     private int numGames = 0;
     private int themeIndex = 0;
-    private String[] themes = {"Mythical", "Planet", "Greek Gods"};
+    private String[] themes = {"Mythical Creatures", "Planets", "Greek Gods"};
     private int [] mythicIDs = {R.drawable.mythic_goblin,R.drawable.mythic_troll, R.drawable.mythic_zombies,
             R.drawable.mythic_phoenix, R.drawable.mythic_vampires,R.drawable.mythic_griffin, R.drawable.mythic_fairies,
             R.drawable.mythic_serpent,R.drawable.mythic_dragon,R.drawable.mythic_unicorn};

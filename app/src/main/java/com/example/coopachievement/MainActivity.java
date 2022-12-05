@@ -259,15 +259,6 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_Theme:
                 gameConfig.incrementThemeIndex();
                 themeName.setText("Theme: "+gameConfig.getTheme());
-//                if(gameConfig.getThemeOG() % 3 == 0){
-//                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-//
-//
-//                }else if(gameConfig.getThemeOG() % 3 == 1){
-//                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-//                }else{
-//                    bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#023020")));
-//                }
                 System.out.println("theme before increment " + themeNum);
 
 

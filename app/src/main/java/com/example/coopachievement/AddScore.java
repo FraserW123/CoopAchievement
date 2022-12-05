@@ -150,7 +150,7 @@ public class AddScore extends AppCompatActivity {
                             numPlayers[i] = "Player " + (i + 1);
                         }
 
-                        score_calc.editMatch(players, theScore, game.getPoorScore(), game.getGreatScore());
+                        //score_calc.editMatch(players, theScore, game.getPoorScore(), game.getGreatScore());
 
                         CalculateAdapter calculatorAdapter = new CalculateAdapter(AddScore.this,
                                 R.layout.list_row, players_score, numPlayers);
@@ -388,7 +388,7 @@ public class AddScore extends AppCompatActivity {
                 case android.R.id.home:
                     GameConfig gameConfig = GameConfig.getInstance();
                     int currentGameIndex = game.getCurrentMatch();
-                    if(game.getPlayersScore(currentGameIndex) != null){
+                    if(game.getPlayersScore(currentGameIndex) != null && !unsaved){
                         game.getPlayersScore(currentGameIndex).clear();
                     }
                     Intent intent = new Intent(this, GamesPlayed.class);

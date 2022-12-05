@@ -36,7 +36,6 @@ public class GameListAdapter extends ArrayAdapter<Game> {
 
         if(getItem(position).getBoxImage() != null){
             imageView.setImageBitmap(getItem(position).getBoxImage());
-            //getItem(position).recycleImage();
         }else{
             imageView.setImageResource(R.drawable.noboard);
         }

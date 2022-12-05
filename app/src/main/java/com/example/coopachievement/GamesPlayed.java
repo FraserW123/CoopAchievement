@@ -1,5 +1,7 @@
 package com.example.coopachievement;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -7,9 +9,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
@@ -39,7 +43,9 @@ public class GamesPlayed extends AppCompatActivity {
     ImageView nogameplayed;
     TextView nogametext;
     ImageView gamesback;
+    Bitmap bitmap;
     ActionBar ab;
+    ActivityResultLauncher<Intent> activityResultLauncher;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -68,6 +74,7 @@ public class GamesPlayed extends AppCompatActivity {
             ab.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FF1493")));
         }
         themeback();
+        displayImageTaken();
     }
 
 
@@ -102,11 +109,14 @@ public class GamesPlayed extends AppCompatActivity {
             EditText description = findViewById(R.id.editTextGameDescription2);
             EditText poor_score = findViewById(R.id.etn_poorScore);
             EditText great_score = findViewById(R.id.etn_greatScore);
+            ImageView boxImage = findViewById(R.id.iv_gameBoxImage);
+
 
             name.setText(game.getName());
             description.setText(game.getDescription());
             poor_score.setText(String.valueOf(game.getPoorScore()));
             great_score.setText(String.valueOf(game.getGreatScore()));
+            boxImage.setImageBitmap(game.getBoxImage());
 
         }
     }
@@ -216,6 +226,20 @@ public class GamesPlayed extends AppCompatActivity {
         finish();
     }
 
+    private void displayImageTaken() {
+        activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if(result.getResultCode() == RESULT_OK && result.getData() != null){
+                        ImageView boxImage = findViewById(R.id.iv_gameBoxImage);
+                        Bundle bundle = result.getData().getExtras();
+                        bitmap =(Bitmap) bundle.get("data");
+                        boxImage.setImageBitmap(bitmap);
+
+
+                    }
+                });
+    }
+
     public boolean onCreateOptionsMenu(Menu menu)
     {
         getMenuInflater().inflate(R.menu.menu_edit_score, menu);
@@ -251,7 +275,11 @@ public class GamesPlayed extends AppCompatActivity {
                 AlertDialog dialog = builder.create();
                 dialog.show();
                 return true;
+            case R.id.action_camera:
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                activityResultLauncher.launch(intent);
 
+                return true;
             case R.id.action_save:
             case android.R.id.home:
                 this.onBackPressed();
@@ -274,6 +302,9 @@ public class GamesPlayed extends AppCompatActivity {
 
             game.setPoorScore(Integer.parseInt(poor_score.getText().toString()));
             game.setGreatScore(Integer.parseInt(great_score.getText().toString()));
+            if(bitmap != null){
+                game.setBoxImage(bitmap);
+            }
             Intent intent = new Intent(GamesPlayed.this, MainActivity.class);
             startActivity(intent);
             System.out.println("got here");
