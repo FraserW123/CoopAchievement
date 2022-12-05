@@ -20,12 +20,15 @@ import java.util.List;
  * also set up the worst/poor/good/great/okay/low scores with respect to number of players.
  */
 public class ScoreCalculator {
-    //GameConfig gameConfig = GameConfig.getInstance();
     private int numPlayers;
     private int Score;
     private int poorScore;
     private int greatScore;
     private int increment;
+    private String icons ;
+    private String nextachievementicon;
+    private double nextchievementscore;
+    private int nextachievementscore;
     //private String[] achievementThemeNames = gameConfig.getThemeNames();
     private String[] achievementThemeNames = {"Goofy Goblins!","Timid Trolls!","Zippy Zombies!","Prideful Phoenixes!",
             "Vicious Vampires!","Glorious Griffins!","Fantastic Fairies!","Supreme Serpents!","Dancing Dragons!","Ultimate Unicorns!"};
@@ -111,7 +114,8 @@ public class ScoreCalculator {
     {
 
         this.achievementThemeNames = achievementThemeNames;
-        name = "Date: " + date+" Players: "+numPlayers + " Total score: " +Score + " "+setAchievementLevel() + " Difficulty " + getDifficulty();
+        setAchievementLevel(achievementThemeNames);
+        name = "Date: " + date+" Players: "+numPlayers + " Total score: " +Score + " "+icons + " Difficulty " + getDifficulty();
         matchesPlayed++;
         matchName.add(name);
     }
@@ -150,9 +154,10 @@ public class ScoreCalculator {
 
     }
 
-    public String setAchievementLevel()
+    public String setAchievementLevel(String achievementarray[])
     {
 
+        this.achievementThemeNames = achievementarray;
         increment = (greatScore - poorScore) / 8;
 
         int length = achievementThemeNames.length;
@@ -160,14 +165,44 @@ public class ScoreCalculator {
 
         for(int i = 0; i<length-2; i++){
             if(Score <= ((poorScore + ((i)*increment)) * numPlayers)*difficultyMultiplier()){
+                icons = achievementThemeNames[i];
+                nextachievementicon = achievementThemeNames[i+1];
                 return achievementThemeNames[i];
             }
         }
         if(Score <= greatScore*numPlayers -1){
+            icons=achievementThemeNames[length-2];
+            nextachievementicon = achievementThemeNames[length-1];
             return achievementThemeNames[length-2];
         }
-
+        icons = achievementThemeNames[length-1];
+        nextachievementicon = "the highest level";
         return achievementThemeNames[length-1];
+
+
+    }
+
+    public String nextAchievementlevelscore(String achievementarray[]){
+        double minScore;
+        for(int i=0;i<achievementarray.length;i++){
+            if(i== achievementarray.length-1){
+                minScore = (greatScore*numPlayers)*difficultyMultiplier();
+                nextchievementscore = minScore;
+            }else{
+                minScore = ((poorScore + ((i-1)*increment)) * numPlayers)*difficultyMultiplier();
+                nextchievementscore = minScore;
+            }
+            if(achievementarray[i]==nextachievementicon){
+                double needed =nextchievementscore-getScore();
+                return "U need "+needed+" To reach level "+nextachievementicon;
+            }
+            if(achievementarray[achievementarray.length-2] == nextachievementicon){
+                double needed =nextchievementscore-getScore();
+                return "U need "+needed+" To reach level "+nextachievementicon;
+            }
+
+        }
+        return " U reached "+ nextachievementicon;
 
     }
 

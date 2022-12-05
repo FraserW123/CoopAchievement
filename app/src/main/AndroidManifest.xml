@@ -20,8 +20,16 @@
             android:name=".RetakeMatchPhoto"
             android:exported="false" />
         <activity
+            android:name=".gamesplayed_bargraph"
+            android:exported="false"
+            android:parentActivityName=".GamesPlayed" />
+        <activity
             android:name=".activity_photo_gallery"
             android:exported="false" />
+        <activity
+            android:name=".AboutScreen"
+            android:exported="false"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".AddScore"
             android:exported="false"

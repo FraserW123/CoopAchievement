@@ -268,6 +268,11 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "Changing theme", Toast.LENGTH_SHORT).show();
                 return true;
 
+            case R.id.action_About:
+                Intent intent = new Intent(this, AboutScreen.class);
+                startActivity(intent);
+                return true;
+
             case android.R.id.home:
                 this.onBackPressed();
                 finish();

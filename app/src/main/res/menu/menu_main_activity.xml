@@ -6,4 +6,9 @@
         app:showAsAction="ifRoom"
         android:title="Change Theme"
         />
+    <item
+        android:id="@+id/action_About"
+        app:showAsAction="ifRoom"
+        android:title="Credits"
+        />
 </menu>
