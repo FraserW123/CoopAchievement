@@ -11,11 +11,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDialogFragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.example.coopachievement.model.Game;
 import com.example.coopachievement.model.GameConfig;
@@ -31,36 +33,49 @@ public class AlertMessageFragment extends AppCompatDialogFragment  {
     MediaPlayer player;
     View v;
     ImageView animationcard;
+    TextView themeName;
+    Game game;
+    String message;
+    String level;
+    String difficulty;
+    int score;
     @NonNull
     //@Override
-    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState)
-    {
+    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         //Create view
         v = LayoutInflater.from(getActivity())
                 .inflate(R.layout.alert_message_layout, null);
-        player = MediaPlayer.create(getActivity(),R.raw.congo);
+        player = MediaPlayer.create(getActivity(), R.raw.congo);
         animationcard = v.findViewById(R.id.animatedView);
-        //back_anime();
+        themeName = v.findViewById(R.id.changethemetext);
         playsong();
-        //back_anime();
         okaybutton();
-
-        Game game = gameConfig.getCurrentGame();
+        changethemeButton();
+        themeName.setText("Theme: "+gameConfig.getTheme());
+        game = gameConfig.getCurrentGame();
         game.getLatestMatch().setAchievementThemeNames(gameConfig.getThemeNames());
-        String level = game.getLatestMatch().setAchievementLevel();
-        String difficulty = game.getLatestMatch().getDifficulty();
-        int score = game.getLatestMatch().getScore();
-        String message = "You are the " + level + "!\nScore: " + score +"\nDifficulty: " + difficulty;
-        if(gameConfig.getThemeIndex() == 1){
+        level = game.getLatestMatch().setAchievementLevel(gameConfig.getThemeNames());
+        difficulty = game.getLatestMatch().getDifficulty();
+        score = game.getLatestMatch().getScore();
+
+
+        if(gameConfig.getThemeIndex() == 0){
+            gameConfig.setTheme(getResources().getStringArray(R.array.achievements));
+            level = game.getLatestMatch().setAchievementLevel(gameConfig.getThemeNames());
+            message = "You are the " + level + "!\nScore: " + score + "\nDifficulty: " + difficulty;
+        }
+        if (gameConfig.getThemeIndex() == 1) {
             gameConfig.setTheme(getResources().getStringArray(R.array.planets));
-            level = game.getLatestMatch().setAchievementLevel();
-            message = "You reached " + level + "!\nScore: " + score + "\nDifficulty: " + difficulty ;
+            level = game.getLatestMatch().setAchievementLevel(gameConfig.getThemeNames());
+            message = "You reached " + level + "!\nScore: " + score + "\nDifficulty: " + difficulty;
         }
-        if(gameConfig.getThemeIndex() == 2){
+        if (gameConfig.getThemeIndex() == 2) {
             gameConfig.setTheme(getResources().getStringArray(R.array.greek_gods));
-            level = game.getLatestMatch().setAchievementLevel();
-            message = "You became " + level + "!\nScore: " + score +"\nDifficulty: " + difficulty;
+            level = game.getLatestMatch().setAchievementLevel(gameConfig.getThemeNames());
+            message = "You became " + level + "!\nScore: " + score + "\nDifficulty: " + difficulty;
         }
+        game.getLatestMatch().setMatchName(gameConfig.getThemeNames());
+
 
         iv_changing_image = v.findViewById(R.id.iv_changing_image);
         change(level);
@@ -72,6 +87,29 @@ public class AlertMessageFragment extends AppCompatDialogFragment  {
                 .create();
     }
 
+
+
+    private void changethemeButton() {
+        Button button = v.findViewById(R.id.changetheme);
+        button.setOnClickListener(w->{
+            gameConfig.incrementThemeIndex();
+            System.out.println("themeindexinc"+gameConfig.getThemeIndex());
+            themeName.setText("Theme: "+gameConfig.getTheme());
+            game = gameConfig.getCurrentGame();
+            game.getLatestMatch().setAchievementThemeNames(gameConfig.getThemeNames());
+            System.out.println("name:"+ gameConfig.getTheme());
+            game.getLatestMatch().setMatchName(gameConfig.getThemeNames());
+            level = game.getLatestMatch().setAchievementLevel(gameConfig.getThemeNames());
+            System.out.println("achivename"+level);
+            change(level);
+            setApplicationTheme(gameConfig);
+            player.stop();
+            player.setLooping(false);
+            FragmentManager manager = getActivity().getSupportFragmentManager();
+            AlertMessageFragment alert = new AlertMessageFragment();
+            alert.show(manager, "AlertMessage");
+        });
+    }
 
 
     private void back_anime() {
@@ -87,6 +125,7 @@ public class AlertMessageFragment extends AppCompatDialogFragment  {
             Intent intent = new Intent(getActivity(), GamesPlayed.class);
             //Intent intent = new Intent(getActivity(), MainActivity.class);
             intent.putExtra("game_index", gameConfig.getCurrentGameIndex());
+            setApplicationTheme(gameConfig);
             player.stop();
             player.setLooping(false);
             my_congo_anime.stop();
@@ -107,5 +146,14 @@ public class AlertMessageFragment extends AppCompatDialogFragment  {
             }
         }
 
+    }
+    private void setApplicationTheme(GameConfig gameConfig) {
+        if (gameConfig.getThemeIndex() == 0) {
+            gameConfig.setTheme(getResources().getStringArray(R.array.achievements));
+        } else if(gameConfig.getThemeIndex() == 1) {
+            gameConfig.setTheme(getResources().getStringArray(R.array.planets));
+        }else{
+            gameConfig.setTheme(getResources().getStringArray(R.array.greek_gods));
+        }
     }
 }
