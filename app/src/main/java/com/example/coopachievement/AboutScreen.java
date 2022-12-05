@@ -46,13 +46,13 @@ public class AboutScreen extends AppCompatActivity {
 
     private void themeback() {
         if (gameConfig.getThemeIndex() == 0){
-            gamesback.setBackgroundResource(R.drawable.mythback);
+            gamesback.setBackgroundResource(R.drawable.background_mythic);
         }
         if(gameConfig.getThemeIndex()==1){
-            gamesback.setBackgroundResource(R.drawable.planetback);
+            gamesback.setBackgroundResource(R.drawable.background_planet);
         }
         if(gameConfig.getThemeIndex()==2){
-            gamesback.setBackgroundResource(R.drawable.greekback);
+            gamesback.setBackgroundResource(R.drawable.background_greek);
         }
     }
 }
