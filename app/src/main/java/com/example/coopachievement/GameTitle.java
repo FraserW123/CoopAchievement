@@ -185,6 +185,7 @@ public class GameTitle extends AppCompatActivity {
             game.setCurrentMatch(game.getNumMatchesPlayed());
             Intent switching = new Intent(this, AddScore.class);
             startActivity(switching);
+            finish();
         }
     }
 
@@ -204,8 +205,9 @@ public class GameTitle extends AppCompatActivity {
         if (item.getItemId() == R.id.action_save)
         {
             saveGame();
+
         }
-        //finish();
+
         return super.onOptionsItemSelected(item);
     }
 }

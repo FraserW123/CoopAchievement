@@ -91,6 +91,7 @@ public class AlertMessageFragment extends AppCompatDialogFragment  {
             player.setLooping(false);
             my_congo_anime.stop();
             startActivity(intent);
+            this.getActivity().finish();
         });
     }
 

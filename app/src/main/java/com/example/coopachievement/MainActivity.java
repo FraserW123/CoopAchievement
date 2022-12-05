@@ -69,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.addGameConfig).setOnClickListener(v->{
             Intent intent = new Intent(this, GameTitle.class);
             startActivity(intent);
+            finish();
         });
         testImage = findViewById(R.id.test_image);
         animationbackground = findViewById(R.id.animatedmainView);
@@ -233,6 +234,7 @@ public class MainActivity extends AppCompatActivity {
         my_background_anime.stop();
         intent.putExtra("game_index", position);
         startActivity(intent);
+        finish();
     }
 
     private void setApplicationTheme(GameConfig gameConfig) {
@@ -268,8 +270,9 @@ public class MainActivity extends AppCompatActivity {
 
             case android.R.id.home:
                 this.onBackPressed();
-
+                finish();
                 return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
