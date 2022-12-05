@@ -131,6 +131,7 @@ public class GamesPlayed extends AppCompatActivity {
                     game.setGreatScore(Integer.parseInt(great_score.getText().toString()));
                     //System.out.println("difficulty " + game.getMatchDifficulty());
                     startActivity(intent);
+                    finish();
                 }
                 else{
                     Toast.makeText(this, "One or more required items are missing or invalid!", Toast.LENGTH_SHORT).show();
@@ -182,12 +183,13 @@ public class GamesPlayed extends AppCompatActivity {
 
             Intent intent = new Intent(this, AddScore.class);
             startActivity(intent);
+            finish();
 
         }
 
     }
 
-    //Cannot use commas or semicolons in the name or description. Fields also cannot be empty
+    //Fields cannot be empty
     private boolean validInputFields(){
         EditText name = findViewById(R.id.editTextGameName2);
         EditText description = findViewById(R.id.editTextGameDescription2);
@@ -286,6 +288,7 @@ public class GamesPlayed extends AppCompatActivity {
             case R.id.action_save:
             case android.R.id.home:
                 this.onBackPressed();
+
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -311,6 +314,8 @@ public class GamesPlayed extends AppCompatActivity {
             Intent intent = new Intent(GamesPlayed.this, MainActivity.class);
             startActivity(intent);
             System.out.println("got here");
+            finish();
+
         }
 
     }

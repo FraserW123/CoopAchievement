@@ -387,6 +387,7 @@ public class AddScore extends AppCompatActivity {
 
                 case R.id.action_delete:
                     deleteMessageConfirm();
+                    finish();
                     return true;
 
                 case R.id.action_camera:
@@ -408,6 +409,7 @@ public class AddScore extends AppCompatActivity {
                     Intent intent = new Intent(this, GamesPlayed.class);
                     intent.putExtra("game_index", gameConfig.getCurrentGameIndex());
                     startActivity(intent);
+                    finish();
                     return true;
 
                 default:
@@ -479,6 +481,7 @@ public class AddScore extends AppCompatActivity {
                 FragmentManager manager = getSupportFragmentManager();
                 AlertMessageFragment alert = new AlertMessageFragment();
                 alert.show(manager, "AlertMessage");
+
             } else {
 
                 Toast.makeText(AddScore.this, "Some values are missing or invalid!", Toast.LENGTH_LONG).show();
