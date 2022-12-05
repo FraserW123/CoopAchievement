@@ -1,15 +1,20 @@
 package com.example.coopachievement;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.EditText;
 
 import android.widget.ImageView;
@@ -28,7 +33,9 @@ public class GameTitle extends AppCompatActivity {
     GameConfig gameConfig = GameConfig.getInstance();
     Game game;
     ImageView gamesback3;
+    Bitmap bitmap;
     ActionBar toolbar;
+    ActivityResultLauncher<Intent> activityResultLauncher;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -49,6 +56,34 @@ public class GameTitle extends AppCompatActivity {
             toolbar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FF1493")));
         }
         themeback();
+
+
+        //ImageView boxImage = findViewById(R.id.iv_testBox);
+        displayImageTaken();
+        useCamera();
+    }
+
+    private void useCamera() {
+        Button camera = findViewById(R.id.btn_BoxCamera);
+        camera.setOnClickListener(v->{
+            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            activityResultLauncher.launch(intent);
+
+        });
+    }
+
+    private void displayImageTaken() {
+        activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if(result.getResultCode() == RESULT_OK && result.getData() != null){
+                        ImageView boxImage = findViewById(R.id.iv_testBox);
+                        Bundle bundle = result.getData().getExtras();
+                        bitmap =(Bitmap) bundle.get("data");
+                        boxImage.setImageBitmap(bitmap);
+
+
+                    }
+                });
     }
 
     private void themeback() {
@@ -83,6 +118,11 @@ public class GameTitle extends AppCompatActivity {
             int num_great_score = Integer.parseInt(greatScore.getText().toString());
 
             Game game = new Game(name.getText().toString(), description.getText().toString(), num_poor_score, num_great_score);
+            if(bitmap != null){
+                game.setBoxImage(bitmap);
+                //bitmap.recycle();
+            }
+
             gameConfig.addGame(game);
             backToMain();
         }
@@ -145,6 +185,7 @@ public class GameTitle extends AppCompatActivity {
             game.setCurrentMatch(game.getNumMatchesPlayed());
             Intent switching = new Intent(this, AddScore.class);
             startActivity(switching);
+            finish();
         }
     }
 
@@ -164,8 +205,9 @@ public class GameTitle extends AppCompatActivity {
         if (item.getItemId() == R.id.action_save)
         {
             saveGame();
+
         }
-        //finish();
+
         return super.onOptionsItemSelected(item);
     }
 }
