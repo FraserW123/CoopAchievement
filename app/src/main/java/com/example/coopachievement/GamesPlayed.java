@@ -42,6 +42,8 @@ public class GamesPlayed extends AppCompatActivity {
     ListView lvManager;
     ImageView nogameplayed;
     TextView nogametext;
+    ImageView nogames;
+    ImageView nolist;
     ImageView gamesback;
     Bitmap bitmap;
     ActionBar ab;
@@ -63,16 +65,7 @@ public class GamesPlayed extends AppCompatActivity {
         lvManager.setEmptyView(nogameplayed);
         lvManager.setEmptyView(nogametext);
         gamesback=findViewById(R.id.backimage);
-        if (gameConfig.getThemeIndex() == 0) {
-            
-            ab.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#023020")));
-        }
-        if(gameConfig.getThemeIndex()==1){
-            ab.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#A020F0")));
-        }
-        if(gameConfig.getThemeIndex()==2){
-            ab.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FF1493")));
-        }
+
         themeback();
         displayImageTaken();
     }
@@ -81,14 +74,17 @@ public class GamesPlayed extends AppCompatActivity {
     private void themeback() {
         if (gameConfig.getThemeIndex() == 0){
             gamesback.setBackgroundResource(R.drawable.background_mythic);
+            ab.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#023020")));
 
         }
         if(gameConfig.getThemeIndex()==1){
             gamesback.setBackgroundResource(R.drawable.background_planet);
+            ab.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#A020F0")));
 
         }
         if(gameConfig.getThemeIndex()==2){
             gamesback.setBackgroundResource(R.drawable.background_greek);
+            ab.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FF1493")));
 
         }
     }
@@ -116,7 +112,7 @@ public class GamesPlayed extends AppCompatActivity {
             description.setText(game.getDescription());
             poor_score.setText(String.valueOf(game.getPoorScore()));
             great_score.setText(String.valueOf(game.getGreatScore()));
-            boxImage.setImageBitmap(game.getBoxImage());
+            //boxImage.setImageBitmap(game.getBoxImage());
 
         }
     }
@@ -163,10 +159,14 @@ public class GamesPlayed extends AppCompatActivity {
             TextView matchesPlayed = findViewById(R.id.tvGamesPlayed);
             matchesPlayed.setText("Games Played: " + matches);
         }
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+       /* ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 this, R.layout.list_matches,list);
         lvManager = findViewById(R.id.lvMatchView);
-        lvManager.setAdapter(adapter);
+        lvManager.setAdapter(adapter);*/
+
+        activity_photo_gallery photo_gallery = new activity_photo_gallery(this,R.layout.activity_photo_gallery, game.getMatchList());
+        lvManager = findViewById(R.id.lvMatchView);
+        lvManager.setAdapter(photo_gallery);
     }
 
     private void createNewMatch()
@@ -233,7 +233,7 @@ public class GamesPlayed extends AppCompatActivity {
                         ImageView boxImage = findViewById(R.id.iv_gameBoxImage);
                         Bundle bundle = result.getData().getExtras();
                         bitmap =(Bitmap) bundle.get("data");
-                        boxImage.setImageBitmap(bitmap);
+                        //boxImage.setImageBitmap(bitmap);
 
 
                     }
@@ -276,10 +276,13 @@ public class GamesPlayed extends AppCompatActivity {
                 dialog.show();
                 return true;
             case R.id.action_camera:
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                activityResultLauncher.launch(intent);
+              //  Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                //activityResultLauncher.launch(intent);
+                Intent intent_retake = new Intent(this, RetakeGameBoardPhoto.class);
+                startActivity(intent_retake);
 
                 return true;
+
             case R.id.action_save:
             case android.R.id.home:
                 this.onBackPressed();

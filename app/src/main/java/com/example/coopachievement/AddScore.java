@@ -50,6 +50,9 @@ public class AddScore extends AppCompatActivity {
     String difficultyLevel = "Normal";
     ImageView gamesback2;
     ActionBar toolbar;
+    Bitmap bitmap;
+    boolean is_edit_screen = false;
+    ImageView testImage;
     ActivityResultLauncher<Intent> activityResultLauncher;
 
     @Override
@@ -79,7 +82,7 @@ public class AddScore extends AppCompatActivity {
             toolbar.setTitle("Editing match");
         }
         toolbar.setDisplayHomeAsUpEnabled(true);
-
+        displayImageTaken();
         //findViewById(R.id.btn_display_levels).setOnClickListener(v->displayLevels());
         EditText num_players_input = findViewById(R.id.etn_num_players);
 
@@ -359,6 +362,7 @@ public class AddScore extends AppCompatActivity {
 
             if (!st_players.equals("") && !st_score.equals("")) {
                 getMenuInflater().inflate(R.menu.menu_edit_score, menu);
+                is_edit_screen = true;
             } else {
                 getMenuInflater().inflate(R.menu.menu_add_score, menu);
             }
@@ -383,6 +387,16 @@ public class AddScore extends AppCompatActivity {
 
                 case R.id.action_delete:
                     deleteMessageConfirm();
+                    return true;
+
+                case R.id.action_camera:
+                    if(is_edit_screen){
+                        Intent intent_retake = new Intent(this, RetakeMatchPhoto.class);
+                        startActivity(intent_retake);
+                    }
+                    else {
+                        openCamera();
+                    }
                     return true;
 
                 case android.R.id.home:
@@ -411,9 +425,10 @@ public class AddScore extends AppCompatActivity {
         activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 result -> {
                     if(result.getResultCode() == RESULT_OK && result.getData() != null){
+                        ImageView boxImage = findViewById(R.id.test_image);
                         Bundle bundle = result.getData().getExtras();
-                        Bitmap bitmap =(Bitmap) bundle.get("data");
-                        //testImage.setImageBitmap(bitmap);
+                        bitmap = (Bitmap) bundle.get("data");
+                        //boxImage.setImageBitmap(bitmap);
 
                     }
                 });
@@ -457,6 +472,9 @@ public class AddScore extends AppCompatActivity {
                     score_calc.setMatchName(gameConfig.getThemeNames());
                 }
                 unsaved = false;
+                if(bitmap != null) {
+                    score_calc.setBoxImage(bitmap);
+                }
 
                 FragmentManager manager = getSupportFragmentManager();
                 AlertMessageFragment alert = new AlertMessageFragment();

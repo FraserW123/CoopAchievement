@@ -6,4 +6,8 @@
         android:title="Save"
         app:showAsAction="ifRoom" />
 
+    <item
+        android:id="@+id/action_camera"
+        android:title="Camera"
+        app:showAsAction="ifRoom"/>
 </menu>
