@@ -447,7 +447,7 @@ public class AddScore extends AppCompatActivity {
                     score_calc = new ScoreCalculator(players, score, game.getPoorScore(), game.getGreatScore());
                     score_calc.setPlayersScore(game.getPlayersScore(currentMatchIndex));
                     score_calc.setDifficulty(difficultyLevel);
-                    score_calc.setAchievementLevel();
+                    score_calc.setAchievementLevel(gameConfig.getThemeNames());
                     score_calc.setMatchName(gameConfig.getThemeNames());
                     game.addMatch(score_calc);
                 } else {
@@ -455,7 +455,7 @@ public class AddScore extends AppCompatActivity {
                     score_calc.setPlayersScore(game.getPlayersScore(game.getCurrentMatch()));
                     score_calc.editMatch(players, score, game.getPoorScore(), game.getGreatScore());
                     score_calc.setDifficulty(difficultyLevel);
-                    score_calc.setAchievementLevel();
+                    score_calc.setAchievementLevel(gameConfig.getThemeNames());
                     score_calc.setMatchName(gameConfig.getThemeNames());
                 }
                 unsaved = false;

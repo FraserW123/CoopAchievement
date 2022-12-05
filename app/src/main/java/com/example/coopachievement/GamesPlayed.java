@@ -3,6 +3,7 @@ package com.example.coopachievement;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -13,6 +14,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -51,6 +53,7 @@ public class GamesPlayed extends AppCompatActivity {
         refreshDisplay();
         populateList();
         listClick();
+        seebarchartbutton();
         findViewById(R.id.playGame).setOnClickListener(v-> createNewMatch());
         nogameplayed = findViewById(R.id.nogamesplayed);
         nogametext = findViewById(R.id.textView4);
@@ -68,6 +71,15 @@ public class GamesPlayed extends AppCompatActivity {
             ab.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FF1493")));
         }
         themeback();
+    }
+
+    private void seebarchartbutton() {
+        Button button = findViewById(R.id.bargraphbutton);
+        button.setOnClickListener(w->{
+            Intent intent = new Intent(this, gamesplayed_bargraph.class);
+            startActivity(intent);
+        });
+
     }
 
 

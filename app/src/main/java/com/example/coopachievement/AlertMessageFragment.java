@@ -54,22 +54,22 @@ public class AlertMessageFragment extends AppCompatDialogFragment  {
         themeName.setText("Theme: "+gameConfig.getTheme());
         game = gameConfig.getCurrentGame();
         game.getLatestMatch().setAchievementThemeNames(gameConfig.getThemeNames());
-        level = game.getLatestMatch().setAchievementLevel();
+        level = game.getLatestMatch().setAchievementLevel(gameConfig.getThemeNames());
         difficulty = game.getLatestMatch().getDifficulty();
         score = game.getLatestMatch().getScore();
         if(gameConfig.getThemeIndex() == 0){
             gameConfig.setTheme(getResources().getStringArray(R.array.achievements));
-            level = game.getLatestMatch().setAchievementLevel();
+            level = game.getLatestMatch().setAchievementLevel(gameConfig.getThemeNames());
             message = "You are the " + level + "!\nScore: " + score + "\nDifficulty: " + difficulty;
         }
         if (gameConfig.getThemeIndex() == 1) {
             gameConfig.setTheme(getResources().getStringArray(R.array.planets));
-            level = game.getLatestMatch().setAchievementLevel();
+            level = game.getLatestMatch().setAchievementLevel(gameConfig.getThemeNames());
             message = "You reached " + level + "!\nScore: " + score + "\nDifficulty: " + difficulty;
         }
         if (gameConfig.getThemeIndex() == 2) {
             gameConfig.setTheme(getResources().getStringArray(R.array.greek_gods));
-            level = game.getLatestMatch().setAchievementLevel();
+            level = game.getLatestMatch().setAchievementLevel(gameConfig.getThemeNames());
             message = "You became " + level + "!\nScore: " + score + "\nDifficulty: " + difficulty;
         }
 
@@ -89,10 +89,14 @@ public class AlertMessageFragment extends AppCompatDialogFragment  {
         Button button = v.findViewById(R.id.changetheme);
         button.setOnClickListener(w->{
             gameConfig.incrementThemeIndex();
+            System.out.println("themeindexinc"+gameConfig.getThemeIndex());
             themeName.setText("Theme: "+gameConfig.getTheme());
             game = gameConfig.getCurrentGame();
             game.getLatestMatch().setAchievementThemeNames(gameConfig.getThemeNames());
-            level = game.getLatestMatch().setAchievementLevel();
+            System.out.println("name:"+ gameConfig.getTheme());
+            game.getLatestMatch().setMatchName(gameConfig.getThemeNames());
+            level = game.getLatestMatch().setAchievementLevel(gameConfig.getThemeNames());
+            System.out.println("achivename"+level);
             change(level);
             setApplicationTheme(gameConfig);
             player.stop();
