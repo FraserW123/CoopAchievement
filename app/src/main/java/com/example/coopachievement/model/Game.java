@@ -17,6 +17,10 @@ public class Game {
     private int numMatchesPlayed = 0;
     private int currentMatch = 0;
 
+
+    public int[] achievementLevels = new int[10];
+    private ArrayList<Integer> achievmentLevelsList = new ArrayList<>(10);
+
     private int themeIndexSave = 0;
     private ArrayList<ScoreCalculator> matchesPlayed = new ArrayList<>();
 
@@ -33,6 +37,32 @@ public class Game {
         this.description = description;
         this.poor_score = poorScore;
         this.great_score = greatScore;
+        for(int i = 0; i<10; i++){
+            achievmentLevelsList.add(0);
+        }
+
+    }
+
+    public void incrementAchievementLevels(String icons, String[] achievementLevelsNames){
+        for(int i = 0; i<10; i++){
+            System.out.println(i);
+            if(icons.equals(achievementLevelsNames[i])){
+                achievmentLevelsList.set(i,1);
+            }
+        }
+    }
+
+    public void decrementAchievementLevels(String icons, String[] achievementLevelsNames){
+        for(int i = 0; i<10; i++){
+            if(icons.equals(achievementLevelsNames[i])){
+                achievementLevels[i]--;
+            }
+        }
+    }
+
+
+    public int[] getAchievementLevels() {
+        return achievementLevels;
     }
 
 
@@ -64,6 +94,7 @@ public class Game {
             System.out.println(getMatchesNamesList().get(i));
         }
     }
+
     public List<ScoreCalculator> getMatchList(){
         return matchesPlayed;
     }

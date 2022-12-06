@@ -1,13 +1,5 @@
 package com.example.coopachievement;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -26,6 +18,14 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 import com.example.coopachievement.model.Game;
 import com.example.coopachievement.model.GameConfig;
@@ -450,6 +450,7 @@ public class AddScore extends AppCompatActivity {
                     score_calc.setAchievementLevel(gameConfig.getThemeNames());
                     score_calc.setMatchName(gameConfig.getThemeNames());
                     game.addMatch(score_calc);
+                    game.incrementAchievementLevels(score_calc.getIcons(),gameConfig.getThemeNames());
                 } else {
                     score_calc = game.getMatch(matchIndex);
                     score_calc.setPlayersScore(game.getPlayersScore(game.getCurrentMatch()));

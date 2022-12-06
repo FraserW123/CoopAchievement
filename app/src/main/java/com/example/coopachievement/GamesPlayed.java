@@ -1,10 +1,5 @@
 package com.example.coopachievement;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -20,6 +15,10 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.coopachievement.model.Game;
 import com.example.coopachievement.model.GameConfig;
@@ -76,8 +75,9 @@ public class GamesPlayed extends AppCompatActivity {
     private void seebarchartbutton() {
         Button button = findViewById(R.id.bargraphbutton);
         button.setOnClickListener(w->{
-            //Intent intent = new Intent(this, gamesplayed_bargraph.class);
-            //startActivity(intent);
+            Intent intent = new Intent(this, gamesplayed_bargraph.class);
+            intent.getIntExtra("gamebar_index", gameConfig.getCurrentGameIndex());
+            startActivity(intent);
         });
 
     }

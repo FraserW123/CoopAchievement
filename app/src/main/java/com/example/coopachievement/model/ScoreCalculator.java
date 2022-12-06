@@ -1,10 +1,5 @@
 package com.example.coopachievement.model;
 
-import android.content.Context;
-import android.os.Build;
-
-import androidx.annotation.RequiresApi;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -28,6 +23,7 @@ public class ScoreCalculator {
     private String[] achievementThemeNames = {"Goofy Goblins!","Timid Trolls!","Zippy Zombies!","Prideful Phoenixes!",
             "Vicious Vampires!","Glorious Griffins!","Fantastic Fairies!","Supreme Serpents!","Dancing Dragons!","Ultimate Unicorns!"};
     private ArrayList<Integer> players_score = new ArrayList<>();
+    private String[] achievementLevelValues = new String[10];
     private String difficulty = "";
     private String name;
 
@@ -94,8 +90,22 @@ public class ScoreCalculator {
         this.achievementThemeNames = achievementThemeNames;
         setAchievementLevel(achievementThemeNames);
         name = "Date: " + date+" Players: "+numPlayers + " Total score: " +Score + " "+icons + " Difficulty " + getDifficulty();
+        for(int i = 0; i < achievementThemeNames.length; i++){
+            if(icons.equals(achievementThemeNames[i])){
+                achievementLevelValues[i] += 1;
+            }
+        }
+
         matchesPlayed++;
         matchName.add(name);
+    }
+
+    public String getIcons() {
+        return icons;
+    }
+
+    public String[] getAchievementLevelValues() {
+        return achievementLevelValues;
     }
 
     public String getMatchName()
