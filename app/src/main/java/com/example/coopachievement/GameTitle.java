@@ -59,7 +59,7 @@ public class GameTitle extends AppCompatActivity {
 
 
         //ImageView boxImage = findViewById(R.id.iv_testBox);
-        displayImageTaken();
+
         useCamera();
     }
 
@@ -72,19 +72,7 @@ public class GameTitle extends AppCompatActivity {
         });
     }
 
-    private void displayImageTaken() {
-        activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
-                result -> {
-                    if(result.getResultCode() == RESULT_OK && result.getData() != null){
-                        ImageView boxImage = findViewById(R.id.iv_testBox);
-                        Bundle bundle = result.getData().getExtras();
-                        bitmap =(Bitmap) bundle.get("data");
-                        boxImage.setImageBitmap(bitmap);
 
-
-                    }
-                });
-    }
 
     private void themeback() {
         if (gameConfig.getThemeIndex() == 0){

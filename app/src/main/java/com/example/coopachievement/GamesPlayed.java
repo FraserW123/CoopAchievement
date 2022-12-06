@@ -70,14 +70,14 @@ public class GamesPlayed extends AppCompatActivity {
         gamesback=findViewById(R.id.backimage);
 
         themeback();
-        displayImageTaken();
+
     }
 
     private void seebarchartbutton() {
         Button button = findViewById(R.id.bargraphbutton);
         button.setOnClickListener(w->{
-            //Intent intent = new Intent(this, gamesplayed_bargraph.class);
-            //startActivity(intent);
+            Intent intent = new Intent(this, gamesplayed_bargraph.class);
+            startActivity(intent);
         });
 
     }
@@ -117,7 +117,6 @@ public class GamesPlayed extends AppCompatActivity {
             EditText description = findViewById(R.id.editTextGameDescription2);
             EditText poor_score = findViewById(R.id.etn_poorScore);
             EditText great_score = findViewById(R.id.etn_greatScore);
-            ImageView boxImage = findViewById(R.id.iv_gameBoxImage);
 
 
             name.setText(game.getName());
@@ -172,11 +171,6 @@ public class GamesPlayed extends AppCompatActivity {
             TextView matchesPlayed = findViewById(R.id.tvGamesPlayed);
             matchesPlayed.setText("Games Played: " + matches);
         }
-       /* ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                this, R.layout.list_matches,list);
-        lvManager = findViewById(R.id.lvMatchView);
-        lvManager.setAdapter(adapter);*/
-
         activity_photo_gallery photo_gallery = new activity_photo_gallery(this,R.layout.activity_photo_gallery, game.getMatchList());
         lvManager = findViewById(R.id.lvMatchView);
         lvManager.setAdapter(photo_gallery);
@@ -240,23 +234,11 @@ public class GamesPlayed extends AppCompatActivity {
         finish();
     }
 
-    private void displayImageTaken() {
-        activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
-                result -> {
-                    if(result.getResultCode() == RESULT_OK && result.getData() != null){
-                        ImageView boxImage = findViewById(R.id.iv_gameBoxImage);
-                        Bundle bundle = result.getData().getExtras();
-                        bitmap =(Bitmap) bundle.get("data");
-                        //boxImage.setImageBitmap(bitmap);
 
-
-                    }
-                });
-    }
 
     public boolean onCreateOptionsMenu(Menu menu)
     {
-        getMenuInflater().inflate(R.menu.menu_edit_score, menu);
+        getMenuInflater().inflate(R.menu.menu_games_played, menu);
         return true;
     }
 
@@ -290,12 +272,13 @@ public class GamesPlayed extends AppCompatActivity {
                 dialog.show();
                 return true;
             case R.id.action_camera:
-              //  Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                //activityResultLauncher.launch(intent);
                 Intent intent_retake = new Intent(this, RetakeGameBoardPhoto.class);
                 startActivity(intent_retake);
 
                 return true;
+            case R.id.action_stats:
+                Intent intent = new Intent(this, gamesplayed_bargraph.class);
+                startActivity(intent);
 
             case R.id.action_save:
             case android.R.id.home:

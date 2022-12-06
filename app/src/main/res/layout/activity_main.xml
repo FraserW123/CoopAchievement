@@ -70,17 +70,6 @@
         app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/nogame" />
 
-    <ImageView
-        android:id="@+id/test_image"
-        android:layout_width="263dp"
-        android:layout_height="254dp"
-        android:foregroundGravity="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <TextView
         android:id="@+id/tvTheme"
         android:layout_width="135dp"
@@ -110,18 +99,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.901" />
-
-    <Button
-        android:id="@+id/btn_camera"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Camera"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.06"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.71000004" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

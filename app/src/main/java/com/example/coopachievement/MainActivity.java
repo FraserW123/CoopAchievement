@@ -71,16 +71,12 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         });
-        testImage = findViewById(R.id.test_image);
         animationbackground = findViewById(R.id.animatedmainView);
         nogames = findViewById(R.id.nogames);
         nolist = findViewById(R.id.nolist);
 
         themeName = findViewById(R.id.tvTheme);
 
-
-        displayImageTaken();
-        useCamera();
 
 
         back_anime();
@@ -103,26 +99,6 @@ public class MainActivity extends AppCompatActivity {
 //        }
     }
 
-    private void useCamera() {
-        Button camera = findViewById(R.id.btn_camera);
-        camera.setOnClickListener(v->{
-            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            activityResultLauncher.launch(intent);
-
-        });
-    }
-
-    private void displayImageTaken() {
-        activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
-                result -> {
-                    if(result.getResultCode() == RESULT_OK && result.getData() != null){
-                        Bundle bundle = result.getData().getExtras();
-                        Bitmap bitmap =(Bitmap) bundle.get("data");
-                        testImage.setImageBitmap(bitmap);
-
-                    }
-                });
-    }
 
 
     private void back_anime() {
