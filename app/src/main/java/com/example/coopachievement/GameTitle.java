@@ -108,7 +108,6 @@ public class GameTitle extends AppCompatActivity {
             Game game = new Game(name.getText().toString(), description.getText().toString(), num_poor_score, num_great_score);
             if(bitmap != null){
                 game.setBoxImage(bitmap);
-                //bitmap.recycle();
             }
 
 
@@ -167,6 +166,9 @@ public class GameTitle extends AppCompatActivity {
             int gamesPlayed = gameConfig.getNumGame();
 
             Game game = new Game(name.getText().toString(), description.getText().toString(), num_poor_score, num_great_score);
+            if(bitmap != null){
+                game.setBoxImage(bitmap);
+            }
             gameConfig.setCurrentGameIndex(gamesPlayed);
             gameConfig.addGame(game);
             gameConfig.setAccessedMatches(true);

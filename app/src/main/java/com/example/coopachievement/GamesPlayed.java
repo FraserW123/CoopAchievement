@@ -65,7 +65,6 @@ public class GamesPlayed extends AppCompatActivity {
         refreshDisplay();
         populateList();
         listClick();
-        seebarchartbutton();
         findViewById(R.id.playGame).setOnClickListener(v-> createNewMatch());
         nogameplayed = findViewById(R.id.nogamesplayed);
         nogametext = findViewById(R.id.textView4);
@@ -76,18 +75,6 @@ public class GamesPlayed extends AppCompatActivity {
         themeback();
         displayImageTaken();
     }
-
-    private void seebarchartbutton() {
-        Button button = findViewById(R.id.bargraphbutton);
-        button.setOnClickListener(w->{
-            Intent intent = new Intent(this, gamesplayed_bargraph.class);
-            intent.putExtra("gamebar_index", getGameIndex());
-
-            startActivity(intent);
-        });
-
-    }
-
 
     private void themeback() {
         if (gameConfig.getThemeIndex() == 0){
@@ -293,7 +280,10 @@ public class GamesPlayed extends AppCompatActivity {
                 return true;
             case R.id.action_stats:
                 Intent intent = new Intent(this, gamesplayed_bargraph.class);
+                intent.putExtra("gamebar_index", getGameIndex());
+
                 startActivity(intent);
+                return true;
 
             case R.id.action_save:
             case android.R.id.home:

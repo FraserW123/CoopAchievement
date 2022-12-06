@@ -199,25 +199,29 @@ public class ScoreCalculator {
 
     public String nextAchievementlevelscore(String achievementarray[]){
         double minScore;
+        increment = (greatScore-poorScore) / 8;
         for(int i=0;i<achievementarray.length;i++){
             if(i== achievementarray.length-1){
                 minScore = (greatScore*numPlayers)*difficultyMultiplier();
                 nextchievementscore = minScore;
             }else{
                 minScore = ((poorScore + ((i-1)*increment)) * numPlayers)*difficultyMultiplier();
+
                 nextchievementscore = minScore;
+                System.out.println("Score " + nextchievementscore);
             }
             if(achievementarray[i]==nextachievementicon){
                 double needed =nextchievementscore-getScore();
-                return "U need "+needed+" To reach level "+nextachievementicon;
+                return "You need "+needed+" more points to reach level "+nextachievementicon;
             }
             if(achievementarray[achievementarray.length-2] == nextachievementicon){
                 double needed =nextchievementscore-getScore();
-                return "U need "+needed+" To reach level "+nextachievementicon;
+
+                return "You need "+needed+" more points to reach level "+nextachievementicon;
             }
 
         }
-        return " U reached "+ nextachievementicon;
+        return " You reached "+ nextachievementicon;
 
     }
 

@@ -389,7 +389,6 @@ public class AddScore extends AppCompatActivity {
 
                 case R.id.action_delete:
                     deleteMessageConfirm();
-                    finish();
                     return true;
 
                 case R.id.action_camera:
@@ -504,6 +503,7 @@ public class AddScore extends AppCompatActivity {
                         Intent intent = new Intent(AddScore.this, GamesPlayed.class);
                         intent.putExtra("game_index", gameConfig.getCurrentGameIndex());
                         startActivity(intent);
+                        finish();
                     }).setNegativeButton("Cancel", null);
             AlertDialog areYouSure = builder.create();
             areYouSure.show();
