@@ -82,6 +82,8 @@ public class AddScore extends AppCompatActivity {
             toolbar.setTitle("Editing match");
         }
         toolbar.setDisplayHomeAsUpEnabled(true);
+        displayImageTaken();
+        //findViewById(R.id.btn_display_levels).setOnClickListener(v->displayLevels());
         EditText num_players_input = findViewById(R.id.etn_num_players);
 
         num_players_input.addTextChangedListener(new TextWatcher() {
@@ -423,7 +425,17 @@ public class AddScore extends AppCompatActivity {
         activityResultLauncher.launch(intent);
     }
 
+    private void displayImageTaken() { //DO NOT MERGE WITH OTHER PHOTO STUFF FROM PHOTO BRANCH
+        activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if(result.getResultCode() == RESULT_OK && result.getData() != null){
+                        Bundle bundle = result.getData().getExtras();
+                        bitmap = (Bitmap) bundle.get("data");
+                        //boxImage.setImageBitmap(bitmap);
 
+                    }
+                });
+    }
 
     private void alertMessage ()
         {

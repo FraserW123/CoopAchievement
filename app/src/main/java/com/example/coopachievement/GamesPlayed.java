@@ -70,7 +70,7 @@ public class GamesPlayed extends AppCompatActivity {
         gamesback=findViewById(R.id.backimage);
 
         themeback();
-
+        displayImageTaken();
     }
 
     private void seebarchartbutton() {
@@ -234,7 +234,18 @@ public class GamesPlayed extends AppCompatActivity {
         finish();
     }
 
+    private void displayImageTaken() {
+        activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if(result.getResultCode() == RESULT_OK && result.getData() != null){
+                        Bundle bundle = result.getData().getExtras();
+                        bitmap =(Bitmap) bundle.get("data");
+                        //boxImage.setImageBitmap(bitmap);
 
+
+                    }
+                });
+    }
 
     public boolean onCreateOptionsMenu(Menu menu)
     {

@@ -59,20 +59,20 @@ public class GameTitle extends AppCompatActivity {
 
 
         //ImageView boxImage = findViewById(R.id.iv_testBox);
-
-        useCamera();
-    }
-
-    private void useCamera() {
-        Button camera = findViewById(R.id.btn_BoxCamera);
-        camera.setOnClickListener(v->{
-            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            activityResultLauncher.launch(intent);
-
-        });
+        displayImageTaken();
+        //useCamera();
     }
 
 
+    private void displayImageTaken() {
+        activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if(result.getResultCode() == RESULT_OK && result.getData() != null){
+                        Bundle bundle = result.getData().getExtras();
+                        bitmap =(Bitmap) bundle.get("data");
+                    }
+                });
+    }
 
     private void themeback() {
         if (gameConfig.getThemeIndex() == 0){
@@ -194,6 +194,10 @@ public class GameTitle extends AppCompatActivity {
         {
             saveGame();
 
+        }
+        else if(item.getItemId() == R.id.action_camera){
+            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            activityResultLauncher.launch(intent);
         }
 
         return super.onOptionsItemSelected(item);
