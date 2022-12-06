@@ -1,6 +1,12 @@
 package com.example.coopachievement.model;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
+import java.io.ByteArrayOutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 /**
@@ -17,13 +23,12 @@ public class Game {
     private int numMatchesPlayed = 0;
     private int currentMatch = 0;
 
-
-
-
+    //private Bitmap boxImage;
+    private String  boxImage;
     private int[] achievementLevelsGraph = new int[]{0,0,0,0,0,0,0,0,0,0};
-    //private ArrayList<Integer> achievmentLevelsList = new ArrayList<>(10);
 
     private int themeIndexSave = 0;
+
     private ArrayList<ScoreCalculator> matchesPlayed = new ArrayList<>();
 
     public ArrayList<ArrayList<Integer>> getPlayers_score() {
@@ -79,6 +84,27 @@ public class Game {
 
 
 
+    public Bitmap getBoxImage() {
+        if(boxImage != null){
+            byte[] imageAsBytes = Base64.getDecoder().decode(boxImage.getBytes(StandardCharsets.UTF_8));
+            return BitmapFactory.decodeByteArray(imageAsBytes,0,imageAsBytes.length);
+        }
+        return null;
+    }
+
+    public void setBoxImage(Bitmap boxImage) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        boxImage.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        byte[] b  = baos.toByteArray();
+        this.boxImage = Base64.getEncoder().encodeToString(b);
+
+    }
+
+//    public void recycleImage(){
+//        boxImage.recycle();
+//    }
+
+
     public ArrayList<Integer> getPlayersScore(int index) {return players_score.get(index);}
 
     public void addPlayerScore(ArrayList<Integer> PlayerScores){this.players_score.add(PlayerScores);}
@@ -107,7 +133,6 @@ public class Game {
             System.out.println(getMatchesNamesList().get(i));
         }
     }
-
     public List<ScoreCalculator> getMatchList(){
         return matchesPlayed;
     }

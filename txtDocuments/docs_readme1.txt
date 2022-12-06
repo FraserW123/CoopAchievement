@@ -1,40 +1,57 @@
 Features implemented
 
-A. Game Played Difficulty
-       a.Each time I play a game, I want to be able to select a difficulty level for that specific game play.
-           1.If I select "normal" I want the scores required to earn an achievement level be 100% of the usual amount.
-           2.If I select "easy" I want the scores required to earn an achievement level be 75% of the usual amount.
-           3.If I select "hard" I want the scores required to earn an achievement level be 125% of the usual amount.
-           4.When viewing an achievement screen, I want to see the difficulty level listed on the screen.
-           5.When viewing the list of games played, I want to see the difficulty level listed for each game play.
-B. Achievement Improvements
-        a.When a game is played and an achievement level is earned, I want an image, some animation effect, and a sound to be played to make it
-        feel like a reward and a celebration.
-        b.I want to select a theme for the achievements. I want at least 3 different themes to choose between.
-          1.It's up to you what themes to support, but possible ones might be: cute fantasy creatures, powerful fantasy creatures, dinosaurs, a
-            movie, or (kids) TV show.
-          2.I don't want the theme to be specific to any given game configuration, or to a specific game played, but rather be used when I'm
-             viewing the achievements (such as viewing achievement levels, or recording a game play).
-C.Edit Game Played
-       a.When viewing a previous game play, I'd like to be able to edit it to correct any errors, such as changing scores or difficulty so that
-          I can correct any errors from previous game plays.
-D.Friendly UI
-       a.Make the UI friendly and good looking so that it is more appealing to use.
-       b.Perhaps adding background images, or customizing the font or buttons.
-E.Score Calculator
-       a.When recording a game play, change the screen to allow the user to enter each player's score individually so that I don't have to add
-         it up in my head when I'm playing with multiple players.
-       b.The app must ask how many players there are and then allow me to enter each player's score individually.
-       c.The app should know the individual scores in the future, so that I can later go back and see or edit the individual scores.
-       d.The computation for the achievement level is still based on the sum of all player scores.
-       e.There is no need to identify which players are which; I just want to enter and view the scores of each player.
-F.Development Process
-       a.Team must implement JUnit unit tests for at least one class in the model.
-       b.Team must estimate the work required for 5-6 user stores. In a text file in the docs/ folder, state on one line per user store state:
-          1.Brief description of the user story
-          2.The estimated amount of work for that story
-          3.Include a mention of what your team used as a unit of 1 work.
-          4.Team must take notes in meetings; rotate who takes notes. No need to submit proof of this.
+A. Photos
+    1.Each time I create a new game play, I want to be able to take a photo to remember the event.
+      a.I want to take the selfie after I have entered the score, but before I see what achievement was earned.
+      b.Often, I'll take it as a selfie of the players, but some times I'll take it of just the game board to remember some memorable aspect
+         to the game.
+      c.I want to be able to return to viewing a specific game play and be able to view the photo that I took. OK if this is another button I
+        have to press, or if it is shown to me automatically.
+      d.I want the photos to be saved between times when I run the app (don't delete my picture!)
+      e.It would be nice if the photo were to show up in the Android photo app (but not required). If it does, I don't ever want the app to 
+        delete it.
+      f.I want to be able to change the photo for a game play when I'm editing it.
+      g.It would be nice if the photo were to show up somehow on the achievement celebration screen (where there is some animation). This is
+        not required, but it would be a nice way to share our photo and accomplishment with the other players.
+    2.I want to be able to take a photo of a game's (physical) box and use that in the app so that I can quickly recognize my games rather
+      than having to read names.
+      a.I want each game configuration to have a photo (or some generic image if the user does not take a photo).
+      b.I want the listing of different game configurations to show each game's photo as an icon in the list, along with the game
+        configuration's name.
+      c.I want to be able to change the game box's photo when I'm editing a game configuration.
+      d.I want the photo to persist between launches of the application.
+B. Achievement Celebration Page
+        a.When viewing the achievement celebration page, I want to see how close we were to the next higher achievement so that it may motivate
+         us in future games. I want to be told how many points we were away from the next level, and be told what the next level's name is.
+        b.When viewing the achievement celebration page, I want to be able to change the theme so that if the game players don't like the
+         current theme, I can quickly select a more appropriate one to show them.
+        c.When viewing the achievement celebration page, I want to be able to replay the animation so that I can show the animation to one
+         player, and then trigger it to play again as I show it to the next player.
+
+C.Achievement Statistics
+       1.In the app, I want to be able to view a screen which shows who wrote the app to give credit and recognition to the developers.
+          a.This screen should show at least the team's name and the first names of each of the developers.
+          b.This screen should show a list of resources that the app uses which were provided by other sources so that we give recognition to
+            where those images/sounds/etc came from.
+D.About Screen
+       1.In the app, I want to be able to view a screen which shows who wrote the app to give credit and recognition to the developers.
+          a.This screen should show at least the team's name and the first names of each of the developers.
+          b.This screen should show a list of resources that the app uses which were provided by other sources so that we give recognition to
+            where those images/sounds/etc came from.
+E.Score Calculator Enhancement
+       1.When using the score calculator to add up player scores while recording a game play, I want the app to:
+         a.Work for at least 25 players because some users may want it for a very large game! (HINT: Don't hard-code 25 input boxes!)
+         b.efault to somewhere between 1 and 4 players so that it works for the average case
+         c.Only show me the UI elements to enter the scores for the currently selected number of players so that it is not an overwhelming UI
+         d.While entering or editing a game play's scores, if I enter scores and then decrease the number of players (say from 10 to 5), this
+          will cause some of the entered scores to seem to be "lost". I want it such that if I then increase the number of players, I want the
+           relevant previous scores that were "lost" (which I had entered when there were more users) to come back as I increase the player
+            count.
+         e.If I enter scores for some number of players, then decrease the number of players and save, then I go back and edit the game play
+          later and increase the number of players, I want each new player's score to default to 0. (i.e., don't remember the "lost" scores
+           from decreasing the player count between when the game play is saved and when I later come back to edit it).
+         f.As before I want to be able to change the number of players and edit scores of existing game plays.
+
 
 C. All General requirements are met and done
 D. All constraints are met and done

@@ -1,5 +1,7 @@
 package com.example.coopachievement;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,9 +10,11 @@ import androidx.fragment.app.FragmentManager;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
@@ -44,8 +48,12 @@ public class GamesPlayed extends AppCompatActivity {
     ListView lvManager;
     ImageView nogameplayed;
     TextView nogametext;
+    ImageView nogames;
+    ImageView nolist;
     ImageView gamesback;
+    Bitmap bitmap;
     ActionBar ab;
+    ActivityResultLauncher<Intent> activityResultLauncher;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -64,17 +72,9 @@ public class GamesPlayed extends AppCompatActivity {
         lvManager.setEmptyView(nogameplayed);
         lvManager.setEmptyView(nogametext);
         gamesback=findViewById(R.id.backimage);
-        if (gameConfig.getThemeIndex() == 0) {
-            
-            ab.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#023020")));
-        }
-        if(gameConfig.getThemeIndex()==1){
-            ab.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#A020F0")));
-        }
-        if(gameConfig.getThemeIndex()==2){
-            ab.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FF1493")));
-        }
+
         themeback();
+        displayImageTaken();
     }
 
     private void seebarchartbutton() {
@@ -92,14 +92,17 @@ public class GamesPlayed extends AppCompatActivity {
     private void themeback() {
         if (gameConfig.getThemeIndex() == 0){
             gamesback.setBackgroundResource(R.drawable.background_mythic);
+            ab.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#023020")));
 
         }
         if(gameConfig.getThemeIndex()==1){
             gamesback.setBackgroundResource(R.drawable.background_planet);
+            ab.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#A020F0")));
 
         }
         if(gameConfig.getThemeIndex()==2){
             gamesback.setBackgroundResource(R.drawable.background_greek);
+            ab.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FF1493")));
 
         }
     }
@@ -143,6 +146,7 @@ public class GamesPlayed extends AppCompatActivity {
                     game.setGreatScore(Integer.parseInt(great_score.getText().toString()));
                     //System.out.println("difficulty " + game.getMatchDifficulty());
                     startActivity(intent);
+                    finish();
                 }
                 else{
                     Toast.makeText(this, "One or more required items are missing or invalid!", Toast.LENGTH_SHORT).show();
@@ -171,10 +175,9 @@ public class GamesPlayed extends AppCompatActivity {
             TextView matchesPlayed = findViewById(R.id.tvGamesPlayed);
             matchesPlayed.setText("Games Played: " + matches);
         }
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                this, R.layout.list_matches,list);
+        activity_photo_gallery photo_gallery = new activity_photo_gallery(this,R.layout.activity_photo_gallery, game.getMatchList());
         lvManager = findViewById(R.id.lvMatchView);
-        lvManager.setAdapter(adapter);
+        lvManager.setAdapter(photo_gallery);
     }
 
     private void createNewMatch()
@@ -190,12 +193,13 @@ public class GamesPlayed extends AppCompatActivity {
 
             Intent intent = new Intent(this, AddScore.class);
             startActivity(intent);
+            finish();
 
         }
 
     }
 
-    //Cannot use commas or semicolons in the name or description. Fields also cannot be empty
+    //Fields cannot be empty
     private boolean validInputFields(){
         EditText name = findViewById(R.id.editTextGameName2);
         EditText description = findViewById(R.id.editTextGameDescription2);
@@ -234,9 +238,22 @@ public class GamesPlayed extends AppCompatActivity {
         finish();
     }
 
+    private void displayImageTaken() {
+        activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if(result.getResultCode() == RESULT_OK && result.getData() != null){
+                        Bundle bundle = result.getData().getExtras();
+                        bitmap =(Bitmap) bundle.get("data");
+                        //boxImage.setImageBitmap(bitmap);
+
+
+                    }
+                });
+    }
+
     public boolean onCreateOptionsMenu(Menu menu)
     {
-        getMenuInflater().inflate(R.menu.menu_edit_score, menu);
+        getMenuInflater().inflate(R.menu.menu_games_played, menu);
         return true;
     }
 
@@ -269,6 +286,14 @@ public class GamesPlayed extends AppCompatActivity {
                 AlertDialog dialog = builder.create();
                 dialog.show();
                 return true;
+            case R.id.action_camera:
+                Intent intent_retake = new Intent(this, RetakeGameBoardPhoto.class);
+                startActivity(intent_retake);
+
+                return true;
+            case R.id.action_stats:
+                Intent intent = new Intent(this, gamesplayed_bargraph.class);
+                startActivity(intent);
 
             case R.id.action_save:
             case android.R.id.home:
@@ -292,9 +317,14 @@ public class GamesPlayed extends AppCompatActivity {
 
             game.setPoorScore(Integer.parseInt(poor_score.getText().toString()));
             game.setGreatScore(Integer.parseInt(great_score.getText().toString()));
+            if(bitmap != null){
+                game.setBoxImage(bitmap);
+            }
             Intent intent = new Intent(GamesPlayed.this, MainActivity.class);
             startActivity(intent);
             System.out.println("got here");
+            finish();
+
         }
 
     }

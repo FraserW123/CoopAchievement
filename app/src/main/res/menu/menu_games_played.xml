@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
     <item
         android:id="@+id/action_delete"
         android:title="Delete"
         app:showAsAction="collapseActionView" />
-        <!--android:icon="@drawable/ic_launcher_delete"-->
-
 
     <item
         android:id="@+id/action_save"
         android:title="Save"
         app:showAsAction="ifRoom"/>
-        <!--android:icon="@drawable/ic_launcher_save"-->
     <item
         android:id="@+id/action_camera"
         android:title="Camera"
         app:showAsAction="collapseActionView"/>
+
+    <item
+        android:id="@+id/action_stats"
+        android:title="Achievement Statistics"
+        app:showAsAction="collapseActionView"/>
+
 </menu>

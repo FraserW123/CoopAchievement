@@ -1,8 +1,18 @@
 package com.example.coopachievement.model;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
+import java.io.ByteArrayOutputStream;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 /**
@@ -26,6 +36,7 @@ public class ScoreCalculator {
     private String[] achievementLevelValues = new String[10];
     private String difficulty = "";
     private String name;
+    private String  boxImage;
 
 
 
@@ -54,6 +65,22 @@ public class ScoreCalculator {
         LocalDateTime time = LocalDateTime.now();
         DateTimeFormatter format = DateTimeFormatter.ofPattern("HH:mm a");
         date = time.format(format);
+    }
+
+    public Bitmap getBoxImage() {
+        if(boxImage != null){
+            byte[] imageAsBytes = Base64.getDecoder().decode(boxImage.getBytes(StandardCharsets.UTF_8));
+            return BitmapFactory.decodeByteArray(imageAsBytes,0,imageAsBytes.length);
+        }
+        return null;
+    }
+
+    public void setBoxImage(Bitmap boxImage) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        boxImage.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        byte[] b  = baos.toByteArray();
+        this.boxImage = Base64.getEncoder().encodeToString(b);
+
     }
 
 
