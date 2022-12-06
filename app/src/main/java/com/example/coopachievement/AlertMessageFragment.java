@@ -74,6 +74,7 @@ public class AlertMessageFragment extends AppCompatDialogFragment  {
             level = game.getLatestMatch().setAchievementLevel(gameConfig.getThemeNames());
             message = "You became " + level + "!\nScore: " + score + "\nDifficulty: " + difficulty + "\n"+game.getLatestMatch().nextAchievementlevelscore(gameConfig.getThemeNames());
         }
+
         game.getLatestMatch().setMatchName(gameConfig.getThemeNames());
 
 

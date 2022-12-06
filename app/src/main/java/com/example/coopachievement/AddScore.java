@@ -449,11 +449,14 @@ public class AddScore extends AppCompatActivity {
                     score_calc.setDifficulty(difficultyLevel);
                     score_calc.setAchievementLevel(gameConfig.getThemeNames());
                     score_calc.setMatchName(gameConfig.getThemeNames());
+
                     game.addMatch(score_calc);
-                    game.incrementAchievementLevels(score_calc.getIcons(),gameConfig.getThemeNames());
+                    game.incrementAchievementLevels(game.getLatestMatch().getIcons(),gameConfig.getThemeNames());
+
                 } else {
                     score_calc = game.getMatch(matchIndex);
                     score_calc.setPlayersScore(game.getPlayersScore(game.getCurrentMatch()));
+                    game.decrementAchievementLevels(game.getLatestMatch().getIcons(), gameConfig.getThemeNames());
                     score_calc.editMatch(players, score, game.getPoorScore(), game.getGreatScore());
                     score_calc.setDifficulty(difficultyLevel);
                     score_calc.setAchievementLevel(gameConfig.getThemeNames());
@@ -475,6 +478,7 @@ public class AddScore extends AppCompatActivity {
             builder.setMessage("Are you sure you want to DELETE this match?")
                     .setPositiveButton("Confirm", (dialog, which) -> {
                         System.out.println("removing match at index " + getMatchIndex());
+                        game.decrementAchievementLevels(game.getLatestMatch().getIcons(), gameConfig.getThemeNames());
                         game.removeMatch(getMatchIndex());
                         Intent intent = new Intent(AddScore.this, GamesPlayed.class);
                         intent.putExtra("game_index", gameConfig.getCurrentGameIndex());

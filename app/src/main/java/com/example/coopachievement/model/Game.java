@@ -18,8 +18,10 @@ public class Game {
     private int currentMatch = 0;
 
 
-    public int[] achievementLevels = new int[10];
-    private ArrayList<Integer> achievmentLevelsList = new ArrayList<>(10);
+
+
+    private int[] achievementLevelsGraph = new int[]{0,0,0,0,0,0,0,0,0,0};
+    //private ArrayList<Integer> achievmentLevelsList = new ArrayList<>(10);
 
     private int themeIndexSave = 0;
     private ArrayList<ScoreCalculator> matchesPlayed = new ArrayList<>();
@@ -37,33 +39,45 @@ public class Game {
         this.description = description;
         this.poor_score = poorScore;
         this.great_score = greatScore;
-        for(int i = 0; i<10; i++){
-            achievmentLevelsList.add(0);
-        }
 
+
+
+    }
+
+    public void setAchievementLevelsGraph(int[] achievementLevelsGraph) {
+        this.achievementLevelsGraph = achievementLevelsGraph;
+    }
+
+    public int[] getAchievementLevelsGraph() {
+        return achievementLevelsGraph;
     }
 
     public void incrementAchievementLevels(String icons, String[] achievementLevelsNames){
         for(int i = 0; i<10; i++){
-            System.out.println(i);
+
             if(icons.equals(achievementLevelsNames[i])){
-                achievmentLevelsList.set(i,1);
+                achievementLevelsGraph[i]++;
+
             }
+        }
+        for(int j = 0; j< achievementLevelsGraph.length; j++){
+            System.out.print(achievementLevelsGraph[j] + " ");
         }
     }
 
     public void decrementAchievementLevels(String icons, String[] achievementLevelsNames){
         for(int i = 0; i<10; i++){
             if(icons.equals(achievementLevelsNames[i])){
-                achievementLevels[i]--;
+                achievementLevelsGraph[i]--;
             }
+        }
+        for(int j = 0; j< achievementLevelsGraph.length; j++){
+            System.out.print(achievementLevelsGraph[j] + " ");
         }
     }
 
 
-    public int[] getAchievementLevels() {
-        return achievementLevels;
-    }
+
 
 
     public ArrayList<Integer> getPlayersScore(int index) {return players_score.get(index);}

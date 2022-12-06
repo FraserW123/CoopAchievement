@@ -76,7 +76,8 @@ public class GamesPlayed extends AppCompatActivity {
         Button button = findViewById(R.id.bargraphbutton);
         button.setOnClickListener(w->{
             Intent intent = new Intent(this, gamesplayed_bargraph.class);
-            intent.getIntExtra("gamebar_index", gameConfig.getCurrentGameIndex());
+            intent.putExtra("gamebar_index", getGameIndex());
+
             startActivity(intent);
         });
 

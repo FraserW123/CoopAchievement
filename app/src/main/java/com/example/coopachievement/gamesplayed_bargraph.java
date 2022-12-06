@@ -32,27 +32,22 @@ public class gamesplayed_bargraph extends AppCompatActivity {
         setContentView(R.layout.activity_gamesplayed_bargraph);
 
         getIntent();
-        int gameBarIndex = getIntent().getIntExtra("gamebar_index",0);
+        int gameBarIndex = getIntent().getIntExtra("gamebar_index",-1);
         Game game =gameConfig.getGame(gameBarIndex);
-        int[] achievementStats = game.getAchievementLevels();
+        int[] achievementStats = game.getAchievementLevelsGraph();
 
         barChart = findViewById(R.id.barchat);
 
         barArraylist = new ArrayList<>();
-        barArraylist.add(new BarEntry(achievementStats[0],0));
-        barArraylist.add(new BarEntry(2,1));
-        barArraylist.add(new BarEntry(1,2));
-        barArraylist.add(new BarEntry(2,3));
-        barArraylist.add(new BarEntry(1,4));
-        barArraylist.add(new BarEntry(2,5));
-        barArraylist.add(new BarEntry(1,6));
-        barArraylist.add(new BarEntry(2,7));
-        barArraylist.add(new BarEntry(1,8));
-        barArraylist.add(new BarEntry(2,9));
+        for (int i = 0; i<achievementStats.length; i++){
+            barArraylist.add(new BarEntry(achievementStats[i],i));
+        }
+
         BarDataSet barDataSet = new BarDataSet(barArraylist,"Achievement levels");
         barDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
         barDataSet.setValueTextColor(Color.BLACK);
         barDataSet.setValueTextSize(16f);
+
         ArrayList<String> theAchivementslevels = new ArrayList<>();
         for(int i =1;i<=10;i++){
         theAchivementslevels.add(String.valueOf(i));

@@ -83,6 +83,8 @@ public class GameTitle extends AppCompatActivity {
             int num_great_score = Integer.parseInt(greatScore.getText().toString());
 
             Game game = new Game(name.getText().toString(), description.getText().toString(), num_poor_score, num_great_score);
+            int[] zeroArray = {0,0,0,0,0,0,0,0,0,0};
+            //game.setAchievementLevelsGraph(zeroArray);
             gameConfig.addGame(game);
             backToMain();
         }
@@ -138,6 +140,8 @@ public class GameTitle extends AppCompatActivity {
             int gamesPlayed = gameConfig.getNumGame();
 
             Game game = new Game(name.getText().toString(), description.getText().toString(), num_poor_score, num_great_score);
+            int[] zeroArray = {0,0,0,0,0,0,0,0,0,0};
+            //game.setAchievementLevelsGraph(zeroArray);
             gameConfig.setCurrentGameIndex(gamesPlayed);
             gameConfig.addGame(game);
             gameConfig.setAccessedMatches(true);
