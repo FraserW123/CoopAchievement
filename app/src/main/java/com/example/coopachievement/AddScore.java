@@ -461,6 +461,7 @@ public class AddScore extends AppCompatActivity {
                     score_calc.setDifficulty(difficultyLevel);
                     score_calc.setAchievementLevel(gameConfig.getThemeNames());
                     score_calc.setMatchName(gameConfig.getThemeNames());
+                    game.incrementAchievementLevels(score_calc.getIcons(),gameConfig.getThemeNames());
                 }
                 unsaved = false;
 

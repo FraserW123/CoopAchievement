@@ -1,7 +1,9 @@
 package com.example.coopachievement;
 
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.EventLogTags;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
@@ -11,12 +13,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.coopachievement.model.Game;
 import com.example.coopachievement.model.GameConfig;
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class gamesplayed_bargraph extends AppCompatActivity {
 
@@ -42,22 +46,26 @@ public class gamesplayed_bargraph extends AppCompatActivity {
         for (int i = 0; i<achievementStats.length; i++){
             barArraylist.add(new BarEntry(achievementStats[i],i));
         }
-
         BarDataSet barDataSet = new BarDataSet(barArraylist,"Achievement levels");
-        barDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+        barDataSet.setColors(ColorTemplate.VORDIPLOM_COLORS);
         barDataSet.setValueTextColor(Color.BLACK);
-        barDataSet.setValueTextSize(16f);
-
+        barDataSet.setValueTextSize(20f);
+        barDataSet.setBarSpacePercent(5f);
         ArrayList<String> theAchivementslevels = new ArrayList<>();
         for(int i =1;i<=10;i++){
         theAchivementslevels.add(String.valueOf(i));
         }
 
         BarData barData = new BarData(theAchivementslevels,barDataSet);
+        barData.setValueTextSize(20f);
         barChart.setData(barData);
         barChart.setTouchEnabled(true);
+        barChart.setDrawValueAboveBar(false);
         barChart.setDragEnabled(true);
         barChart.setScaleEnabled(true);
+        barChart.setDescription("Achievement Statistics");
+        barChart.animateXY(2000,2000);
+        barChart.invalidate();
         }
 
     public boolean onOptionsItemSelected(@NonNull MenuItem item)

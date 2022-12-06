@@ -79,7 +79,6 @@ public class Game {
 
 
 
-
     public ArrayList<Integer> getPlayersScore(int index) {return players_score.get(index);}
 
     public void addPlayerScore(ArrayList<Integer> PlayerScores){this.players_score.add(PlayerScores);}
